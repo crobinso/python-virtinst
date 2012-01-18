@@ -33,6 +33,11 @@
       <target dir='/bar/baz'/>
     </filesystem>
     <filesystem type='mount' accessmode='squash'>
+      <driver type='path' wrpolicy='immediate'/>
+      <source dir='/foo/bar'/>
+      <target dir='/bar/baz'/>
+    </filesystem>
+    <filesystem type='mount' accessmode='mapped'>
       <driver type='path'/>
       <source dir='/foo/bar'/>
       <target dir='/bar/baz'/>

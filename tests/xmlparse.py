@@ -577,11 +577,13 @@ class XMLParseTest(unittest.TestCase):
         dev1 = guest.get_devices(devtype)[0]
         dev2 = guest.get_devices(devtype)[1]
         dev3 = guest.get_devices(devtype)[2]
+        dev4 = guest.get_devices(devtype)[3]
 
         check = self._make_checker(dev1)
         check("type", None, "mount")
         check("mode", None, "passthrough")
         check("driver", "handle", None)
+        check("wrpolicy", None, None)
         check("source", "/foo/bar", "/new/path")
         check("target", "/bar/baz", "/new/target")
 
@@ -595,6 +597,14 @@ class XMLParseTest(unittest.TestCase):
         check("type", "mount", None)
         check("mode", "squash", None)
         check("driver", "path", "handle")
+        check("wrpolicy", "immediate", None)
+        check("readonly", False, True)
+
+        check = self._make_checker(dev4)
+        check("type", "mount", None)
+        check("mode", "mapped", None)
+        check("driver", "path", "handle")
+        check("wrpolicy", None, "immediate")
         check("readonly", False, True)
 
         self._alter_compare(guest.get_config_xml(), outfile)

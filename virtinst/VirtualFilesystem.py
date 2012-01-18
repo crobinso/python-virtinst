@@ -42,6 +42,10 @@ class VirtualFilesystem(VirtualDevice.VirtualDevice):
     MODE_DEFAULT = "default"
     MOUNT_MODES = [MODE_PASSTHROUGH, MODE_MAPPED, MODE_SQUASH, MODE_DEFAULT]
 
+    WRPOLICY_IMM = "immediate"
+    WRPOLICY_DEFAULT = "default"
+    WRPOLICIES = [WRPOLICY_IMM, WRPOLICY_DEFAULT]
+
     DRIVER_PATH = "path"
     DRIVER_HANDLE = "handle"
     DRIVER_DEFAULT = "default"
@@ -75,6 +79,7 @@ class VirtualFilesystem(VirtualDevice.VirtualDevice):
         self._target = None
         self._source = None
         self._readonly = None
+        self._wrpolicy = None
 
         if self._is_parse():
             return
@@ -82,6 +87,7 @@ class VirtualFilesystem(VirtualDevice.VirtualDevice):
         self.mode = self.MODE_DEFAULT
         self.type = self.TYPE_DEFAULT
         self.driver = self.DRIVER_DEFAULT
+        self.wrpolicy = self.WRPOLICY_DEFAULT
 
     def _get_type(self):
         return self._type
@@ -98,6 +104,14 @@ class VirtualFilesystem(VirtualDevice.VirtualDevice):
             raise ValueError(_("Unsupported filesystem mode '%s'" % val))
         self._mode = val
     mode = _xml_property(_get_mode, _set_mode, xpath="./@accessmode")
+
+    def _get_wrpolicy(self):
+        return self._wrpolicy
+    def _set_wrpolicy(self, val):
+        if val is not None and not self.WRPOLICIES.count(val):
+            raise ValueError(_("Unsupported filesystem write policy '%s'" % val))
+        self._wrpolicy = val
+    wrpolicy = _xml_property(_get_wrpolicy, _set_wrpolicy, xpath="./driver/@wrpolicy")
 
     def _get_readonly(self):
         return self._readonly
@@ -162,6 +176,7 @@ class VirtualFilesystem(VirtualDevice.VirtualDevice):
         source = self.source
         target = self.target
         readonly = self.readonly
+        wrpolicy = self.wrpolicy
 
         if mode == self.MODE_DEFAULT:
             mode = None
@@ -169,6 +184,9 @@ class VirtualFilesystem(VirtualDevice.VirtualDevice):
             ftype = None
         if driver == self.DRIVER_DEFAULT:
             driver = None
+            wrpolicy = None
+        if wrpolicy == self.WRPOLICY_DEFAULT:
+            wrpolicy = None
 
         if not source or not target:
             raise ValueError(
@@ -182,7 +200,12 @@ class VirtualFilesystem(VirtualDevice.VirtualDevice):
         fsxml += ">\n"
 
         if driver:
-            fsxml += "      <driver type='%s'/>\n" % driver
+            if not wrpolicy:
+                fsxml += "      <driver type='%s'/>\n" % driver
+            else:
+                fsxml += "      <driver type='%s' wrpolicy='%s' />\n" % (
+                                                                    driver,
+                                                                    wrpolicy)
 
         fsxml += "      <source %s='%s'/>\n" % (
                                             self.type_to_source_prop(ftype),

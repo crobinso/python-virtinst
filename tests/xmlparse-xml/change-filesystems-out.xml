@@ -37,5 +37,11 @@
       <target dir="/bar/baz"/>
       <readonly/>
     </filesystem>
+    <filesystem>
+      <driver type="handle" wrpolicy="immediate"/>
+      <source dir="/foo/bar"/>
+      <target dir="/bar/baz"/>
+      <readonly/>
+    </filesystem>
   </devices>
 </domain>
