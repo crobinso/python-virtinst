@@ -901,7 +901,7 @@ class VirtualDisk(VirtualDevice):
         retlabel = self._selinux_label
         if not retlabel:
             retlabel = ""
-            if self.__creating_storage() and not self.__managed_storage():
+            if self.creating_storage() and not self.__managed_storage():
                 retlabel = self._expected_security_label()
             else:
                 retlabel = self._storage_security_label()
@@ -989,7 +989,7 @@ class VirtualDisk(VirtualDevice):
         if not self.format:
             return
 
-        if not self.__creating_storage():
+        if not self.creating_storage():
             return
 
         if self.vol_install:
@@ -1007,7 +1007,7 @@ class VirtualDisk(VirtualDevice):
         """
         Return size of existing storage
         """
-        if self.__creating_storage():
+        if self.creating_storage():
             return
 
         if self.vol_object:
@@ -1110,7 +1110,7 @@ class VirtualDisk(VirtualDevice):
                     drvtype = _qemu_sanitize_drvtype(self.type,
                                                      self.vol_install.format)
 
-        elif self.__creating_storage():
+        elif self.creating_storage():
             if drvname == self.DRIVER_QEMU:
                 drvtype = self.DRIVER_QEMU_RAW
 
@@ -1130,7 +1130,7 @@ class VirtualDisk(VirtualDevice):
                     self.vol_install != None or
                     self._pool_object != None)
 
-    def __creating_storage(self):
+    def creating_storage(self):
         """
         Return True if the user requested us to create a device
         """
@@ -1219,7 +1219,7 @@ class VirtualDisk(VirtualDevice):
         # - Do we need to create the storage?
 
         managed_storage = self.__managed_storage()
-        create_media = self.__creating_storage()
+        create_media = self.creating_storage()
 
         self.__set_format()
 
@@ -1424,7 +1424,7 @@ class VirtualDisk(VirtualDevice):
         if not progresscb:
             progresscb = progress.BaseMeter()
 
-        if self.__creating_storage() or self.clone_path:
+        if self.creating_storage() or self.clone_path:
             self._do_create_storage(progresscb)
 
         # Relabel storage if it was requested
@@ -1540,7 +1540,7 @@ class VirtualDisk(VirtualDevice):
         if self.vol_install:
             return self.vol_install.is_size_conflict()
 
-        if not self.__creating_storage():
+        if not self.creating_storage():
             return (False, None)
 
         ret = False
