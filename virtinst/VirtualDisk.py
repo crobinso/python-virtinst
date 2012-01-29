@@ -1675,10 +1675,10 @@ class VirtualDisk(VirtualDevice):
 
         return can_fix
 
-    def _get_target_type(self):
+    def get_target_prefix(self):
         """
-        Returns the suggested disk target prefix (hd, xvd, sd ...) from
-        the passed parameters.
+        Returns the suggested disk target prefix (hd, xvd, sd ...) for the
+        disk.
         @returns: str prefix, or None if no reasonable guess can be made
         """
         # The upper limits here aren't necessarilly 1024, but let the HV
@@ -1711,7 +1711,7 @@ class VirtualDisk(VirtualDevice):
         # Only use these targets if there are no other options
         except_targets = ["hdc"]
 
-        prefix, maxnode = self._get_target_type()
+        prefix, maxnode = self.get_target_prefix()
         if prefix is None:
             raise ValueError(_("Cannot determine device bus/type."))
 
