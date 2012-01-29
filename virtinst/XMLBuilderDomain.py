@@ -20,6 +20,7 @@
 # MA 02110-1301 USA.
 
 import copy
+import threading
 
 import libvirt
 import libxml2
@@ -28,36 +29,49 @@ import CapabilitiesParser
 import _util
 from virtinst import _gettext as _
 
+_xml_refs_lock = threading.Lock()
 _xml_refs = {}
+
 def _unref_doc(doc):
     if not doc:
         return
 
     idx = None
-    for n in _xml_refs:
-        if n == doc:
-            idx = n
-            break
 
-    if not idx:
-        return
+    try:
+        _xml_refs_lock.acquire()
 
-    _xml_refs[idx] = _xml_refs[idx] - 1
-    if _xml_refs[idx] == 0:
-        idx.freeDoc()
+        for n in _xml_refs:
+            if n == doc:
+                idx = n
+                break
+
+        if not idx:
+            return
+
+        _xml_refs[idx] = _xml_refs[idx] - 1
+        if _xml_refs[idx] == 0:
+            idx.freeDoc()
+    finally:
+        _xml_refs_lock.release()
 
 def _ref_doc(doc):
     if not doc:
         return
 
-    idx = doc
-    for n in _xml_refs:
-        if n == doc:
-            idx = n
-            break
+    try:
+        _xml_refs_lock.acquire()
 
-    refcount = _xml_refs.get(idx) or 0
-    _xml_refs[idx] = refcount + 1
+        idx = doc
+        for n in _xml_refs:
+            if n == doc:
+                idx = n
+                break
+
+        refcount = _xml_refs.get(idx) or 0
+        _xml_refs[idx] = refcount + 1
+    finally:
+        _xml_refs_lock.release()
 
 def _sanitize_libxml_xml(xml):
     # Strip starting <?...> line
