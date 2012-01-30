@@ -431,8 +431,15 @@ class VirtualDisk(VirtualDevice):
                 if proc.returncode != 0:
                     raise ValueError(err)
             else:
+                logging.debug("Setting +x on %s", dirname)
                 mode = os.stat(dirname).st_mode
-                os.chmod(dirname, mode | stat.S_IXOTH)
+                newmode = mode | stat.S_IXOTH
+                os.chmod(dirname, newmode)
+                if os.stat(dirname).st_mode != newmode:
+                    # Trying to change perms on vfat at least doesn't work
+                    # but also doesn't seem to error. Try and detect that
+                    raise ValueError(_("Permissions on '%s' did not stick") %
+                                     dirname)
 
         fixlist = VirtualDisk.check_path_search_for_user(conn, path, username)
         if not fixlist:
@@ -452,6 +459,7 @@ class VirtualDisk(VirtualDevice):
                         raise
                     useacl = False
 
+                    logging.debug("setfacl failed, trying old fashioned way")
                     fix_perms(dirname, useacl)
             except Exception, e:
                 errdict[dirname] = str(e)
