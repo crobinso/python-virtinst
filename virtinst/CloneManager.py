@@ -611,7 +611,7 @@ class CloneDesign(object):
                                 validate=validate)
                 d.target = target
             except Exception, e:
-                _util.log_exception(e)
+                logging.debug("", exc_info=True)
                 raise ValueError(_("Could not determine original disk "
                                    "information: %s" % str(e)))
             disks.append(d)

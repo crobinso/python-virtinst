@@ -35,7 +35,6 @@ import libvirt
 
 import virtinst
 from virtinst import _util
-from _util import log_exception
 from _util import listify
 from virtinst import _gettext as _
 
@@ -346,7 +345,7 @@ def do_creds(creds, cbdata):
     try:
         return _do_creds(creds, cbdata)
     except:
-        log_exception("Error in creds callback.")
+        logging.debug("Error in creds callback.", exc_info=True)
         raise
 
 def _do_creds(creds, cbdata_ignore):
@@ -438,7 +437,7 @@ def fail(msg, do_exit=True):
     Convenience function when failing in cli app
     """
     logging.error(msg)
-    log_exception()
+    logging.debug("", exc_info=True)
     if do_exit:
         _fail_exit()
 

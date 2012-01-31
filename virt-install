@@ -88,7 +88,7 @@ def supports_pxe(guest):
             if forward and forward != "nat":
                 return True
         except:
-            _util.log_exception("Error checking if PXE supported")
+            logging.debug("Error checking if PXE supported", exc_info=True)
             return True
 
     return False
@@ -654,7 +654,7 @@ def start_install(guest, continue_inst, options):
             guest.connect_console(conscb)
 
     except KeyboardInterrupt, e:
-        cli.log_exception()
+        logging.debug("", exc_info=True)
         guest.terminate_console()
         print_stderr(_("Domain install interrupted."))
     except RuntimeError, e:
@@ -1009,7 +1009,7 @@ if __name__ == "__main__":
     except SystemExit, sys_e:
         sys.exit(sys_e.code)
     except KeyboardInterrupt:
-        cli.log_exception()
+        logging.debug("", exc_info=True)
         print_stderr(_("Installation aborted at user request"))
     except Exception, main_e:
         fail(main_e)
