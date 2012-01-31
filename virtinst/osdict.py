@@ -364,6 +364,25 @@ OS_TYPES = {
         }
     },
 
+    "opensuse11": {
+        "label": "openSuse 11",
+        "distro": "suse",
+        "supported": True,
+        "devices" : {
+            DISK : VIRTIO_DISK,
+            NET  : VIRTIO_NET,
+        },
+    },
+    "opensuse12": {
+        "label": "openSuse 12",
+        "distro": "suse",
+        "supported": True,
+        "devices" : {
+            DISK : VIRTIO_DISK,
+            NET  : VIRTIO_NET,
+        },
+    },
+
     "sles10": {
         "label": "Suse Linux Enterprise Server",
         "distro": "suse",
