@@ -1729,9 +1729,34 @@ class VirtualDisk(VirtualDevice):
                 self.target = "hdc"
                 return self.target
 
+        if maxnode > (26 * 26 * 26):
+            raise RuntimeError("maxnode value is too high")
+
         # Regular scanning
-        for i in range(maxnode):
-            gen_t = "%s%c" % (prefix, ord('a') + i)
+        for i in range(1, maxnode + 1):
+            gen_t = prefix
+
+            tmp = i
+            digits = []
+            for factor in range(0, 3):
+                amt = (tmp % (26 ** (factor + 1))) / (26 ** factor)
+                if amt == 0 and tmp >= (26 ** (factor + 1)):
+                    amt = 26
+                tmp -= amt
+                digits.insert(0, amt)
+
+            seen_valid = False
+            for digit in digits:
+                if digit == 0:
+                    if not seen_valid:
+                        continue
+                    digit = 1
+
+                seen_valid = True
+                gen_t += "%c" % (ord('a') + digit - 1)
+
+            #print i, digits, gen_t
+
             if gen_t in except_targets:
                 continue
             if gen_t not in skip_targets:

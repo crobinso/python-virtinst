@@ -962,5 +962,18 @@ class TestXMLConfig(unittest.TestCase):
                           virtinst.Guest.cpuset_str_to_tuple,
                           conn, "16")
 
+    def testManyVirtio(self):
+        d = VirtualDisk(conn=utils.get_conn(), bus="virtio",
+                        path="/default-pool/testvol1.img")
+
+        targetlist = []
+        for ignore in range(0, (26 * 2) + 1):
+            d.target = None
+            d.generate_target(targetlist)
+            targetlist.append(d.target)
+
+        self.assertEquals("vdaa", targetlist[26])
+        self.assertEquals("vdba", targetlist[26 * 2])
+
 if __name__ == "__main__":
     unittest.main()
