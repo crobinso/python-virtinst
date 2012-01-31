@@ -44,7 +44,6 @@ LOCAL_MEDIA = []
 
 # GeoIP/managed URLs
 FEDORA_BASEURL = "http://download.fedoraproject.org/pub/fedora/linux/releases/%s/Fedora/%s/os/"
-FEDORA_RAWHIDE_BASEURL = "http://download.fedoraproject.org/pub/fedora/linux/development/%s/os"
 OPENSUSE_BASEURL = "http://download.opensuse.org/distribution/%s/repo/oss/"
 OLD_OPENSUSE_BASEURL = "http://ftp5.gwdg.de/pub/opensuse/discontinued/distribution/%s/repo/oss"
 
@@ -59,7 +58,7 @@ MANDRIVA_BASEURL = "http://ftp.uwsg.indiana.edu/linux/mandrake/official/%s/%s/"
 SCIENTIFIC_BASEURL = "http://ftp.scientificlinux.org/linux/scientific/%s/%s/"
 
 # Doesn't appear to be a simple boot iso in newer suse trees
-NOBOOTISO_FILTER = ".*opensuse11.*|.*opensuse10.3.*|.*opensuse10.0.*"
+NOBOOTISO_FILTER = ".*opensuse12.*|.*opensuse11.*|.*opensuse10.3.*|.*opensuse10.0.*"
 
 # Opensuse < 10.3 (and some sles) require crazy rpm hacking to get a bootable
 # kernel. We expect failure in this case since our test harness doesn't
@@ -88,18 +87,13 @@ def distroClass(distname):
 urls = {
 
     # Fedora Distros
-    "fedora13" : {
-        'x86_64': FEDORA_BASEURL % ("13", "x86_64"),
-        'distro': ("linux", "fedora13")
-    },
-    "fedora14" : {
-        'x86_64': FEDORA_BASEURL % ("14", "x86_64"),
-        'distro': ("linux", "fedora14")
-    },
-    "fedora-rawhide" : {
-        'i386'  : FEDORA_RAWHIDE_BASEURL % ("i386"),
-        'x86_64': FEDORA_RAWHIDE_BASEURL % ("x86_64"),
+    "fedora15" : {
+        'x86_64': FEDORA_BASEURL % ("15", "x86_64"),
         'distro': ("linux", "fedora15")
+    },
+    "fedora16" : {
+        'x86_64': FEDORA_BASEURL % ("16", "x86_64"),
+        'distro': ("linux", "fedora16")
     },
 
     # SUSE Distros
@@ -117,6 +111,10 @@ urls = {
         'i386'  : OPENSUSE_BASEURL % ("11.4"),
         'x86_64': OPENSUSE_BASEURL % ("11.4")
     },
+    "opensuse12.1" : {
+        'i386'  : OPENSUSE_BASEURL % ("12.1"),
+        'x86_64': OPENSUSE_BASEURL % ("12.1")
+    },
 
     # Debian Distros
     "debian-lenny-64" : {
@@ -131,6 +129,10 @@ urls = {
     },
     "debian-wheezy" : {
         'x86_64': DEBIAN_BASEURL % ("wheezy", "amd64"),
+        'distro': ("linux", None)
+    },
+    "debian-sid" : {
+        'x86_64': DEBIAN_BASEURL % ("sid", "amd64"),
         'distro': ("linux", None)
     },
     "debian-daily" : {
@@ -189,11 +191,6 @@ urls = {
         'x86_64': UBUNTU_BASEURL % ("hardy", "amd64"),
         'distro': ("linux", None)
     },
-    "ubuntu-lucid" : {
-        'i386': UBUNTU_BASEURL % ("lucid", "i386"),
-        'x86_64': UBUNTU_BASEURL % ("lucid", "amd64"),
-        'distro': ("linux", None)
-    },
     "ubuntu-maverick" : {
         'i386': UBUNTU_BASEURL % ("maverick", "i386"),
         'x86_64': UBUNTU_BASEURL % ("maverick", "amd64"),
@@ -204,17 +201,27 @@ urls = {
         'x86_64': UBUNTU_BASEURL % ("natty", "amd64"),
         'distro': ("linux", None)
     },
+    "ubuntu-oneiric" : {
+        'i386': UBUNTU_BASEURL % ("oneiric", "i386"),
+        'x86_64': UBUNTU_BASEURL % ("oneiric", "amd64"),
+        'distro': ("linux", None)
+    },
+    "ubuntu-precise" : {
+        'i386': UBUNTU_BASEURL % ("precise", "i386"),
+        'x86_64': UBUNTU_BASEURL % ("precise", "amd64"),
+        'distro': ("linux", None)
+    },
 
     # Mandriva
     "mandriva-2009.1" : {
         "noxen": True,
-        'i386': MANDRIVA_BASEURL % ("2009.1", "i586"),
+        'i586': MANDRIVA_BASEURL % ("2009.1", "i586"),
         'x86_64': MANDRIVA_BASEURL % ("2009.1", "x86_64"),
         'distro': ("linux", None)
     },
     "mandriva-2010.2" : {
         "noxen": True,
-        'i386': MANDRIVA_BASEURL % ("2010.2", "i586"),
+        'i586': MANDRIVA_BASEURL % ("2010.2", "i586"),
         'x86_64': MANDRIVA_BASEURL % ("2010.2", "x86_64"),
         'distro': ("linux", None)
     },
