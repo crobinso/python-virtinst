@@ -29,9 +29,9 @@
       <mac address="01:23:45:67:89:00"/>
       <source network="test1"/>
     </interface>
-    <interface type="network">
+    <interface type="bridge">
       <mac address="01:23:45:67:89:01"/>
-      <source network="test2"/>
+      <source bridge="br0"/>
     </interface>
     <input type="mouse" bus="ps2"/>
     <graphics type="vnc" port="-1" autoport="yes" listen="127.0.0.1"/>

@@ -447,6 +447,8 @@ class CloneDesign(object):
         self._guest.uuid = self._clone_uuid
         self._clone_mac.reverse()
         for iface in self._guest.get_devices("interface"):
+            iface.target_dev = None
+
             if self._clone_mac:
                 mac = self._clone_mac.pop()
             else:

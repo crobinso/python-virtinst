@@ -28,10 +28,12 @@
     <interface type='network'>
       <mac address='52:54:00:6c:a0:cb'/>
       <source network='test1'/>
+      <target dev='vnet0'/>
     </interface>
-    <interface type='network'>
+    <interface type='bridge'>
       <mac address='52:54:00:6c:bb:ca'/>
-      <source network='test2'/>
+      <source bridge='br0'/>
+      <target dev='my_manual_dev'/>
     </interface>
     <input type='mouse' bus='ps2'/>
     <graphics type='vnc' port='-1' autoport='yes' listen='127.0.0.1'/>

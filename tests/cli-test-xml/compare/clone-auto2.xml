@@ -27,7 +27,6 @@
     <controller type="ide" index="0"/>
     <interface type="user">
       <mac address="00:11:22:33:44:55"/>
-      <target dev="testnet0"/>
     </interface>
     <parallel type="file">
       <source path="/tmp/foo.log"/>
