@@ -480,7 +480,7 @@ Disk IO backend. Can be either "threads" or "native".
 =item B<error_policy>
 
 How guest should react if a write error is encountered. Can be one of
-"stop", "none", or "enospace"
+"stop", "ignore", or "enospace"
 
 =item B<serial>
 

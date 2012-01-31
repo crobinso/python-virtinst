@@ -348,7 +348,7 @@ class VirtualDisk(VirtualDevice):
             return "dir"
         return "file"
 
-    error_policies = ["none", "stop", "enospace"]
+    error_policies = ["ignore", "stop", "enospace"]
 
     @staticmethod
     def path_exists(conn, path):
