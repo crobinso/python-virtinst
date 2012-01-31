@@ -469,6 +469,12 @@ class CloneDesign(object):
                 if disk.target == orig_disk.target:
                     xmldisk = disk
 
+            if clone_disk.vol_object:
+                # XXX We could do this with vol upload I think
+                raise RuntimeError(
+                    _("Clone onto existing storage volume is not "
+                      "supported: '%s'") % clone_disk.path)
+
             # Change the XML
             xmldisk.path = None
             xmldisk.type = clone_disk.type
