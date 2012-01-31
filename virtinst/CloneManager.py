@@ -405,6 +405,8 @@ class CloneDesign(object):
             self._original_dom = self._lookup_vm(self.original_guest)
             self.original_xml = self._original_dom.XMLDesc(0)
 
+        logging.debug("Original XML:\n%s", self.original_xml)
+
         # Pull clonable storage info from the original xml
         self._original_virtual_disks = self._get_original_devices_info(self._original_xml)
 
