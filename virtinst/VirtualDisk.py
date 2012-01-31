@@ -493,7 +493,7 @@ class VirtualDisk(VirtualDevice):
             template += "source/@%s='%s'])"
 
             for dtype in VirtualDisk._target_props:
-                xpath = template % (dtype, path)
+                xpath = template % (dtype, _util.xml_escape(path))
                 c += ctx.xpathEval(xpath)
 
             return c
