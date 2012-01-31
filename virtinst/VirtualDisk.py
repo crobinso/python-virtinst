@@ -972,7 +972,10 @@ class VirtualDisk(VirtualDevice):
         elif path:
             vol_object, pool, path_is_pool = _check_if_path_managed(self.conn,
                                                                     path)
-            if pool and not vol_object and not path_is_pool:
+            if (pool and
+                not vol_object and
+                not path_is_pool and
+                not self._is_parse()):
                 vol_install = _build_vol_install(path, pool,
                                                  self.size,
                                                  self.sparse)
@@ -1754,8 +1757,6 @@ class VirtualDisk(VirtualDevice):
 
                 seen_valid = True
                 gen_t += "%c" % (ord('a') + digit - 1)
-
-            #print i, digits, gen_t
 
             if gen_t in except_targets:
                 continue

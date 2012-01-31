@@ -36,7 +36,6 @@ import logging
 import re
 import os
 
-import libxml2
 import urlgrabber.progress as progress
 import libvirt
 
@@ -127,6 +126,7 @@ class CloneDesign(object):
         self._original_dom          = None
         self._original_virtual_disks = []
         self._original_xml          = None
+        self._guest              = None
 
         # clone guest
         self._clone_name         = None
@@ -407,8 +407,11 @@ class CloneDesign(object):
 
         logging.debug("Original XML:\n%s", self.original_xml)
 
+        self._guest = Guest.Guest(conn=self._hyper_conn,
+                                  parsexml=self.original_xml)
+
         # Pull clonable storage info from the original xml
-        self._original_virtual_disks = self._get_original_devices_info(self._original_xml)
+        self._original_virtual_disks = self._get_original_devices_info()
 
         logging.debug("Original paths: %s", self.original_devices)
         logging.debug("Original sizes: %s", self.original_devices_size)
@@ -432,39 +435,21 @@ class CloneDesign(object):
 
         self._clone_xml = self.original_xml
 
-        # XXX: Make sure a clone name has been specified? or generate one?
+        if len(self.clone_virtual_disks) < len(self.original_virtual_disks):
+            raise ValueError(_("More disks to clone than new paths specified. "
+                               "(%(passed)d specified, %(need)d needed") %
+                               {"passed" : len(self.clone_virtual_disks),
+                                "need"   : len(self.original_virtual_disks) })
 
         logging.debug("Clone paths: %s", self._clone_devices)
 
-        # We simply edit the original VM xml in place
-        doc = libxml2.parseDoc(self._clone_xml)
-        ctx = doc.xpathNewContext()
-
-        # changing name
-        node = ctx.xpathEval("/domain/name")
-        node[0].setContent(self._clone_name)
-
-        # We always have a UUID since one is generated at init time
-        node = ctx.xpathEval("/domain/uuid")
-        node[0].setContent(self._clone_uuid)
-
-        # changing mac
-        count = ctx.xpathEval("count(/domain/devices/interface/mac)")
-        for i in range(1, int(count + 1)):
-            base_xpath = "/domain/devices/interface[%d]" % i
-            base_node = ctx.xpathEval(base_xpath)[0]
-            node = ctx.xpathEval(base_xpath + "/mac/@address")
-            node = node and node[0] or None
-
-            if not node:
-                node = base_node.newChild(None, "mac", None)
-                node.setProp("address", "tmp")
-                node = ctx.xpathEval(base_xpath + "/mac/@address")[0]
-
-            mac = None
-            try:
-                mac = self._clone_mac[i - 1]
-            except Exception:
+        self._guest.name = self._clone_name
+        self._guest.uuid = self._clone_uuid
+        self._clone_mac.reverse()
+        for iface in self._guest.get_devices("interface"):
+            if self._clone_mac:
+                mac = self._clone_mac.pop()
+            else:
                 while 1:
                     mac = _util.randomMAC(self.original_conn.getType().lower())
                     dummy, msg = self._check_mac(mac)
@@ -473,20 +458,21 @@ class CloneDesign(object):
                     else:
                         break
 
-            node.setContent(mac)
-
-        if len(self.clone_virtual_disks) < len(self.original_virtual_disks):
-            raise ValueError(_("More disks to clone than new paths specified. "
-                               "(%(passed)d specified, %(need)d needed") %
-                               {"passed" : len(self.clone_virtual_disks),
-                                "need"   : len(self.original_virtual_disks) })
+            iface.macaddr = mac
 
         # Changing storage XML
-        for i in range(0, len(self.original_virtual_disks)):
+        for i in range(len(self._original_virtual_disks)):
             orig_disk = self._original_virtual_disks[i]
             clone_disk = self._clone_virtual_disks[i]
 
-            self._change_storage_xml(ctx, orig_disk, clone_disk)
+            for disk in self._guest.get_devices("disk"):
+                if disk.target == orig_disk.target:
+                    xmldisk = disk
+
+            # Change the XML
+            xmldisk.path = None
+            xmldisk.type = clone_disk.type
+            xmldisk.path = clone_disk.path
 
             # Sync 'size' between the two
             if orig_disk.size:
@@ -511,10 +497,7 @@ class CloneDesign(object):
                 clone_disk.clone_path = orig_disk.path
 
         # Save altered clone xml
-        self._clone_xml = str(doc)
-
-        ctx.xpathFreeContext()
-        doc.freeDoc()
+        self._clone_xml = self._guest.get_xml_config()
 
     def setup(self):
         """
@@ -537,122 +520,73 @@ class CloneDesign(object):
         nic = VirtualNetworkInterface(macaddr=mac, conn=self.original_conn)
         return nic.is_conflict_net(self._hyper_conn)
 
-    def _change_storage_xml(self, ctx, orig_disk, clone_disk):
-        """
-        Swap the original disk path out for the clone disk path in the
-        passed XML context
-        """
-        base_path   = ("/domain/devices/disk[target/@dev='%s']" %
-                       orig_disk.target)
-        disk        = ctx.xpathEval(base_path)[0]
-        driver      = ctx.xpathEval(base_path + "/driver")
-        disk_type   = ctx.xpathEval(base_path + "/@type")
-        source_node = ctx.xpathEval(base_path + "/source")
-        source_node = source_node and source_node[0]
-
-        # If no destination path, our job is easy
-        if not clone_disk.path:
-            if source_node:
-                source_node.unlinkNode()
-                source_node.freeNode()
-            return
-
-        if not source_node:
-            # No original source, but new path specified: create <source> tag
-            source_node = disk.newChild(None, "source", None)
-        else:
-            source_node.get_properties().unlinkNode()
-
-        # Change disk type/driver
-        if clone_disk.type == clone_disk.TYPE_FILE:
-            dtype, prop, drvval = ("file", "file", "file")
-        else:
-            dtype, prop, drvval = ("block", "dev", "phy")
-
-        # Only change these type/driver values if they are in our minimal
-        # known whitelist, to try and avoid future problems
-        if disk_type[0].getContent() in [ "file", "block" ]:
-            disk_type[0].setContent(dtype)
-        if driver and driver[0].prop("name") in [ "file", "block" ]:
-            driver[0].setProp("name", drvval)
-
-        source_node.setProp(prop, clone_disk.path)
-
     # Parse disk paths that need to be cloned from the original guest's xml
     # Return a list of VirtualDisk instances pointing to the original
     # storage
-    def _get_original_devices_info(self, xml):
+    def _get_original_devices_info(self):
+        clonelist = []
+        retdisks = []
 
-        disks   = []
-        lst     = []
-
-        count = _util.get_xml_path(xml, "count(/domain/devices/disk)")
-        for i in range(1, int(count + 1)):
-            # Check if the disk needs cloning
-            (path, target) = self._do_we_clone_device(xml, i)
-            if target == None:
+        for disk in self._guest.get_devices("disk"):
+            if self._do_we_clone_device(disk):
+                clonelist.append(disk)
                 continue
-            lst.append((path, target))
 
         # Set up virtual disk to encapsulate all relevant path info
-        for path, target in lst:
-            d = None
+        for disk in clonelist:
             validate = not self.preserve_dest_disks
+
             try:
-                if (path and validate and
-                    not VirtualDisk.path_exists(self._hyper_conn, path)):
+                if (disk.path and validate and
+                    not VirtualDisk.path_exists(self._hyper_conn, disk.path)):
                     raise ValueError(_("Disk '%s' does not exist.") %
-                                     path)
+                                     disk.path)
 
                 device = VirtualDisk.DEVICE_DISK
-                if not path:
+                if not disk.path:
                     # Tell VirtualDisk we are a cdrom to allow empty media
                     device = VirtualDisk.DEVICE_CDROM
 
-                d = VirtualDisk(path, conn=self._hyper_conn, device=device,
-                                validate=validate)
-                d.target = target
+                d = VirtualDisk(disk.path, conn=self._hyper_conn,
+                                device=device, validate=validate)
+                d.target = disk.target
             except Exception, e:
                 logging.debug("", exc_info=True)
                 raise ValueError(_("Could not determine original disk "
                                    "information: %s" % str(e)))
-            disks.append(d)
+            retdisks.append(d)
 
-        return disks
+        return retdisks
 
     # Pull disk #i from the original guest xml, return it's source path
     # if it should be cloned
     # Cloning policy based on 'clone_policy', 'force_target' and 'skip_target'
-    def _do_we_clone_device(self, xml, i):
-        base_path = "/domain/devices/disk[%d]" % i
-        source  = _util.get_xml_path(xml, "%s/source/@dev | %s/source/@file" %
-                                     (base_path, base_path))
-        target  = _util.get_xml_path(xml, base_path + "/target/@dev")
-        ro      = _util.get_xml_path(xml, "count(%s/readonly)" % base_path)
-        share   = _util.get_xml_path(xml, "count(%s/shareable)" % base_path)
-
-        if not target:
+    def _do_we_clone_device(self, disk):
+        if not disk.target:
             raise ValueError("XML has no 'dev' attribute in disk target")
 
-        if target in self.skip_target:
-            return (None, None)
+        if disk.target in self.skip_target:
+            return False
 
-        if target in self.force_target:
-            return (source, target)
+        if disk.target in self.force_target:
+            return True
 
         # No media path
-        if not source and self.CLONE_POLICY_NO_EMPTYMEDIA in self.clone_policy:
-            return (None, None)
+        if (not disk.path and
+            self.CLONE_POLICY_NO_EMPTYMEDIA in self.clone_policy):
+            return False
 
         # Readonly disks
-        if ro and self.CLONE_POLICY_NO_READONLY in self.clone_policy:
-            return (None, None)
+        if (disk.read_only and
+            self.CLONE_POLICY_NO_READONLY in self.clone_policy):
+            return False
 
         # Shareable disks
-        if share and self.CLONE_POLICY_NO_SHAREABLE in self.clone_policy:
-            return (None, None)
+        if (disk.shareable and
+            self.CLONE_POLICY_NO_SHAREABLE in self.clone_policy):
+            return False
 
-        return (source, target)
+        return True
 
     # Simple wrapper for checking a vm exists and returning the domain
     def _lookup_vm(self, name):
