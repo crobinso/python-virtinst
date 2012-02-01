@@ -23,7 +23,7 @@
     <emulator>/usr/bin/test-hv</emulator>
     <disk type='file' device='disk'>
       <driver cache='writeback' io='threads'/>
-      <source file='/tmp/__virtinst_cli_exist1.img'/>
+      <source file='/default-pool/UPPER'/>
       <target dev='hda' bus='ide'/>
       <shareable/>
       <serial>WD-WMAP9A966149</serial>
@@ -104,7 +104,7 @@
     <emulator>/usr/bin/test-hv</emulator>
     <disk type='file' device='disk'>
       <driver cache='writeback' io='threads'/>
-      <source file='/tmp/__virtinst_cli_exist1.img'/>
+      <source file='/default-pool/UPPER'/>
       <target dev='hda' bus='ide'/>
       <shareable/>
       <serial>WD-WMAP9A966149</serial>

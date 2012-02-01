@@ -103,6 +103,7 @@ test_files = {
     'TREEDIR'           : treedir,
     'MANAGEDEXIST1'     : "/default-pool/testvol1.img",
     'MANAGEDEXIST2'     : "/default-pool/testvol2.img",
+    'MANAGEDEXISTUPPER' : "/default-pool/UPPER",
     'MANAGEDNEW1'       : "/default-pool/clonevol",
     'MANAGEDNEW2'       : "/default-pool/clonevol",
     'MANAGEDDISKNEW1'   : "/disk-pool/newvol1.img",
@@ -604,7 +605,7 @@ args_dict = {
          "--controller usb,model=ich9-uhci1,address=0:0:4.0,index=0,master=0 "
          "--controller usb,model=ich9-uhci2,address=0:0:4.1,index=0,master=2 "
          "--controller usb,model=ich9-uhci3,address=0:0:4.2,index=0,master=4 "
-         "--disk %(EXISTIMG1)s,cache=writeback,io=threads,perms=sh,serial=WD-WMAP9A966149 "
+         "--disk %(MANAGEDEXISTUPPER)s,cache=writeback,io=threads,perms=sh,serial=WD-WMAP9A966149 "
          "--disk %(NEWIMG1)s,sparse=false,size=.001,perms=ro,error_policy=enospace "
          "--disk device=cdrom,bus=sata "
          "--serial tcp,host=:2222,mode=bind,protocol=telnet "
