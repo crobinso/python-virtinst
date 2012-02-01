@@ -104,6 +104,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_bindir}/virt-convert
 
 %changelog
+* Tue Jan 31 2012 Cole Robinson <crobinso@redhat.com> - 0.600.1-1
+- virt-install: --redir option for usb redirection (Marc-André Lureau)
+- virt-install: Advanced --controller support for usb2 (Marc-André
+  Lureau)
+- Many bug fixes and minor improvments.
+
 * Tue Jul 26 2011 Cole Robinson <crobinso@redhat.com> - 0.600.0-1
 - virt-install: Various improvements to enable LXC/container guests:
 - New --filesystem option for <filesystem> devices

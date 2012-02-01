@@ -1,6 +1,13 @@
    Virtinst News
    =================
 
+Release 0.600.1 (January 31, 2012)
+----------------------------------
+- virt-install: --redir option for usb redirection (Marc-André Lureau)
+- virt-install: Advanced --controller support for usb2 (Marc-André
+  Lureau)
+- Many bug fixes and minor improvments.
+
 Release 0.600.0 (July 26, 2011)
 -------------------------------
 - virt-install: Various improvements to enable LXC/container guests:
