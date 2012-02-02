@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: virtinst\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-31 20:20-0500\n"
-"PO-Revision-Date: 2011-07-27 12:24+0000\n"
-"Last-Translator: warrink <geert.warrink@onsnet.nu>\n"
+"POT-Creation-Date: 2012-02-02 17:15-0500\n"
+"PO-Revision-Date: 2012-02-01 08:50+0000\n"
+"Last-Translator: Geert Warrink <geert.warrink@onsnet.nu>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
@@ -213,14 +213,14 @@ msgid "Error in smartcard device parameters: %s"
 msgstr "Fout in smartcard apparaat parameters: %s"
 
 #: virtinst/cli.py:1005
-#, fuzzy, python-format
+#, python-format
 msgid "Error in controller device parameters: %s"
-msgstr "Fout in netwerkapparaat parameters: %s"
+msgstr "Fout in controller apparaat parameters: %s"
 
 #: virtinst/cli.py:1015
-#, fuzzy, python-format
+#, python-format
 msgid "Error in redirdev device parameters: %s"
-msgstr "Fout in smartcard apparaat parameters: %s"
+msgstr "Fout in redirdev apparaat parameters: %s"
 
 #: virtinst/cli.py:1026
 msgid "Connect to hypervisor with libvirt URI"
@@ -267,13 +267,12 @@ msgstr ""
 "--network network=mynet,model=virtio,mac=00:11..."
 
 #: virtinst/cli.py:1089
-#, fuzzy
 msgid ""
 "Configure a guest controller device. Ex:\n"
 "--controller type=usb,model=ich9-ehci1"
 msgstr ""
-"Configureer een gast smartcard apparaat. B.v.:\n"
-"--smartcard mode=passthrough"
+"Configureer een gast controller apparaat. B.v.:\n"
+"--controller type=usb,model=ich9-ehci1"
 
 #: virtinst/cli.py:1092
 msgid "Configure a guest serial device"
@@ -320,6 +319,8 @@ msgid ""
 "Configure a guest redirection device. Ex:\n"
 "--redirdev usb,type=tcp,server=192.168.1.1:4000"
 msgstr ""
+"Configureer een gast omleiding apparaat. B.v.:\n"
+"--redirdev usb,type=tcp,server=192.168.1.1:4000"
 
 #: virtinst/cli.py:1118
 msgid ""
@@ -392,11 +393,11 @@ msgstr "Komt niet overeen met toetsenbord indeling '%s' in keytable!"
 
 #: virtinst/cli.py:1794
 msgid "The server option is invalid with spicevmc redirection"
-msgstr ""
+msgstr "De server optie is ongeldig met spicevmc omleiding"
 
 #: virtinst/cli.py:1797
 msgid "The server option is missing for TCP redirection"
-msgstr ""
+msgstr "De server optie ontbreekt voor TCP omleiding"
 
 #: virtinst/cli.py:1865
 #, python-format
@@ -454,9 +455,9 @@ msgstr ""
 "gespecificeerd, %(need)d nodig)"
 
 #: virtinst/CloneManager.py:477
-#, fuzzy, python-format
+#, python-format
 msgid "Clone onto existing storage volume is not supported: '%s'"
-msgstr "kopiëren naar een bestaande vdisk wordt niet ondersteund"
+msgstr ""
 
 #: virtinst/CloneManager.py:550
 #, python-format
@@ -483,7 +484,7 @@ msgstr "Ongeldig NFS formaat: Geen pad gespecificeerd."
 
 #: virtinst/DistroInstaller.py:115
 msgid "Failed to lookup scratch media volume"
-msgstr ""
+msgstr "Opzoeken van scratch media volume mislukte"
 
 #: virtinst/DistroInstaller.py:130
 #, python-format
@@ -1418,14 +1419,12 @@ msgid "Spice agent"
 msgstr "Spice agent"
 
 #: virtinst/VirtualCharDevice.py:125
-#, fuzzy
 msgid "Client mode"
-msgstr "Cliënt mode."
+msgstr "Client mode"
 
 #: virtinst/VirtualCharDevice.py:127
-#, fuzzy
 msgid "Server mode"
-msgstr "Server mode."
+msgstr "Server mode"
 
 #: virtinst/VirtualCharDevice.py:169
 #, python-format
@@ -1548,9 +1547,9 @@ msgid "Unknown virtual device type '%s'."
 msgstr "Onbekend virtueel apparaat type '%s'."
 
 #: virtinst/VirtualDevice.py:189 virtinst/VirtualRedirDevice.py:106
-#, fuzzy, python-format
+#, python-format
 msgid "Could not determine or unsupported format of '%s'"
-msgstr "Kon formaat van '%s' niet bepalen"
+msgstr "Kon niet bepalen of niet-ondersteund formaat van '%s'"
 
 #: virtinst/VirtualDisk.py:218
 #, python-format
@@ -1762,14 +1761,14 @@ msgid "Unsupported filesystem mode '%s'"
 msgstr "Niet-ondersteunde bestandssysteem mode '%s'"
 
 #: virtinst/VirtualFilesystem.py:112
-#, fuzzy, python-format
+#, python-format
 msgid "Unsupported filesystem write policy '%s'"
-msgstr "Niet-ondersteund bestandssysteem type '%s'"
+msgstr ""
 
 #: virtinst/VirtualFilesystem.py:127
-#, fuzzy, python-format
+#, python-format
 msgid "Unsupported filesystem driver '%s'"
-msgstr "Niet-ondersteunde bestandssysteem mode '%s'"
+msgstr ""
 
 #: virtinst/VirtualFilesystem.py:166
 #, python-format
@@ -1905,18 +1904,18 @@ msgstr ""
 "virtuele machine."
 
 #: virtinst/VirtualRedirDevice.py:67
-#, fuzzy, python-format
+#, python-format
 msgid "Unsupported bus '%s'"
-msgstr "Niet-ondersteund geluid model '%s'"
+msgstr "Niet-ondersteunde bus '%s'"
 
 #: virtinst/VirtualRedirDevice.py:80
-#, fuzzy, python-format
+#, python-format
 msgid "Unsupported redirection type '%s'"
-msgstr "Niet-ondersteund bestandssysteem type '%s'"
+msgstr "Niet-ondersteund omleiging  type '%s'"
 
 #: virtinst/VirtualRedirDevice.py:89
 msgid "Invalid host value"
-msgstr ""
+msgstr "Ongeldige host waarde"
 
 #: virtinst/VirtualSmartCardDevice.py:58
 #, python-format
@@ -2544,9 +2543,8 @@ msgid "--extra-args only work if specified with --location."
 msgstr "--extra-args werkt alleen als het opgegeven wordt met --location."
 
 #: virt-install:428
-#, fuzzy
 msgid "--initrd-inject only works if specified with --location."
-msgstr "--extra-args werkt alleen als het opgegeven wordt met --location."
+msgstr "--initrd-inject werkt alleen indien gespecificeerd met --location."
 
 #: virt-install:441
 msgid "Can't use --pxe with --nonetworks"
@@ -2813,6 +2811,3 @@ msgstr "Forceer 'ja' voor elke toepasselijke vraag, beëindig voor alle andere"
 #: virt-install:991
 msgid "--print-step must be 1, 2, 3, or all"
 msgstr "--print-step moet 1, 2, 3 of all zijn"
-
-#~ msgid "Could not detach PCI device: %s"
-#~ msgstr "Kon PCI apparaat niet loskoppelen: %s"

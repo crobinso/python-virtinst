@@ -4,14 +4,14 @@
 #
 # Translators:
 # Cole Robinson <crobinso@redhat.com>, 2011.
-# Piotr Drąg <piotrdrag@gmail.com>, 2011.
+# Piotr Drąg <piotrdrag@gmail.com>, 2011, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: virtinst\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-31 20:20-0500\n"
-"PO-Revision-Date: 2011-07-28 08:46+0000\n"
-"Last-Translator: raven <piotrdrag@gmail.com>\n"
+"POT-Creation-Date: 2012-02-02 17:15-0500\n"
+"PO-Revision-Date: 2012-02-02 12:16+0000\n"
+"Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish (http://www.transifex.net/projects/p/virtinst/team/"
 "pl/)\n"
 "Language: pl\n"
@@ -219,14 +219,14 @@ msgid "Error in smartcard device parameters: %s"
 msgstr "Błąd w parametrach urządzenia smartcard: %s"
 
 #: virtinst/cli.py:1005
-#, fuzzy, python-format
+#, python-format
 msgid "Error in controller device parameters: %s"
-msgstr "Błąd w parametrach urządzenia sieciowego: %s"
+msgstr "Błąd w parametrach urządzenia kontrolera: %s"
 
 #: virtinst/cli.py:1015
-#, fuzzy, python-format
+#, python-format
 msgid "Error in redirdev device parameters: %s"
-msgstr "Błąd w parametrach urządzenia smartcard: %s"
+msgstr "Błąd w parametrach urządzenia redirdev: %s"
 
 #: virtinst/cli.py:1026
 msgid "Connect to hypervisor with libvirt URI"
@@ -273,13 +273,12 @@ msgstr ""
 "--network network=mojasieć,model=virtio,mac=00:11..."
 
 #: virtinst/cli.py:1089
-#, fuzzy
 msgid ""
 "Configure a guest controller device. Ex:\n"
 "--controller type=usb,model=ich9-ehci1"
 msgstr ""
-"Konfiguruje urządzenie smartcard gościa. Np.:\n"
-"--smartcard mode=passthrough"
+"Konfiguruje urządzenie kontrolera gościa. Np.:\n"
+"--controller type=usb,model=ich9-ehci1"
 
 #: virtinst/cli.py:1092
 msgid "Configure a guest serial device"
@@ -326,6 +325,8 @@ msgid ""
 "Configure a guest redirection device. Ex:\n"
 "--redirdev usb,type=tcp,server=192.168.1.1:4000"
 msgstr ""
+"Konfiguruje urządzenie przekierowania gościa. Np.:\n"
+"--redirdev usb,type=tcp,server=192.168.1.1:4000"
 
 #: virtinst/cli.py:1118
 msgid ""
@@ -399,11 +400,11 @@ msgstr "Nie pasuje do mapy klawiszy \"%s\" w tablicy klawiszy."
 
 #: virtinst/cli.py:1794
 msgid "The server option is invalid with spicevmc redirection"
-msgstr ""
+msgstr "Opcja serwera jest nieprawidłowa z przekierowaniem spicevmc"
 
 #: virtinst/cli.py:1797
 msgid "The server option is missing for TCP redirection"
-msgstr ""
+msgstr "Brak opcji serwera dla przekierowania TCP"
 
 #: virtinst/cli.py:1865
 #, python-format
@@ -461,9 +462,11 @@ msgstr ""
 "%(need)d jest wymaganych"
 
 #: virtinst/CloneManager.py:477
-#, fuzzy, python-format
+#, python-format
 msgid "Clone onto existing storage volume is not supported: '%s'"
-msgstr "kopiowanie do istniejącego dysku wirtualnego nie jest obsługiwane"
+msgstr ""
+"Klonowanie do istniejącego woluminu pamięci masowej jest nieobsługiwane: \"%s"
+"\""
 
 #: virtinst/CloneManager.py:550
 #, python-format
@@ -490,7 +493,7 @@ msgstr "Nieprawidłowy format NFS: nie podano ścieżki."
 
 #: virtinst/DistroInstaller.py:115
 msgid "Failed to lookup scratch media volume"
-msgstr ""
+msgstr "Wyszukanie woluminu nośnika od zera nie powiodło się"
 
 #: virtinst/DistroInstaller.py:130
 #, python-format
@@ -1427,14 +1430,12 @@ msgid "Spice agent"
 msgstr "Agent Spice"
 
 #: virtinst/VirtualCharDevice.py:125
-#, fuzzy
 msgid "Client mode"
-msgstr "Tryb klienta."
+msgstr "Tryb klienta"
 
 #: virtinst/VirtualCharDevice.py:127
-#, fuzzy
 msgid "Server mode"
-msgstr "Tryb serwera."
+msgstr "Tryb serwera"
 
 #: virtinst/VirtualCharDevice.py:169
 #, python-format
@@ -1557,9 +1558,9 @@ msgid "Unknown virtual device type '%s'."
 msgstr "Nieznany typ urządzenia wirtualnego \"%s\"."
 
 #: virtinst/VirtualDevice.py:189 virtinst/VirtualRedirDevice.py:106
-#, fuzzy, python-format
+#, python-format
 msgid "Could not determine or unsupported format of '%s'"
-msgstr "Nie można ustalić formatu \"%s\""
+msgstr "Nie można określić formatu \"%s\" lub jest nieobsługiwany"
 
 #: virtinst/VirtualDisk.py:218
 #, python-format
@@ -1584,7 +1585,7 @@ msgstr ""
 #: virtinst/VirtualDisk.py:441
 #, python-format
 msgid "Permissions on '%s' did not stick"
-msgstr ""
+msgstr "Uprawnienia \"%s\" się nie utrzymały"
 
 #: virtinst/VirtualDisk.py:534
 msgid "volName must be a tuple of the form ('poolname', 'volname')"
@@ -1772,14 +1773,14 @@ msgid "Unsupported filesystem mode '%s'"
 msgstr "Nieobsługiwany tryb systemu plików \"%s\""
 
 #: virtinst/VirtualFilesystem.py:112
-#, fuzzy, python-format
+#, python-format
 msgid "Unsupported filesystem write policy '%s'"
-msgstr "Nieobsługiwany typ systemu plików \"%s\""
+msgstr "Nieobsługiwana polityka zapisu systemu plików \"%s\""
 
 #: virtinst/VirtualFilesystem.py:127
-#, fuzzy, python-format
+#, python-format
 msgid "Unsupported filesystem driver '%s'"
-msgstr "Nieobsługiwany tryb systemu plików \"%s\""
+msgstr "Nieobsługiwany sterownik systemu plików \"%s\""
 
 #: virtinst/VirtualFilesystem.py:166
 #, python-format
@@ -1913,18 +1914,18 @@ msgstr ""
 "Podany adres MAC jest już używany przez inną nieaktywną maszynę wirtualną."
 
 #: virtinst/VirtualRedirDevice.py:67
-#, fuzzy, python-format
+#, python-format
 msgid "Unsupported bus '%s'"
-msgstr "Nieobsługiwany model dźwięku \"%s\""
+msgstr "Nieobsługiwana magistrala \"%s\""
 
 #: virtinst/VirtualRedirDevice.py:80
-#, fuzzy, python-format
+#, python-format
 msgid "Unsupported redirection type '%s'"
-msgstr "Nieobsługiwany typ systemu plików \"%s\""
+msgstr "Nieobsługiwany typ przekierowania \"%s\""
 
 #: virtinst/VirtualRedirDevice.py:89
 msgid "Invalid host value"
-msgstr ""
+msgstr "Nieprawidłowa wartość komputera"
 
 #: virtinst/VirtualSmartCardDevice.py:58
 #, python-format
@@ -2542,9 +2543,8 @@ msgid "--extra-args only work if specified with --location."
 msgstr "--extra-args działa tylko, jeśli zostało podane za pomocą --location."
 
 #: virt-install:428
-#, fuzzy
 msgid "--initrd-inject only works if specified with --location."
-msgstr "--extra-args działa tylko, jeśli zostało podane za pomocą --location."
+msgstr "--initrd-inject działa tylko, jeśli podano razem z --location."
 
 #: virt-install:441
 msgid "Can't use --pxe with --nonetworks"
@@ -2815,6 +2815,3 @@ msgstr ""
 #: virt-install:991
 msgid "--print-step must be 1, 2, 3, or all"
 msgstr "--print-step musi wynosić 1, 2, 3 lub all"
-
-#~ msgid "Could not detach PCI device: %s"
-#~ msgstr "Nie można odłączyć urządzenia PCI: %s"

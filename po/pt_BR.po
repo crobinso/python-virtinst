@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: virtinst\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-31 20:20-0500\n"
-"PO-Revision-Date: 2011-07-27 00:34+0000\n"
-"Last-Translator: crobinso <crobinso@redhat.com>\n"
+"POT-Creation-Date: 2012-02-02 17:15-0500\n"
+"PO-Revision-Date: 2012-02-01 08:50+0000\n"
+"Last-Translator: Cole Robinson <crobinso@redhat.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
@@ -202,14 +202,14 @@ msgid "Error in smartcard device parameters: %s"
 msgstr ""
 
 #: virtinst/cli.py:1005
-#, fuzzy, python-format
+#, python-format
 msgid "Error in controller device parameters: %s"
-msgstr "Erro com parâmetros de armazenamento: %s"
+msgstr ""
 
 #: virtinst/cli.py:1015
-#, fuzzy, python-format
+#, python-format
 msgid "Error in redirdev device parameters: %s"
-msgstr "Erro com parâmetros de armazenamento: %s"
+msgstr ""
 
 #: virtinst/cli.py:1026
 msgid "Connect to hypervisor with libvirt URI"
@@ -1496,9 +1496,9 @@ msgid "Unknown virtual device type '%s'."
 msgstr ""
 
 #: virtinst/VirtualDevice.py:189 virtinst/VirtualRedirDevice.py:106
-#, fuzzy, python-format
+#, python-format
 msgid "Could not determine or unsupported format of '%s'"
-msgstr "Não pôde definir pool de armazenamento:  %s"
+msgstr ""
 
 #: virtinst/VirtualDisk.py:218
 #, python-format
@@ -1708,14 +1708,14 @@ msgid "Unsupported filesystem mode '%s'"
 msgstr ""
 
 #: virtinst/VirtualFilesystem.py:112
-#, fuzzy, python-format
+#, python-format
 msgid "Unsupported filesystem write policy '%s'"
-msgstr "Modelo de Som não suportado '%s'"
+msgstr ""
 
 #: virtinst/VirtualFilesystem.py:127
-#, fuzzy, python-format
+#, python-format
 msgid "Unsupported filesystem driver '%s'"
-msgstr "Modelo de Som não suportado '%s'"
+msgstr ""
 
 #: virtinst/VirtualFilesystem.py:166
 #, python-format
@@ -1850,14 +1850,14 @@ msgstr ""
 "virtual inativa."
 
 #: virtinst/VirtualRedirDevice.py:67
-#, fuzzy, python-format
+#, python-format
 msgid "Unsupported bus '%s'"
-msgstr "Modelo de Som não suportado '%s'"
+msgstr ""
 
 #: virtinst/VirtualRedirDevice.py:80
-#, fuzzy, python-format
+#, python-format
 msgid "Unsupported redirection type '%s'"
-msgstr "Modelo de Som não suportado '%s'"
+msgstr ""
 
 #: virtinst/VirtualRedirDevice.py:89
 msgid "Invalid host value"

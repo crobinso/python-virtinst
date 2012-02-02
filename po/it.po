@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: virtinst\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-31 20:20-0500\n"
-"PO-Revision-Date: 2011-07-27 00:34+0000\n"
-"Last-Translator: crobinso <crobinso@redhat.com>\n"
+"POT-Creation-Date: 2012-02-02 17:15-0500\n"
+"PO-Revision-Date: 2012-02-01 08:50+0000\n"
+"Last-Translator: Cole Robinson <crobinso@redhat.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
@@ -205,14 +205,14 @@ msgid "Error in smartcard device parameters: %s"
 msgstr ""
 
 #: virtinst/cli.py:1005
-#, fuzzy, python-format
+#, python-format
 msgid "Error in controller device parameters: %s"
-msgstr "Errore nei parametri del dispositivo %(chartype)s: %(err)s"
+msgstr ""
 
 #: virtinst/cli.py:1015
-#, fuzzy, python-format
+#, python-format
 msgid "Error in redirdev device parameters: %s"
-msgstr "Errore nei parametri del dispositivo %(chartype)s: %(err)s"
+msgstr ""
 
 #: virtinst/cli.py:1026
 msgid "Connect to hypervisor with libvirt URI"
@@ -423,9 +423,9 @@ msgid ""
 msgstr ""
 
 #: virtinst/CloneManager.py:477
-#, fuzzy, python-format
+#, python-format
 msgid "Clone onto existing storage volume is not supported: '%s'"
-msgstr "la copia ad un vdisk esistente non è supportata"
+msgstr ""
 
 #: virtinst/CloneManager.py:550
 #, python-format
@@ -1377,14 +1377,12 @@ msgid "Spice agent"
 msgstr ""
 
 #: virtinst/VirtualCharDevice.py:125
-#, fuzzy
 msgid "Client mode"
-msgstr "Modalità client."
+msgstr ""
 
 #: virtinst/VirtualCharDevice.py:127
-#, fuzzy
 msgid "Server mode"
-msgstr "Modalità server."
+msgstr ""
 
 #: virtinst/VirtualCharDevice.py:169
 #, python-format
@@ -1509,9 +1507,9 @@ msgid "Unknown virtual device type '%s'."
 msgstr "Tipo di dispositivo virtuale sconosciuto '%s'."
 
 #: virtinst/VirtualDevice.py:189 virtinst/VirtualRedirDevice.py:106
-#, fuzzy, python-format
+#, python-format
 msgid "Could not determine or unsupported format of '%s'"
-msgstr "Impossibile determinare le informazioni del disco originale: %s"
+msgstr ""
 
 #: virtinst/VirtualDisk.py:218
 #, python-format
@@ -1724,14 +1722,14 @@ msgid "Unsupported filesystem mode '%s'"
 msgstr ""
 
 #: virtinst/VirtualFilesystem.py:112
-#, fuzzy, python-format
+#, python-format
 msgid "Unsupported filesystem write policy '%s'"
-msgstr "Tipo di virtualizzazione non supportata: %s %s"
+msgstr ""
 
 #: virtinst/VirtualFilesystem.py:127
-#, fuzzy, python-format
+#, python-format
 msgid "Unsupported filesystem driver '%s'"
-msgstr "Modello di scheda sonora non supportata '%s'"
+msgstr ""
 
 #: virtinst/VirtualFilesystem.py:166
 #, python-format
@@ -1862,14 +1860,14 @@ msgstr ""
 "L'indirizzo MAC inserito è già in uso da un'altra macchina virtuale inattiva."
 
 #: virtinst/VirtualRedirDevice.py:67
-#, fuzzy, python-format
+#, python-format
 msgid "Unsupported bus '%s'"
-msgstr "Modello di scheda sonora non supportata '%s'"
+msgstr ""
 
 #: virtinst/VirtualRedirDevice.py:80
-#, fuzzy, python-format
+#, python-format
 msgid "Unsupported redirection type '%s'"
-msgstr "Tipo di virtualizzazione non supportata: %s %s"
+msgstr ""
 
 #: virtinst/VirtualRedirDevice.py:89
 msgid "Invalid host value"
@@ -2727,6 +2725,3 @@ msgstr "Risponde 'sì' ad ogni notifica, termina per tutte le altre"
 #: virt-install:991
 msgid "--print-step must be 1, 2, 3, or all"
 msgstr ""
-
-#~ msgid "Could not detach PCI device: %s"
-#~ msgstr "Impossibile disconnettere il dispositivo PCI: %s"

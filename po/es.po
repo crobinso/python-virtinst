@@ -3,15 +3,16 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Translators:
+# Claudio Rodrigo Pereyra Diaz <elsupergomez@gmail.com>, 2012.
 # Cole Robinson <crobinso@redhat.com>, 2011.
 # Héctor Daniel Cabrera <logan@fedoraproject.org>, 2011.
 msgid ""
 msgstr ""
 "Project-Id-Version: virtinst\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-31 20:20-0500\n"
-"PO-Revision-Date: 2011-07-27 14:21+0000\n"
-"Last-Translator: logan <logan@fedoraproject.org>\n"
+"POT-Creation-Date: 2012-02-02 17:15-0500\n"
+"PO-Revision-Date: 2012-02-02 13:00+0000\n"
+"Last-Translator: Claudio Rodrigo Pereyra Diaz <elsupergomez@gmail.com>\n"
 "Language-Team: Spanish (Castilian) <trans-es@lists.fedoraproject.org>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
@@ -219,14 +220,14 @@ msgid "Error in smartcard device parameters: %s"
 msgstr "Error en los parámetros del dispositivo smartcard: %s"
 
 #: virtinst/cli.py:1005
-#, fuzzy, python-format
+#, python-format
 msgid "Error in controller device parameters: %s"
-msgstr "Error en los parámetros del dispositivo de red: %s"
+msgstr "Error en los parámetros del dispositivo controlador: %s"
 
 #: virtinst/cli.py:1015
-#, fuzzy, python-format
+#, python-format
 msgid "Error in redirdev device parameters: %s"
-msgstr "Error en los parámetros del dispositivo smartcard: %s"
+msgstr "Error en los parámetros del dispositivo redirdev: %s"
 
 #: virtinst/cli.py:1026
 msgid "Connect to hypervisor with libvirt URI"
@@ -273,13 +274,12 @@ msgstr ""
 "--network network=mynet,model=virtio,mac=00:11..."
 
 #: virtinst/cli.py:1089
-#, fuzzy
 msgid ""
 "Configure a guest controller device. Ex:\n"
 "--controller type=usb,model=ich9-ehci1"
 msgstr ""
-"Configura un dispositivo smartcard en el huésped. Ej:\n"
-"--smartcard mode=passthrough"
+"Configura un dispositivo controlador huésped. Ej:\n"
+"--controller type=usb,model=ich9-ehci1"
 
 #: virtinst/cli.py:1092
 msgid "Configure a guest serial device"
@@ -327,6 +327,8 @@ msgid ""
 "Configure a guest redirection device. Ex:\n"
 "--redirdev usb,type=tcp,server=192.168.1.1:4000"
 msgstr ""
+"Configura un dispositivo de redirección de huésped. EJ:\n"
+"--redirdev usb,type=tcp,server=192.168.1.1:4000"
 
 #: virtinst/cli.py:1118
 msgid ""
@@ -400,11 +402,11 @@ msgstr "¡No coincidió el mapa de teclado '%s' en Keytable!"
 
 #: virtinst/cli.py:1794
 msgid "The server option is invalid with spicevmc redirection"
-msgstr ""
+msgstr "La opción del servidor es inválida con la redirección spicevmc"
 
 #: virtinst/cli.py:1797
 msgid "The server option is missing for TCP redirection"
-msgstr ""
+msgstr "No se encuentra la opción de servidor para la redirección TCP"
 
 #: virtinst/cli.py:1865
 #, python-format
@@ -463,9 +465,10 @@ msgstr ""
 "%(passed)d, son necesarios %(need)d)"
 
 #: virtinst/CloneManager.py:477
-#, fuzzy, python-format
+#, python-format
 msgid "Clone onto existing storage volume is not supported: '%s'"
-msgstr "la copia a un disco virtual existente no está soportada"
+msgstr ""
+"Clonar en un volumen de almacenamiento existente no esta soportado: '%s'"
 
 #: virtinst/CloneManager.py:550
 #, python-format
@@ -492,7 +495,7 @@ msgstr "Formato NFS inválido: No se ha especificado ninguna ruta."
 
 #: virtinst/DistroInstaller.py:115
 msgid "Failed to lookup scratch media volume"
-msgstr ""
+msgstr "Falló al buscar volumen de medio scratch"
 
 #: virtinst/DistroInstaller.py:130
 #, python-format
@@ -1440,14 +1443,12 @@ msgid "Spice agent"
 msgstr "Agente spice"
 
 #: virtinst/VirtualCharDevice.py:125
-#, fuzzy
 msgid "Client mode"
-msgstr "Modo de cliente."
+msgstr "Modo cliente"
 
 #: virtinst/VirtualCharDevice.py:127
-#, fuzzy
 msgid "Server mode"
-msgstr "Modo de servidor."
+msgstr "Modo servidor"
 
 #: virtinst/VirtualCharDevice.py:169
 #, python-format
@@ -1570,9 +1571,9 @@ msgid "Unknown virtual device type '%s'."
 msgstr "Tipo de dispositivo virtual desconocido '%s'"
 
 #: virtinst/VirtualDevice.py:189 virtinst/VirtualRedirDevice.py:106
-#, fuzzy, python-format
+#, python-format
 msgid "Could not determine or unsupported format of '%s'"
-msgstr "No pudo determinar el formato de '%s'"
+msgstr "No es posible determinar '%s' o el formato no es soportado"
 
 #: virtinst/VirtualDisk.py:218
 #, python-format
@@ -1597,7 +1598,7 @@ msgstr ""
 #: virtinst/VirtualDisk.py:441
 #, python-format
 msgid "Permissions on '%s' did not stick"
-msgstr ""
+msgstr "Pemisos en '%s' no seran permanentes"
 
 #: virtinst/VirtualDisk.py:534
 msgid "volName must be a tuple of the form ('poolname', 'volname')"
@@ -1788,14 +1789,15 @@ msgid "Unsupported filesystem mode '%s'"
 msgstr "Modo de sistema de archivos '%s' no sportado"
 
 #: virtinst/VirtualFilesystem.py:112
-#, fuzzy, python-format
+#, python-format
 msgid "Unsupported filesystem write policy '%s'"
-msgstr "Tipo de sistema de archivos '%s' no soportado"
+msgstr ""
+"La politica de escritura '%s'  del sistema de archivo no esta soportada"
 
 #: virtinst/VirtualFilesystem.py:127
-#, fuzzy, python-format
+#, python-format
 msgid "Unsupported filesystem driver '%s'"
-msgstr "Modo de sistema de archivos '%s' no sportado"
+msgstr "El controlador '%s' de sistema de archivos no esta soportado"
 
 #: virtinst/VirtualFilesystem.py:166
 #, python-format
@@ -1933,18 +1935,18 @@ msgstr ""
 "virtual inactiva."
 
 #: virtinst/VirtualRedirDevice.py:67
-#, fuzzy, python-format
+#, python-format
 msgid "Unsupported bus '%s'"
-msgstr "Modelo de sonido no soportado '%s'"
+msgstr "Bus '%s' no soportado"
 
 #: virtinst/VirtualRedirDevice.py:80
-#, fuzzy, python-format
+#, python-format
 msgid "Unsupported redirection type '%s'"
-msgstr "Tipo de sistema de archivos '%s' no soportado"
+msgstr "Tipo de redirección '%s' no soportado"
 
 #: virtinst/VirtualRedirDevice.py:89
 msgid "Invalid host value"
-msgstr ""
+msgstr "Valor de equipo no válido"
 
 #: virtinst/VirtualSmartCardDevice.py:58
 #, python-format
@@ -2576,9 +2578,8 @@ msgid "--extra-args only work if specified with --location."
 msgstr "--extra-args sólo funciona si se ha especificado con --location."
 
 #: virt-install:428
-#, fuzzy
 msgid "--initrd-inject only works if specified with --location."
-msgstr "--extra-args sólo funciona si se ha especificado con --location."
+msgstr "--initrd-inject sólo funciona si se lo especifica con --location."
 
 #: virt-install:441
 msgid "Can't use --pxe with --nonetworks"
@@ -2849,6 +2850,3 @@ msgstr ""
 #: virt-install:991
 msgid "--print-step must be 1, 2, 3, or all"
 msgstr "--print-step debe ser 1, 2, 3 o todos"
-
-#~ msgid "Could not detach PCI device: %s"
-#~ msgstr "No se pudo desmontar dispositivo de PCI: %s"
