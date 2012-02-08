@@ -314,28 +314,23 @@ class VirtualNetworkInterface(VirtualDevice.VirtualDevice):
         if mac is None:
             return (False, None)
 
-        # Not supported for remote connections yet
-        if self.is_remote():
-            return (False, None)
-
         vms, inactive_vm = _util.fetch_all_guests(conn)
 
-        # get the Host's NIC MACaddress
-        hostdevs = _util.get_host_network_devices()
+        # get the Host's NIC MAC address
+        hostdevs = []
+        if not self.is_remote():
+            hostdevs = _util.get_host_network_devices()
 
-        if _countMACaddr(vms, mac) > 0:
+        if (_countMACaddr(vms, mac) > 0 or
+            _countMACaddr(inactive_vm, mac) > 0):
             return (True, _("The MAC address you entered is already in use "
-                            "by another active virtual machine."))
+                            "by another virtual machine."))
 
         for dev in hostdevs:
             host_macaddr = dev[4]
             if mac.upper() == host_macaddr.upper():
                 return (True, _("The MAC address you entered conflicts with "
                                 "a device on the physical host."))
-
-        if _countMACaddr(inactive_vm, mac) > 0:
-            return (False, _("The MAC address you entered is already in use "
-                             "by another inactive virtual machine."))
 
         return (False, None)
 
