@@ -240,6 +240,7 @@ class Distro:
     _hvm_kernel_paths = []
     _xen_kernel_paths = []
     uses_treeinfo = False
+    method_arg = "method"
 
     def __init__(self, uri, arch, vmtype=None, scratchdir=None):
         self.uri = uri
@@ -373,7 +374,7 @@ class Distro:
         args = ''
 
         if not fetcher.location.startswith("/"):
-            args += "method=" + fetcher.location
+            args += "%s=%s" % (self.method_arg, fetcher.location)
 
         if guest.extraargs:
             args += " " + guest.extraargs
@@ -655,6 +656,7 @@ class SuseDistro(Distro):
 
     name = "SUSE"
     os_type = "linux"
+    method_arg = "install"
     _boot_iso_paths   = [ "boot/boot.iso" ]
 
     def __init__(self, uri, arch, vmtype=None, scratchdir=None):
