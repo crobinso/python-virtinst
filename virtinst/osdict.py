@@ -336,7 +336,6 @@ OS_TYPES = {
     "fedora14": {
         "label": "Fedora 14",
         "distro": "fedora",
-        "supported": True,
         "devices" : {
             DISK : VIRTIO_DISK,
             NET  : VIRTIO_NET,
@@ -354,7 +353,7 @@ OS_TYPES = {
         }
     },
     "fedora16": {
-        "label": "Fedora 16",
+        "label": "Fedora 17",
         "distro": "fedora",
         "supported": True,
         "devices" : {
@@ -405,7 +404,6 @@ OS_TYPES = {
     "mandriva2010": {
         "label": "Mandriva Linux 2010 and later",
         "distro": "mandriva",
-        "supported": True,
         "devices" : {
             DISK : VIRTIO_DISK,
             NET  : VIRTIO_NET,
