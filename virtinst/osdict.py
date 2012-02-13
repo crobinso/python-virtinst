@@ -353,6 +353,16 @@ OS_TYPES = {
         }
     },
     "fedora16": {
+        "label": "Fedora 16",
+        "distro": "fedora",
+        "supported": True,
+        "devices" : {
+            DISK : VIRTIO_DISK,
+            NET  : VIRTIO_NET,
+            INPUT: USB_TABLET,
+        }
+    },
+    "fedora17": {
         "label": "Fedora 17",
         "distro": "fedora",
         "supported": True,
