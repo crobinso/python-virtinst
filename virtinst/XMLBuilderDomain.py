@@ -349,7 +349,7 @@ def _xml_property(fget=None, fset=None, fdel=None, doc=None,
                     # Boolean property, creating the node is enough
                     pass
                 else:
-                    node.setContent(str(val))
+                    node.setContent(_util.xml_escape(str(val)))
             else:
                 _remove_xpath_node(self._xml_node, usexpath)
 

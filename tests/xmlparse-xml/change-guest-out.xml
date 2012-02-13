@@ -61,7 +61,7 @@
     <label>barlabel</label>
     <imagelabel>fooimage</imagelabel>
   </seclabel>
-  <description>Hey desc changed</description>
+  <description>Hey desc changed&amp;</description>
   <memoryBacking>
     <hugepages/>
   </memoryBacking>
