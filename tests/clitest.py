@@ -14,10 +14,11 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301 USA.
 
-import os
-import sys
 import commands
+import os
+import shlex
 import subprocess
+import sys
 
 import utils
 
@@ -78,6 +79,8 @@ new_files   = new_images + virtimage_new + virtconv_dirs
 clean_files = (new_images + exist_images +
                virtimage_exist + virtimage_new + virtconv_dirs + [ro_dir])
 
+promptlist = []
+
 test_files = {
     'TESTURI'           : testuri,
     'REMOTEURI'         : remoteuri,
@@ -118,55 +121,6 @@ test_files = {
 
 debug = False
 
-class PromptCheck(object):
-    def __init__(self, prompt, response=None):
-        self.prompt = prompt
-        self.response = response
-        if self.response:
-            self.response = self.response % test_files
-
-    def check(self, proc):
-        out = proc.stdout.readline()
-
-        if not out.count(self.prompt):
-            out += "\nContent didn't contain prompt '%s'" % (self.prompt)
-            return False, out
-
-        if self.response:
-            proc.stdin.write(self.response + "\n")
-
-        return True, out
-
-class PromptTest(object):
-    def __init__(self, cmd):
-        cmd = cmd % test_files
-        app, opts = cmd.split(" ", 1)
-        self.cmd = [os.path.abspath(app)] + opts.split(" ")
-        self.cmdstr = cmd
-        self.debug = False
-
-        self.prompt_list = []
-
-    def add(self, *args, **kwargs):
-        self.prompt_list.append(PromptCheck(*args, **kwargs))
-
-    def run(self):
-        proc = subprocess.Popen(self.cmd,
-                stdin=subprocess.PIPE,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.STDOUT)
-
-        out = "Running %s\n" % self.cmdstr
-
-        for p in self.prompt_list:
-            ret, content = p.check(proc)
-            out += content
-            if not ret:
-                # Since we didn't match output, process might be hung
-                proc.kill()
-                break
-
-        return proc.wait(), out
 
 """
 CLI test matrix
@@ -1095,7 +1049,144 @@ args_dict = {
   }, # app 'virt-convert'
 }
 
-promptlist = []
+
+######################
+# Test class helpers #
+######################
+
+class Command(object):
+    """
+    Instance of a single cli command to test
+    """
+    def __init__(self, cmd):
+        self.cmdstr = cmd
+        self.fullcmd = cmd % test_files
+        self.check_success = True
+        self.compare_file = None
+
+        app, opts = self.fullcmd.split(" ", 1)
+        self.argv = [os.path.abspath(app)] + shlex.split(opts)
+
+    def write_pass(self):
+        if debug:
+            return
+        sys.stdout.write(".")
+        sys.stdout.flush()
+
+    def write_fail(self):
+        if debug:
+            return
+        sys.stdout.write("F")
+        sys.stdout.flush()
+
+    def _launch_command(self):
+        if debug:
+            print self.fullcmd
+
+        return commands.getstatusoutput(self.fullcmd)
+
+    def _get_output(self):
+        try:
+            for i in new_files:
+                os.system("rm %s > /dev/null 2>&1" % i)
+
+            code, output = self._launch_command()
+
+            if debug:
+                print output
+                print "\n"
+
+            return code, output
+        except Exception, e:
+            return (-1, str(e))
+
+    def run(self):
+        filename = self.compare_file
+        err = None
+
+        try:
+            code, output = self._get_output()
+
+            if bool(code) == self.check_success:
+                raise AssertionError(
+                    ("Expected command to %s, but failed.\n" %
+                     (self.check_success and "pass" or "fail")) +
+                     ("Command was: %s\n" % self.cmdstr) +
+                     ("Error code : %d\n" % code) +
+                     ("Output was:\n%s" % output))
+
+            if filename:
+                # Generate test files that don't exist yet
+                if not os.path.exists(filename):
+                    file(filename, "w").write(output)
+
+                utils.diff_compare(output, filename)
+
+            self.write_pass()
+        except AssertionError, e:
+            self.write_fail()
+            err = self.cmdstr + "\n" + str(e)
+
+        return err
+
+
+class PromptCheck(object):
+    """
+    Individual question/response pair for automated --prompt tests
+    """
+    def __init__(self, prompt, response=None):
+        self.prompt = prompt
+        self.response = response
+        if self.response:
+            self.response = self.response % test_files
+
+    def check(self, proc):
+        out = proc.stdout.readline()
+
+        if not out.count(self.prompt):
+            out += "\nContent didn't contain prompt '%s'" % (self.prompt)
+            return False, out
+
+        if self.response:
+            proc.stdin.write(self.response + "\n")
+
+        return True, out
+
+
+class PromptTest(Command):
+    """
+    Fully automated --prompt test
+    """
+    def __init__(self, cmdstr):
+        Command.__init__(self, cmdstr)
+
+        self.prompt_list = []
+
+    def add(self, *args, **kwargs):
+        self.prompt_list.append(PromptCheck(*args, **kwargs))
+
+    def _launch_command(self):
+        proc = subprocess.Popen(self.argv,
+                stdin=subprocess.PIPE,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT)
+
+        out = "Running %s\n" % self.fullcmd
+
+        for p in self.prompt_list:
+            ret, content = p.check(proc)
+            out += content
+            if not ret:
+                # Since we didn't match output, process might be hung
+                proc.kill()
+                break
+
+        return proc.wait(), out
+
+
+##########################
+# Automated prompt tests #
+##########################
 
 # Basic virt-install prompting
 p1 = PromptTest("virt-install --connect %(TESTURI)s --prompt --quiet "
@@ -1146,90 +1237,16 @@ p6.add("use as the cloned disk", "%(NEWIMG1)s")
 p6.add("use as the cloned disk", "%(NEWIMG2)s")
 promptlist.append(p6)
 
-def runcomm(comm):
-    try:
-        for i in new_files:
-            os.system("rm %s > /dev/null 2>&1" % i)
 
-        if type(comm) is str:
-            if debug:
-                print comm % test_files
+#########################
+# Test runner functions #
+#########################
 
-            code, output = commands.getstatusoutput(comm % test_files)
-
-        else:
-            if debug:
-                print comm.cmdstr
-            code, output = comm.run()
-
-        if debug:
-            print output
-            print "\n"
-
-        return code, output
-    except Exception, e:
-        return (-1, str(e))
-
-def write_pass():
-    if not debug:
-        sys.stdout.write(".")
-        sys.stdout.flush()
-
-def write_fail():
-    if not debug:
-        sys.stdout.write("F")
-        sys.stdout.flush()
-
-class Command(object):
-    def __init__(self, cmd):
-        self.cmdstr = cmd
-        self.cmd = None
-        self.check_success = True
-        self.compare_file = None
-
-        if type(cmd) is not str:
-            self.cmd = cmd
-            self.cmdstr = " ".join(self.cmd.cmd)
-
-    def run(self):
-        filename = self.compare_file
-        err = None
-
-        try:
-            code, output = runcomm(self.cmd or self.cmdstr)
-
-            if bool(code) == self.check_success:
-                raise AssertionError(
-                    ("Expected command to %s, but failed.\n" %
-                     (self.check_success and "pass" or "fail")) +
-                     ("Command was: %s\n" % self.cmdstr) +
-                     ("Error code : %d\n" % code) +
-                     ("Output was:\n%s" % output))
-
-            if filename:
-                # Uncomment to generate new test files
-                if not os.path.exists(filename):
-                    file(filename, "w").write(output)
-
-                utils.diff_compare(output, filename)
-
-            write_pass()
-        except AssertionError, e:
-            write_fail()
-            err = self.cmdstr + "\n" + str(e)
-
-        return err
-
-# Setup: build cliarg dict, which uses
-def run_tests(do_app, do_category, error_ret):
+def build_cmd_list(do_app, do_category):
     if do_app and do_app not in args_dict.keys():
         raise ValueError("Unknown app '%s'" % do_app)
 
-    cmdlist = []
-
-    # Prompt tests upfront
-    for cmd in promptlist:
-        cmdlist.append(Command(cmd))
+    cmdlist = promptlist
 
     for app in args_dict:
         if do_app and app != do_app:
@@ -1302,14 +1319,13 @@ def run_tests(do_app, do_category, error_ret):
                 cmd.compare_file = filename
                 cmdlist.append(cmd)
 
-    # Run commands
-    for cmd in cmdlist:
-        err = cmd.run()
-        if err:
-            error_ret.append(err)
+    return cmdlist
 
-def main():
-    # CLI Args
+
+def parse_args():
+    """
+    Parse CLI args piped through from setup.py
+    """
     global debug
 
     do_app = None
@@ -1324,7 +1340,13 @@ def main():
             elif sys.argv[i].count("--category"):
                 do_category = sys.argv[i + 1]
 
-    # Setup needed files
+    return do_app, do_category
+
+
+def setup():
+    """
+    Create initial test files/dirs
+    """
     for i in exist_files:
         if os.path.exists(i):
             raise ValueError("'%s' will be used by testsuite, can not already"
@@ -1339,9 +1361,29 @@ def main():
     os.system("chmod 444 %s" % ro_img)
     os.system("chmod 555 %s" % ro_dir)
 
+
+def cleanup():
+    """
+    Cleanup temporary files used for testing
+    """
+    for i in clean_files:
+        os.system("chmod 777 %s > /dev/null 2>&1" % i)
+        os.system("rm -rf %s > /dev/null 2>&1" % i)
+
+
+def main():
+    do_app, do_category = parse_args()
+
+    setup()
+
     error_ret = []
     try:
-        run_tests(do_app, do_category, error_ret)
+        cmdlist = build_cmd_list(do_app, do_category)
+
+        for cmd in cmdlist:
+            err = cmd.run()
+            if err:
+                error_ret.append(err)
     finally:
         cleanup()
         for err in error_ret:
@@ -1350,11 +1392,6 @@ def main():
     if not error_ret:
         print "\nAll tests completed successfully."
 
-def cleanup():
-    # Cleanup files
-    for i in clean_files:
-        os.system("chmod 777 %s > /dev/null 2>&1" % i)
-        os.system("rm -rf %s > /dev/null 2>&1" % i)
 
 if __name__ == "__main__":
     try:
