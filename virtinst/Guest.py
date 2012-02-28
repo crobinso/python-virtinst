@@ -870,11 +870,19 @@ class Guest(XMLBuilderDomain.XMLBuilderDomain):
             finally:
                 if origpath:
                     dev.path = origpath
+        def get_vscsi_ctrl_xml():
+            vscsi_class = virtinst.VirtualController.get_class_for_type(
+                          virtinst.VirtualController.CONTROLLER_TYPE_SCSI)
+            ctrl = vscsi_class(self.conn)
+            ctrl.set_address("spapr-vio")
+            return ctrl._get_xml_config()
 
         xml = self._get_emulator_xml()
         # Build XML
         for dev in devs:
             xml = _util.xml_append(xml, get_dev_xml(dev))
+            if dev.address.type == "spapr-vio":
+                xml = _util.xml_append(xml, get_vscsi_ctrl_xml())
 
         return xml
 

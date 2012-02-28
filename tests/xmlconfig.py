@@ -714,6 +714,7 @@ class TestXMLConfig(unittest.TestCase):
         g.disks.append(VirtualDisk(conn=g.conn, path="/tmp", device="floppy"))
         d3 = VirtualDisk(conn=g.conn, path="/default-pool/testvol1.img",
                          bus="scsi", driverName="qemu")
+        d3.address.type = "spapr-vio"
         g.disks.append(d3)
 
         # Controller devices

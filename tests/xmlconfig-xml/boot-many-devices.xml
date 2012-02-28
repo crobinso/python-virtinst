@@ -39,6 +39,9 @@
       <source file='/default-pool/testvol1.img'/>
       <target dev='sdb' bus='scsi'/>
     </disk>
+    <controller type='scsi' index='0'>
+      <address type='spapr-vio'/>
+    </controller>
     <controller type='ide' index='3'/>
     <controller type='virtio-serial' index='0' ports='32' vectors='17'/>
     <interface type='network'>

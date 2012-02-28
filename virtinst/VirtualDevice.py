@@ -143,9 +143,11 @@ class VirtualDeviceAddress(XMLBuilderDomain):
     ADDRESS_TYPE_DRIVE         = "drive"
     ADDRESS_TYPE_VIRTIO_SERIAL = "virtio-serial"
     ADDRESS_TYPE_CCID          = "ccid"
+    ADDRESS_TYPE_SPAPR_VIO     = "spapr-vio"
 
     TYPES = [ADDRESS_TYPE_PCI, ADDRESS_TYPE_DRIVE,
-             ADDRESS_TYPE_VIRTIO_SERIAL, ADDRESS_TYPE_CCID]
+             ADDRESS_TYPE_VIRTIO_SERIAL, ADDRESS_TYPE_CCID,
+             ADDRESS_TYPE_SPAPR_VIO]
 
     def __init__(self, conn, parsexml=None, parsexmlnode=None, caps=None, addrstr=None):
         XMLBuilderDomain.__init__(self, conn, parsexml, parsexmlnode,
@@ -185,6 +187,8 @@ class VirtualDeviceAddress(XMLBuilderDomain):
                 self.domain = "0"
                 if addrstr.count(":"):
                     self.domain, self.bus = addrstr.split(":", 1)
+            elif addrstr == "spapr-vio":
+                self.type = self.ADDRESS_TYPE_SPAPR_VIO
             else:
                 raise ValueError(_("Could not determine or unsupported format of '%s'") % addrstr)
         except:
