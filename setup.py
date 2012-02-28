@@ -145,7 +145,7 @@ class TestCLI(TestBaseCommand):
         self.category = None
 
     def run(self):
-        cmd = "python tests/clitest.py"
+        cmd = "PYTHONPATH=`pwd` python tests/clitest.py"
         if self.debug:
             cmd += " debug"
         if self.app:

@@ -125,7 +125,7 @@ def parse_args():
 
     return options
 
-def main():
+def main(conn=None):
     cli.earlyLogging()
     options = parse_args()
 
@@ -133,7 +133,8 @@ def main():
     cli.setupLogging("virt-image", options.debug, options.quiet)
     cli.set_prompt(False)
 
-    conn = cli.getConnection(options.connect)
+    if conn is None:
+        conn = cli.getConnection(options.connect)
 
     try:
         image = virtinst.ImageParser.parse_file(options.image)
@@ -183,7 +184,7 @@ def main():
     if options.print_only:
         start_xml, final_xml = guest.start_install(return_xml=True)
         print_stdout(start_xml or final_xml, do_force=True)
-        return
+        return 0
 
     meter = progress.TextMeter(fo=sys.stdout)
 
@@ -202,9 +203,11 @@ def main():
         fail(e, do_exit=False)
         cli.install_fail(guest)
 
+    return 0
+
 if __name__ == "__main__":
     try:
-        main()
+        sys.exit(main())
     except SystemExit, sys_e:
         sys.exit(sys_e.code)
     except KeyboardInterrupt:

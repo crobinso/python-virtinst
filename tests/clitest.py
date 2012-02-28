@@ -15,12 +15,22 @@
 # MA 02110-1301 USA.
 
 import commands
+import logging
 import os
 import shlex
 import subprocess
 import sys
+import traceback
+import StringIO
 
+import virtinst.cli
+
+from scriptimports import virtinstall, virtimage, virtclone, virtconvert
 import utils
+
+rootLogger = logging.getLogger()
+for handler in rootLogger.handlers:
+    rootLogger.removeHandler(handler)
 
 os.environ["VIRTCONV_TEST_NO_DISK_CONVERSION"] = "1"
 os.environ["LANG"] = "en_US.UTF-8"
@@ -1081,6 +1091,12 @@ args_dict = {
   }, # app 'virt-convert'
 }
 
+_conns = {}
+def open_conn(uri):
+    #if uri not in _conns:
+    #    _conns[uri] = virtinst.cli._open_test_uri(uri)
+    #return _conns[uri]
+    return virtinst.cli.getConnection(uri)
 
 ######################
 # Test class helpers #
@@ -1091,12 +1107,11 @@ class Command(object):
     Instance of a single cli command to test
     """
     def __init__(self, cmd):
-        self.cmdstr = cmd
-        self.fullcmd = cmd % test_files
+        self.cmdstr = cmd % test_files
         self.check_success = True
         self.compare_file = None
 
-        app, opts = self.fullcmd.split(" ", 1)
+        app, opts = self.cmdstr.split(" ", 1)
         self.argv = [os.path.abspath(app)] + shlex.split(opts)
 
     def write_pass(self):
@@ -1113,9 +1128,52 @@ class Command(object):
 
     def _launch_command(self):
         if debug:
-            print self.fullcmd
+            print self.cmdstr
 
-        return commands.getstatusoutput(self.fullcmd)
+        uri = None
+        conn = None
+        app = self.argv[0]
+
+        for idx in reversed(range(len(self.argv))):
+            if self.argv[idx] == "--connect":
+                uri = self.argv[idx + 1]
+                break
+
+        if uri:
+            conn = open_conn(uri)
+
+        oldstdout = sys.stdout
+        oldstderr = sys.stderr
+        oldargv = sys.argv
+        try:
+            out = StringIO.StringIO()
+            sys.stdout = out
+            sys.stderr = out
+            sys.argv = self.argv
+
+            try:
+                if app.count("virt-install"):
+                    ret = virtinstall.main(conn=conn)
+                elif app.count("virt-clone"):
+                    ret = virtclone.main(conn=conn)
+                elif app.count("virt-image"):
+                    ret = virtimage.main(conn=conn)
+                elif app.count("virt-convert"):
+                    ret = virtconvert.main()
+            except SystemExit, sys_e:
+                ret = sys_e.code
+
+            if ret != 0:
+                ret = -1
+            outt = out.getvalue()
+            if outt.endswith("\n"):
+                outt = outt[:-1]
+            return (ret, outt)
+        finally:
+            sys.stdout = oldstdout
+            sys.stderr = oldstderr
+            sys.argv = oldargv
+
 
     def _get_output(self):
         try:
@@ -1130,7 +1188,7 @@ class Command(object):
 
             return code, output
         except Exception, e:
-            return (-1, str(e))
+            return (-1, "".join(traceback.format_exc()) + str(e))
 
     def run(self):
         filename = self.compare_file
@@ -1203,7 +1261,7 @@ class PromptTest(Command):
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT)
 
-        out = "Running %s\n" % self.fullcmd
+        out = "Running %s\n" % self.cmdstr
 
         for p in self.prompt_list:
             ret, content = p.check(proc)
@@ -1388,11 +1446,12 @@ def main():
                 error_ret.append(err)
     finally:
         cleanup()
+        print
         for err in error_ret:
             print err + "\n\n"
 
     if not error_ret:
-        print "\nAll tests completed successfully."
+        print "All tests completed successfully."
 
 
 if __name__ == "__main__":

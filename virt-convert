@@ -273,11 +273,11 @@ def main():
             (options.output_file, e), options, vmdef, clean)
 
     print_stdout("Done.")
-
+    return 0
 
 if __name__ == "__main__":
     try:
-        main()
+        sys.exit(main())
     except SystemExit, sys_e:
         sys.exit(sys_e.code)
     except KeyboardInterrupt:

@@ -968,13 +968,15 @@ def parse_args():
 # main() handling #
 ###################
 
-def main():
+def main(conn=None):
     cli.earlyLogging()
     options, cliargs = parse_args()
 
     # Default setup options
     options.quiet = options.xmlstep or options.xmlonly or options.quiet
+
     cli.setupLogging("virt-install", options.debug, options.quiet)
+
     if cliargs:
         fail(_("Unknown argument '%s'") % cliargs[0])
 
@@ -985,7 +987,9 @@ def main():
 
     cli.set_force(options.force)
     cli.set_prompt(options.prompt)
-    conn = cli.getConnection(options.connect)
+
+    if conn is None:
+        conn = cli.getConnection(options.connect)
 
     if options.xmlstep not in [None, "1", "2", "3", "all"]:
         fail(_("--print-step must be 1, 2, 3, or all"))
