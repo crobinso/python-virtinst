@@ -875,7 +875,7 @@ class Guest(XMLBuilderDomain.XMLBuilderDomain):
                           virtinst.VirtualController.CONTROLLER_TYPE_SCSI)
             ctrl = vscsi_class(self.conn)
             ctrl.set_address("spapr-vio")
-            return ctrl._get_xml_config()
+            return ctrl.get_xml_config()
 
         xml = self._get_emulator_xml()
         # Build XML

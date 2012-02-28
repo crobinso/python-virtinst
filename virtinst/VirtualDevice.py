@@ -149,7 +149,8 @@ class VirtualDeviceAddress(XMLBuilderDomain):
              ADDRESS_TYPE_VIRTIO_SERIAL, ADDRESS_TYPE_CCID,
              ADDRESS_TYPE_SPAPR_VIO]
 
-    def __init__(self, conn, parsexml=None, parsexmlnode=None, caps=None, addrstr=None):
+    def __init__(self, conn, parsexml=None, parsexmlnode=None, caps=None,
+                 addrstr=None):
         XMLBuilderDomain.__init__(self, conn, parsexml, parsexmlnode,
                                   caps=caps)
 
