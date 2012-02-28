@@ -125,11 +125,12 @@ debug = False
 """
 CLI test matrix
 
+Any global args for every invocation should be added to default_args
+function, so that individual tests can easily overwrite them.
+
 Format:
 
 "appname" {
-  "globalargs" : Arguments to be passed to every app invocation
-
   "categoryfoo" : { Some descriptive test catagory name (e.g. storage)
 
     "args" : Args to be applied to all invocations in category
@@ -148,12 +149,49 @@ Format:
 }
   "
 """
+
+
+def default_args(app, cli, testtype):
+    args = ""
+    iscompare = testtype in ["compare"]
+
+    if not iscompare:
+        args = "--debug"
+
+    if app in ["virt-install", "virt-clone", "virt-image"] and not iscompare:
+        if "--connect " not in cli:
+            args += " --connect %(TESTURI)s"
+
+    if app in ["virt-install"]:
+        if "--name " not in cli:
+            args += " --name foobar"
+        if "--ram " not in cli:
+            args += " --ram 64"
+
+    if testtype in ["compare"]:
+        if app == "virt-install":
+            if (not cli.count("--print-xml") and
+                not cli.count("--print-step") and
+                not cli.count("--quiet")):
+                args += " --print-step all"
+
+        elif app == "virt-image":
+            if not cli.count("--print"):
+                args += " --print"
+
+        elif app == "virt-clone":
+            if not cli.count("--print-xml"):
+                args += " --print-xml"
+
+        if app != "virt-convert" and not "--connect " in cli:
+            args += " --connect %s" % fakeuri
+
+    return args
+
 args_dict = {
 
 
   "virt-install" : {
-    "globalargs" : " --connect %(TESTURI)s -d --name foobar --ram 64",
-
     "storage" : {
       "args": "--pxe --nographics --noautoconsole --hvm",
 
@@ -806,8 +844,6 @@ args_dict = {
 
 
   "virt-clone": {
-    "globalargs" : " --connect %(TESTURI)s -d",
-
     "general" : {
       "args": "-n clonetest",
 
@@ -914,8 +950,6 @@ args_dict = {
 
 
   'virt-image': {
-    "globalargs" : " --connect %(TESTURI)s --debug",
-
     "general" : {
       "args" : "--name test-image %(IMAGE_XML)s",
 
@@ -1009,8 +1043,6 @@ args_dict = {
 
 
   "virt-convert" : {
-    "globalargs" : "--debug",
-
     "misc" : {
      "args": "",
 
@@ -1253,14 +1285,9 @@ def build_cmd_list(do_app, do_category):
             continue
 
         unique = {}
-        globalargs = ""
 
         # Build default command line dict
         for option in args_dict.get(app):
-            if option == "globalargs":
-                globalargs = args_dict[app][option]
-                continue
-
             # Default is a unique cmd string
             unique[option] = args_dict[app][option]
 
@@ -1275,49 +1302,24 @@ def build_cmd_list(do_app, do_category):
             catdict = unique[category]
             category_args = catdict["args"]
 
-            for optstr in catdict["valid"]:
-                cmdstr = "./%s %s %s %s" % (app, globalargs,
-                                            category_args, optstr)
-                cmd = Command(cmdstr)
-                cmd.check_success = True
-                cmdlist.append(cmd)
+            for testtype in ["valid", "invalid", "compare"]:
+                for optstr in catdict.get(testtype) or []:
+                    if testtype == "compare":
+                        optstr, filename = optstr
+                        filename = "%s/%s.xml" % (compare_xmldir, filename)
 
-            for optstr in catdict["invalid"]:
-                cmdstr = "./%s %s %s %s" % (app, globalargs,
-                                            category_args, optstr)
-                cmd = Command(cmdstr)
-                cmd.check_success = False
-                cmdlist.append(cmd)
+                    args = category_args + " " + optstr
+                    args = default_args(app, args, testtype) + " " + args
+                    cmdstr = "./%s %s" % (app, args)
 
-            for optstr, filename in catdict.get("compare") or []:
-                filename = "%s/%s.xml" % (compare_xmldir, filename)
-                cmdstr = "./%s %s %s %s" % (app, globalargs,
-                                            category_args, optstr)
-                cmdstr = cmdstr % test_files
+                    cmd = Command(cmdstr)
+                    if testtype == "compare":
+                        cmd.check_success = not filename.endswith("fail.xml")
+                        cmd.compare_file = filename
+                    else:
+                        cmd.check_success = bool(testtype == "valid")
 
-                # Strip --debug to get reasonable output
-                cmdstr = cmdstr.replace("--debug ", "").replace("-d ", "")
-                if app == "virt-install":
-                    if (not cmdstr.count("--print-xml") and
-                        not cmdstr.count("--print-step") and
-                        not cmdstr.count("--quiet")):
-                        cmdstr += " --print-step all"
-
-                elif app == "virt-image":
-                    if not cmdstr.count("--print"):
-                        cmdstr += " --print"
-
-                elif app == "virt-clone":
-                    if not cmdstr.count("--print-xml"):
-                        cmdstr += " --print-xml"
-
-                if app != "virt-convert" and not cmdstr.count(fakeuri):
-                    cmdstr += " --connect %s" % fakeuri
-
-                cmd = Command(cmdstr)
-                cmd.check_success = not filename.endswith("fail.xml")
-                cmd.compare_file = filename
-                cmdlist.append(cmd)
+                    cmdlist.append(cmd)
 
     return cmdlist
 
