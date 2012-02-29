@@ -172,7 +172,8 @@ class VirtualNetworkInterface(VirtualDevice.VirtualDevice):
         if self.conn and not self._random_mac:
             found = False
             for ignore in range(256):
-                self._random_mac = _util.randomMAC(self.conn.getType().lower())
+                self._random_mac = _util.randomMAC(self.conn.getType().lower(),
+                                                   conn=self.conn)
                 ret = self.is_conflict_net(self.conn, self._random_mac)
                 if ret[1] is not None:
                     continue

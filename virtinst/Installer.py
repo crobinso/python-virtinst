@@ -432,7 +432,7 @@ class Installer(XMLBuilderDomain.XMLBuilderDomain):
         @type L{Guest}
         """
 
-        if _util.is_uri_remote(guest.conn.getURI()):
+        if _util.is_uri_remote(guest.conn.getURI(), conn=guest.conn):
             # XXX: Use block peek for this?
             return True
 

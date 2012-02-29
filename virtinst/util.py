@@ -178,7 +178,7 @@ def get_default_arch():
 # available under the LGPL,
 # Copyright 2004, 2005 Mike Wray <mike.wray@hp.com>
 # Copyright 2005 XenSource Ltd
-def randomMAC(type="xen"):
+def randomMAC(type="xen", conn=None):
     """Generate a random MAC address.
 
     00-16-3E allocated to xensource
@@ -200,6 +200,10 @@ def randomMAC(type="xen"):
 
     @return: MAC address string
     """
+    if conn and hasattr(conn, "_virtinst__fake_conn_predictable"):
+        # Testing hack
+        return "00:11:22:33:44:55"
+
     ouis = { 'xen': [ 0x00, 0x16, 0x3E ], 'qemu': [ 0x52, 0x54, 0x00 ] }
 
     try:
@@ -222,7 +226,11 @@ def randomUUID():
 
     return [ random.randint(0, 255) for dummy in range(0, 16) ]
 
-def uuidToString(u):
+def uuidToString(u, conn=None):
+    if conn and hasattr(conn, "_virtinst__fake_conn_predictable"):
+        # Testing hack
+        return "00000000-1111-2222-3333-444444444444"
+
     return "-".join(["%02x" * 4, "%02x" * 2, "%02x" * 2, "%02x" * 2,
                      "%02x" * 6]) % tuple(u)
 
@@ -430,7 +438,11 @@ def uri_split(uri):
     return scheme, username, netloc, uri, query, fragment
 
 
-def is_uri_remote(uri):
+def is_uri_remote(uri, conn=None):
+    if conn and hasattr(conn, "_virtinst__fake_conn_remote"):
+        # Testing hack
+        return True
+
     try:
         split_uri = uri_split(uri)
         netloc = split_uri[2]

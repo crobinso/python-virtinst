@@ -255,6 +255,8 @@ def _open_test_uri(uri):
 
     # Need tmpfile names to be deterministic
     if "predictable" in opts:
+        setattr(conn, "_virtinst__fake_conn_predictable", True)
+
         def fakemkstemp(prefix, *args, **kwargs):
             ignore = args
             ignore = kwargs
@@ -262,12 +264,9 @@ def _open_test_uri(uri):
             return os.open(filename, os.O_RDWR | os.O_CREAT), filename
         tempfile.mkstemp = fakemkstemp
 
-        _util.randomMAC = lambda type_: "00:11:22:33:44:55"
-        _util.uuidToString = lambda r: "00000000-1111-2222-3333-444444444444"
-
     # Fake remote status
     if "remote" in opts:
-        _util.is_uri_remote = lambda uri_: True
+        setattr(conn, "_virtinst__fake_conn_remote", True)
 
     # Fake capabilities
     if "caps" in opts:

@@ -370,7 +370,8 @@ class StoragePool(StorageObject):
         # Initialize all optional properties
         self._host = None
         self._source_path = None
-        self._random_uuid = _util.uuidToString(_util.randomUUID())
+        self._random_uuid = _util.uuidToString(_util.randomUUID(),
+                                               conn=self.conn)
 
     # Properties used by all pools
     def get_type(self):

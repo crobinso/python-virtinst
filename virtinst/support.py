@@ -346,7 +346,7 @@ def _daemon_lib_ver(conn, uri, force_version, minimum_libvirt_version):
     else:
         default_ret = 100000000000
 
-    if not _util.is_uri_remote(uri):
+    if not _util.is_uri_remote(uri, conn=conn):
         return _local_lib_ver()
 
     if not _has_command("getLibVersion", obj=conn):

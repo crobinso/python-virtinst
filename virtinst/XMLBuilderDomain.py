@@ -422,7 +422,7 @@ class XMLBuilderDomain(object):
             raise ValueError(_("'conn' must be a virConnect instance."))
         self._conn = val
         self._conn_uri = self._conn.getURI()
-        self.__remote = _util.is_uri_remote(self._conn_uri)
+        self.__remote = _util.is_uri_remote(self._conn_uri, conn=self._conn)
     conn = property(get_conn, set_conn)
 
     def get_uri(self):

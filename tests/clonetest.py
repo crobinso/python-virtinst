@@ -53,9 +53,6 @@ for tmpf in os.listdir(clonexml_dir):
 
 conn = utils.open_testdriver()
 
-def fake_is_uri_remote(ignore):
-    return True
-
 class TestClone(unittest.TestCase):
 
     def setUp(self):
@@ -67,12 +64,12 @@ class TestClone(unittest.TestCase):
             os.unlink(f)
 
     def _clone_helper(self, filebase, disks=None, force_list=None,
-                      skip_list=None, compare=True):
+                      skip_list=None, compare=True, useconn=None):
         """Helper for comparing clone input/output from 2 xml files"""
         infile = os.path.join(clonexml_dir, filebase + "-in.xml")
         in_content = utils.read_file(infile)
 
-        cloneobj = CloneDesign(conn=conn)
+        cloneobj = CloneDesign(conn=useconn or conn)
         cloneobj.original_xml = in_content
         for force in force_list or []:
             cloneobj.force_target = force
@@ -151,38 +148,29 @@ class TestClone(unittest.TestCase):
 
     def testRemoteNoStorage(self):
         """Test remote clone where VM has no storage that needs cloning"""
-        oldfunc = CloneManager._util.is_uri_remote
-        try:
-            CloneManager._util.is_uri_remote = fake_is_uri_remote
-
-            for base in [ "nostorage", "noclone-storage" ] :
-                self._clone_helper(base, disks=[])
-
-        finally:
-            CloneManager._util.is_uri_remote = oldfunc
+        useconn = utils.open_test_remote()
+        for base in [ "nostorage", "noclone-storage" ] :
+            self._clone_helper(base, disks=[], useconn=useconn)
 
     def testRemoteWithStorage(self):
         """
         Test remote clone with storage needing cloning. Should fail,
         since libvirt has no storage clone api.
         """
-        oldfunc = CloneManager._util.is_uri_remote
-        try:
-            CloneManager._util.is_uri_remote = fake_is_uri_remote
+        useconn = utils.open_test_remote()
+        for base in [ "general-cfg" ] :
+            try:
+                self._clone_helper(base,
+                                   disks=["%s/1.img" % POOL1,
+                                          "%s/2.img" % POOL1],
+                                   useconn=useconn)
 
-            for base in [ "general-cfg" ] :
-                try:
-                    self._clone_helper(base, disks=["%s/1.img" % POOL1,
-                                                    "%s/2.img" % POOL1])
-
-                    # We shouldn't succeed, so test fails
-                    raise AssertionError("Remote clone with storage passed "
-                                         "when it shouldn't.")
-                except (ValueError, RuntimeError), e:
-                    # Exception expected
-                    logging.debug("Received expected exception: %s", str(e))
-        finally:
-            CloneManager._util.is_uri_remote = oldfunc
+                # We shouldn't succeed, so test fails
+                raise AssertionError("Remote clone with storage passed "
+                                     "when it shouldn't.")
+            except (ValueError, RuntimeError), e:
+                # Exception expected
+                logging.debug("Received expected exception: %s", str(e))
 
     def testCloneStorage(self):
         base = "managed-storage"

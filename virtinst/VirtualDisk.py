@@ -209,7 +209,7 @@ def _check_if_path_managed(conn, path):
             pool = trypool
 
     if not vol and not pool:
-        if not _util.is_uri_remote(conn.getURI()):
+        if not _util.is_uri_remote(conn.getURI(), conn=conn):
             # Building local disk
             return None, None, False
 
@@ -355,7 +355,7 @@ class VirtualDisk(VirtualDevice):
         """
         Check if path exists. If we can't determine, return False
         """
-        is_remote = _util.is_uri_remote(conn.getURI())
+        is_remote = _util.is_uri_remote(conn.getURI(), conn=conn)
         try:
             vol = None
             path_is_pool = False
@@ -383,7 +383,7 @@ class VirtualDisk(VirtualDevice):
         @return: List of the directories the user cannot search, or empty list
         @rtype : C{list}
         """
-        if _util.is_uri_remote(conn.getURI()):
+        if _util.is_uri_remote(conn.getURI(), conn=conn):
             return []
 
         try:

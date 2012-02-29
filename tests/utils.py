@@ -34,6 +34,7 @@ _cwd        = os.getcwd()
 scratch     = os.path.join(_cwd, "tests", "testscratchdir")
 _testuri    = "test:///%s/tests/testdriver.xml" % _cwd
 _fakeuri    = "__virtinst_test__" + _testuri + ",predictable"
+_remoteuri  = "__virtinst_test__" + _testuri + ",remote"
 _kvmcaps    = "%s/tests/capabilities-xml/libvirt-0.7.6-qemu-caps.xml" % _cwd
 _plainkvm   = "%s,qemu" % _fakeuri
 _plainxen   = "%s,xen" % _fakeuri
@@ -58,6 +59,8 @@ def open_plainkvm(connver=None, libver=None):
     return virtinst.cli.getConnection(_make_uri(_plainkvm, connver, libver))
 def open_plainxen(connver=None, libver=None):
     return virtinst.cli.getConnection(_make_uri(_plainxen, connver, libver))
+def open_test_remote():
+    return virtinst.cli.getConnection(_remoteuri)
 
 _default_conn = open_testdriver()
 _conn = None

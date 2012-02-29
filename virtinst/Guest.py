@@ -1546,7 +1546,8 @@ class Guest(XMLBuilderDomain.XMLBuilderDomain):
         if self.uuid is None:
             found = False
             for ignore in range(256):
-                self.uuid = _util.uuidToString(_util.randomUUID())
+                self.uuid = _util.uuidToString(_util.randomUUID(),
+                                               conn=self.conn)
                 if _util.vm_uuid_collision(self.conn, self.uuid):
                     continue
                 found = True

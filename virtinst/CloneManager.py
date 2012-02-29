@@ -154,7 +154,7 @@ class CloneDesign(object):
 
         # Generate a random UUID at the start
         while 1:
-            uuid = _util.uuidToString(_util.randomUUID())
+            uuid = _util.uuidToString(_util.randomUUID(), conn=conn)
             if _util.vm_uuid_collision(self._hyper_conn, uuid):
                 continue
             self.clone_uuid = uuid
@@ -453,7 +453,8 @@ class CloneDesign(object):
                 mac = self._clone_mac.pop()
             else:
                 while 1:
-                    mac = _util.randomMAC(self.original_conn.getType().lower())
+                    mac = _util.randomMAC(self.original_conn.getType().lower(),
+                                          conn=self.original_conn)
                     dummy, msg = self._check_mac(mac)
                     if msg is not None:
                         continue

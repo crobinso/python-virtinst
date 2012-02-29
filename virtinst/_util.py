@@ -370,7 +370,7 @@ def default_bridge2(conn=None):
     dev = util.default_route()
 
     if (dev is not None and
-        (not conn or not is_uri_remote(conn.getURI()))):
+        (not conn or not is_uri_remote(conn.getURI(), conn=conn))):
         # New style peth0 == phys dev, eth0 == bridge, eth0 == default route
         if os.path.exists("/sys/class/net/%s/bridge" % dev):
             return ["bridge", dev]
