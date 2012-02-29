@@ -41,14 +41,15 @@ else:
 
 # Have imports down here so they get the benefit of logging setup etc.
 import capabilities
-import validation
-import xmlconfig
-import image
-import storage
-import urltest
+import clitest
 import clonetest
-import nodedev
-import virtconvtest
+import image
 import interface
-import xmlparse
+import nodedev
+import storage
 import support
+import urltest
+import validation
+import virtconvtest
+import xmlconfig
+import xmlparse

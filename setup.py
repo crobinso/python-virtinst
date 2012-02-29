@@ -68,10 +68,10 @@ class TestBaseCommand(Command):
 
     def run(self):
         try:
+            # Use system 'coverage' if available
             import coverage
             use_coverage = True
         except:
-            # Use system 'coverage' if available
             use_coverage = False
 
         tests = TestLoader().loadTestsFromNames(self._testfiles)
@@ -86,10 +86,8 @@ class TestBaseCommand(Command):
         if use_coverage:
             coverage.stop()
 
-        if len(result.failures) > 0 or len(result.errors) > 0:
-            sys.exit(1)
-        else:
-            sys.exit(0)
+        sys.exit(int(bool(len(result.failures) > 0 or
+                          len(result.errors) > 0)))
 
 class TestCommand(TestBaseCommand):
 
@@ -111,9 +109,8 @@ class TestCommand(TestBaseCommand):
         '''
         testfiles = []
         for t in glob.glob(os.path.join(self._dir, 'tests', '*.py')):
-            if (t.endswith('__init__.py') or
-                t.endswith("urltest.py") or
-                t.endswith("clitest.py")):
+            if (t.endswith("__init__.py") or
+                t.endswith("urltest.py")):
                 continue
 
             base = os.path.basename(t)
@@ -129,30 +126,6 @@ class TestCommand(TestBaseCommand):
 
         self._testfiles = testfiles
         TestBaseCommand.run(self)
-
-class TestCLI(TestBaseCommand):
-
-    description = "Test various CLI invocations"
-
-    user_options = (TestBaseCommand.user_options +
-                    [("app=", None, "Only run tests for requested app"),
-                    ("category=", None, "Only run tests for the requested "
-                                       "category (install, storage, etc.)")])
-
-    def initialize_options(self):
-        TestBaseCommand.initialize_options(self)
-        self.app = None
-        self.category = None
-
-    def run(self):
-        cmd = "PYTHONPATH=`pwd` python tests/clitest.py"
-        if self.debug:
-            cmd += " debug"
-        if self.app:
-            cmd += " --app %s" % self.app
-        if self.category:
-            cmd += " --category %s" % self.category
-        os.system(cmd)
 
 class TestURLFetch(TestBaseCommand):
 
@@ -371,7 +344,6 @@ setup(
     cmdclass={
         'test': TestCommand,
         'test_urls' : TestURLFetch,
-        'test_cli' : TestCLI,
         'pylint': CheckPylint,
 
         'rpm' : myrpm,

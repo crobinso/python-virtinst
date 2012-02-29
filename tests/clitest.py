@@ -14,23 +14,19 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301 USA.
 
-import commands
 import logging
 import os
 import shlex
 import subprocess
 import sys
 import traceback
+import unittest
 import StringIO
 
 import virtinst.cli
 
 from scriptimports import virtinstall, virtimage, virtclone, virtconvert
 import utils
-
-rootLogger = logging.getLogger()
-for handler in rootLogger.handlers:
-    rootLogger.removeHandler(handler)
 
 os.environ["VIRTCONV_TEST_NO_DISK_CONVERSION"] = "1"
 os.environ["LANG"] = "en_US.UTF-8"
@@ -128,8 +124,6 @@ test_files = {
     'VC_IMG2'           : "tests/image-xml/image-format.xml",
     'VMX_IMG1'          : "%s/vmx/test1.vmx" % vcdir,
 }
-
-debug = False
 
 
 """
@@ -1094,7 +1088,7 @@ args_dict = {
 _conns = {}
 def open_conn(uri):
     #if uri not in _conns:
-    #    _conns[uri] = virtinst.cli._open_test_uri(uri)
+    #    _conns[uri] = virtinst.cli.getConnection(uri)
     #return _conns[uri]
     return virtinst.cli.getConnection(uri)
 
@@ -1114,21 +1108,8 @@ class Command(object):
         app, opts = self.cmdstr.split(" ", 1)
         self.argv = [os.path.abspath(app)] + shlex.split(opts)
 
-    def write_pass(self):
-        if debug:
-            return
-        sys.stdout.write(".")
-        sys.stdout.flush()
-
-    def write_fail(self):
-        if debug:
-            return
-        sys.stdout.write("F")
-        sys.stdout.flush()
-
     def _launch_command(self):
-        if debug:
-            print self.cmdstr
+        logging.debug(self.cmdstr)
 
         uri = None
         conn = None
@@ -1182,10 +1163,7 @@ class Command(object):
 
             code, output = self._launch_command()
 
-            if debug:
-                print output
-                print "\n"
-
+            logging.debug(output + "\n")
             return code, output
         except Exception, e:
             return (-1, "".join(traceback.format_exc()) + str(e))
@@ -1212,9 +1190,7 @@ class Command(object):
 
                 utils.diff_compare(output, filename)
 
-            self.write_pass()
         except AssertionError, e:
-            self.write_fail()
             err = self.cmdstr + "\n" + str(e)
 
         return err
@@ -1332,16 +1308,10 @@ promptlist.append(p6)
 # Test runner functions #
 #########################
 
-def build_cmd_list(do_app, do_category):
-    if do_app and do_app not in args_dict.keys():
-        raise ValueError("Unknown app '%s'" % do_app)
-
+def build_cmd_list():
     cmdlist = promptlist
 
     for app in args_dict:
-        if do_app and app != do_app:
-            continue
-
         unique = {}
 
         # Build default command line dict
@@ -1349,14 +1319,8 @@ def build_cmd_list(do_app, do_category):
             # Default is a unique cmd string
             unique[option] = args_dict[app][option]
 
-
-        if do_category and do_category not in unique.keys():
-            raise ValueError("Unknown category %s" % do_category)
-
         # Build up unique command line cases
         for category in unique.keys():
-            if do_category and category != do_category:
-                continue
             catdict = unique[category]
             category_args = catdict["args"]
 
@@ -1381,27 +1345,9 @@ def build_cmd_list(do_app, do_category):
 
     return cmdlist
 
-
-def parse_args():
-    """
-    Parse CLI args piped through from setup.py
-    """
-    global debug
-
-    do_app = None
-    do_category = None
-
-    if len(sys.argv) > 1:
-        for i in range(1, len(sys.argv)):
-            if sys.argv[i].count("debug"):
-                debug = True
-            elif sys.argv[i].count("--app"):
-                do_app = sys.argv[i + 1]
-            elif sys.argv[i].count("--category"):
-                do_category = sys.argv[i + 1]
-
-    return do_app, do_category
-
+newidx = 0
+curtest = 0
+old_bridge = virtinst._util.default_bridge2
 
 def setup():
     """
@@ -1421,6 +1367,8 @@ def setup():
     os.system("chmod 444 %s" % ro_img)
     os.system("chmod 555 %s" % ro_dir)
 
+    virtinst._util.default_bridge2 = lambda ignore: None
+
 
 def cleanup():
     """
@@ -1430,34 +1378,32 @@ def cleanup():
         os.system("chmod 777 %s > /dev/null 2>&1" % i)
         os.system("rm -rf %s > /dev/null 2>&1" % i)
 
+    virtinst._util.default_bridge2 = old_bridge
 
-def main():
-    do_app, do_category = parse_args()
+class CLITests(unittest.TestCase):
+    def __init__(self, *args, **kwargs):
+        unittest.TestCase.__init__(self, *args, **kwargs)
 
-    setup()
+    def setUp(self):
+        global curtest
+        curtest += 1
+        # Only run this for first test
+        if curtest == 1:
+            setup()
 
-    error_ret = []
-    try:
-        cmdlist = build_cmd_list(do_app, do_category)
+    def tearDown(self):
+        # Only run this on the last test
+        if curtest == newidx:
+            cleanup()
 
-        for cmd in cmdlist:
-            err = cmd.run()
-            if err:
-                error_ret.append(err)
-    finally:
-        cleanup()
-        print
-        for err in error_ret:
-            print err + "\n\n"
+def maketest(cmd):
+    def cmdtemplate(self, c):
+        err = c.run()
+        if err:
+            self.fail(err)
+    return lambda s: cmdtemplate(s, cmd)
 
-    if not error_ret:
-        print "All tests completed successfully."
-
-
-if __name__ == "__main__":
-    try:
-        main()
-    except KeyboardInterrupt:
-        print "Tests interrupted"
-        if debug:
-            raise
+_cmdlist = build_cmd_list()
+for _cmd in _cmdlist:
+    newidx += 1
+    setattr(CLITests, "testCLI%d" % newidx, maketest(_cmd))
