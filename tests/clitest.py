@@ -1353,11 +1353,6 @@ def setup():
     """
     Create initial test files/dirs
     """
-    for i in exist_files:
-        if os.path.exists(i):
-            raise ValueError("'%s' will be used by testsuite, can not already"
-                             " exist." % i)
-
     os.system("mkdir %s" % ro_dir)
 
     for i in exist_files:
