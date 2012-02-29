@@ -512,6 +512,14 @@ def find_keymap_from_etc_default():
             break
     return kt
 
+def generate_uuid(conn):
+    for ignore in range(256):
+        uuid = uuidToString(randomUUID(), conn=conn)
+        if not vm_uuid_collision(conn, uuid):
+            return uuid
+
+    logging.error("Failed to generate non-conflicting UUID")
+
 #
 # These functions accidentally ended up in the API under virtinst.util
 #

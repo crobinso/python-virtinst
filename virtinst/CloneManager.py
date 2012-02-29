@@ -153,12 +153,7 @@ class CloneDesign(object):
         self._valid_guest        = Guest.Guest(conn=conn)
 
         # Generate a random UUID at the start
-        while 1:
-            uuid = _util.uuidToString(_util.randomUUID(), conn=conn)
-            if _util.vm_uuid_collision(self._hyper_conn, uuid):
-                continue
-            self.clone_uuid = uuid
-            break
+        self.clone_uuid = _util.generate_uuid(conn)
 
 
     # Getter/Setter methods
