@@ -19,7 +19,6 @@
 
 import logging
 import os
-import sys
 import shutil
 import subprocess
 import tempfile
@@ -287,19 +286,31 @@ class DistroInstaller(Installer.Installer):
         logging.debug("Appending to the initrd.")
         find_proc = subprocess.Popen(['find', '.', '-print0'],
                                      stdout=subprocess.PIPE,
-                                     stderr=sys.stderr, cwd=tempdir)
+                                     stderr=subprocess.PIPE,
+                                     cwd=tempdir)
         cpio_proc = subprocess.Popen(['cpio', '-o', '--null', '-Hnewc', '--quiet'],
                                      stdin=find_proc.stdout,
                                      stdout=subprocess.PIPE,
-                                     stderr=sys.stderr, cwd=tempdir)
+                                     stderr=subprocess.PIPE,
+                                     cwd=tempdir)
         f = open(initrd, 'ab')
         gzip_proc = subprocess.Popen(['gzip'], stdin=cpio_proc.stdout,
-                                     stdout=f, stderr=sys.stderr)
+                                     stdout=f, stderr=subprocess.PIPE)
         cpio_proc.wait()
         find_proc.wait()
         gzip_proc.wait()
         f.close()
         shutil.rmtree(tempdir)
+
+        finderr = find_proc.stderr.read()
+        cpioerr = cpio_proc.stderr.read()
+        gziperr = gzip_proc.stderr.read()
+        if finderr:
+            logging.debug("find stderr=%s", finderr)
+        if cpioerr:
+            logging.debug("cpio stderr=%s", cpioerr)
+        if gziperr:
+            logging.debug("gzip stderr=%s", gziperr)
 
     def support_remote_url_install(self):
         if not self.conn:
