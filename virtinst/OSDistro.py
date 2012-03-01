@@ -493,11 +493,17 @@ class FedoraDistro(RedHatDistro):
             ret = (m != None)
 
             if ret:
+                lateststr, latestnum = self._latestFedoraVariant()
                 ver = self.treeinfo.get("general", "version")
                 if ver == "development":
                     self.os_variant = self._latestFedoraVariant()
                 elif ver:
-                    self.os_variant = "fedora" + (str(ver).split("-"))[0]
+                    vernum = int(str(ver).split("-")[0])
+                    if vernum > latestnum:
+                        self.os_variant = lateststr
+                    else:
+                        self.os_variant = "fedora" + str(vernum)
+
 
             return ret
         else:
@@ -510,9 +516,11 @@ class FedoraDistro(RedHatDistro):
         ret = None
         for var in osdict.sort_helper(osdict.OS_TYPES["linux"]["variants"]):
             if var.startswith("fedora"):
-                # Last fedora* occurence should be the newest
+                # First fedora* occurence should be the newest
                 ret = var
-        return ret
+                break
+
+        return ret, int(ret[6:])
 
 # Red Hat Enterprise Linux distro check
 class RHELDistro(RedHatDistro):

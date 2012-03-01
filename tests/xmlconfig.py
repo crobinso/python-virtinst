@@ -976,5 +976,12 @@ class TestXMLConfig(unittest.TestCase):
         self.assertEquals("vdaa", targetlist[26])
         self.assertEquals("vdba", targetlist[26 * 2])
 
+    def testFedoraTreeinfo(self):
+        i = utils.make_distro_installer(
+                                location="tests/cli-test-xml/fakefedoratree",
+                                gtype="kvm")
+        t, v = i.detect_distro()
+        self.assertEquals((t, v), ("linux", "fedora17"))
+
 if __name__ == "__main__":
     unittest.main()
