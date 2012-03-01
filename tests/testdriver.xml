@@ -94,6 +94,11 @@
       <target dev='sdc' bus='scsi'/>
       <readonly/>
     </disk>
+    <disk type='file' device='disk'>
+      <source file='/default-pool/default-vol'/>
+      <target dev='sdd' bus='scsi'/>
+      <driver name="qemu" type="qcow2"/>
+    </disk>
     <disk type='block' device='disk'>
       <source dev='/default-pool/sharevol.img'/>
       <target dev='sdx' bus='scsi'/>

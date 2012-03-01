@@ -473,11 +473,6 @@ class CloneDesign(object):
                     _("Clone onto existing storage volume is not "
                       "supported: '%s'") % clone_disk.path)
 
-            # Change the XML
-            xmldisk.path = None
-            xmldisk.type = clone_disk.type
-            xmldisk.path = clone_disk.path
-
             # Sync 'size' between the two
             if orig_disk.size:
                 clone_disk.size = orig_disk.size
@@ -499,6 +494,12 @@ class CloneDesign(object):
 
             elif not self.preserve_dest_disks:
                 clone_disk.clone_path = orig_disk.path
+
+            # Change the XML
+            xmldisk.path = None
+            xmldisk.type = clone_disk.type
+            xmldisk.path = clone_disk.path
+            xmldisk.driver_type = clone_disk.driver_type
 
         # Save altered clone xml
         self._clone_xml = self._guest.get_xml_config()

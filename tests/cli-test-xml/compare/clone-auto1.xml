@@ -23,6 +23,7 @@
       <source dev="/disk-pool/diskvol1-clone"/>
       <target dev="sda" bus="scsi"/>
       <address type="drive" controller="0" bus="0" unit="0"/>
+      <driver name="qemu" type="raw"/>
     </disk>
     <disk type="block" device="cdrom">
       <target dev="sdb" bus="scsi"/>
@@ -34,6 +35,12 @@
       <target dev="sdc" bus="scsi"/>
       <readonly/>
       <address type="drive" controller="0" bus="0" unit="2"/>
+    </disk>
+    <disk type="file" device="disk">
+      <driver name="qemu" type="qcow2"/>
+      <target dev="sdd" bus="scsi"/>
+      <address type="drive" controller="0" bus="0" unit="3"/>
+      <source file="/default-pool/default-vol-clone"/>
     </disk>
     <disk type="block" device="disk">
       <source dev="/default-pool/sharevol.img"/>

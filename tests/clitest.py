@@ -926,7 +926,7 @@ args_dict = {
       ],
 
       "compare" : [
-        ("-o test-for-clone --auto-clone --clone-running", "clone-auto1"),
+        ("--connect %(KVMURI)s -o test-for-clone --auto-clone --clone-running", "clone-auto1"),
         ("-o test-clone-simple --name newvm --auto-clone --clone-running",
          "clone-auto2"),
       ],
