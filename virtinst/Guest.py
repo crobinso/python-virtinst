@@ -881,7 +881,8 @@ class Guest(XMLBuilderDomain.XMLBuilderDomain):
         # Build XML
         for dev in devs:
             xml = _util.xml_append(xml, get_dev_xml(dev))
-            if dev.address.type == "spapr-vio":
+            if (dev.address.type == "spapr-vio" and
+                  dev.virtual_device_type == virtinst.VirtualDevice.VIRTUAL_DEV_DISK):
                 xml = _util.xml_append(xml, get_vscsi_ctrl_xml())
 
         return xml

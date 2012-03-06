@@ -52,6 +52,12 @@
     <interface type='user'>
       <mac address='11:11:11:11:11:11'/>
     </interface>
+    <interface type='network'>
+      <source network='default'/>
+      <mac address='22:22:22:22:22:22'/>
+      <model type='spapr-vlan'/>
+      <address type='spapr-vio'/>
+    </interface>
     <input type='mouse' bus='ps2'/>
     <graphics type='sdl' display=':3.4' xauth='/tmp/.Xauthority'/>
     <graphics type='vnc' port='-1' keymap='en-us'/>

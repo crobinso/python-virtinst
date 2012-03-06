@@ -731,8 +731,13 @@ class TestXMLConfig(unittest.TestCase):
         net1.model = "e1000"
         net2 = VirtualNetworkInterface(type="user",
                                        macaddr="11:11:11:11:11:11")
+        net3 = VirtualNetworkInterface(type=virtinst.VirtualNetworkInterface.TYPE_VIRTUAL,
+                                       macaddr="22:22:22:22:22:22", network="default")
+        net3.model = "spapr-vlan"
+        net3.set_address("spapr-vio")
         g.nics.append(net1)
         g.nics.append(net2)
+        g.nics.append(net3)
 
         # Character devices
         cdev1 = VirtualCharDevice.get_dev_instance(g.conn,
