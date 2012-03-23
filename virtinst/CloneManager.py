@@ -645,5 +645,5 @@ def _do_duplicate(design, meter):
             logging.debug("Source and destination are the same. Skipping.")
             continue
 
-        # VirtualDisk.setup handles everything
-        dst_dev.setup(meter)
+        # VirtualDisk.setup_dev handles everything
+        dst_dev.setup_dev(meter=meter)
