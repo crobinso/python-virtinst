@@ -70,11 +70,11 @@ def get_clone_macaddr(new_mac, design):
         new_mac = None
     else:
         for i in new_mac:
-            design.set_clone_mac(i)
+            design.clone_mac = i
 
 def get_clone_uuid(new_uuid, design):
     if new_uuid is not None:
-        design.set_clone_uuid(new_uuid)
+        design.clone_uuid = new_uuid
 
 def get_clone_diskfile(new_diskfiles, design, conn, preserve=False,
                        auto_clone=False):
@@ -115,15 +115,15 @@ def _check_disk(conn, clone_path, orig_path, preserve):
                            path_to_clone=orig_path)
 
 def get_clone_sparse(sparse, design):
-    design.set_clone_sparse(sparse)
+    design.clone_sparse = sparse
 
 def get_preserve(preserve, design):
-    design.set_preserve(preserve)
+    design.preserve = preserve
 
 
 def get_force_target(target, design):
     for i in target or []:
-        design.set_force_target(i)
+        design.force_target = i
 
 def parse_args():
     parser = cli.setupParser()
