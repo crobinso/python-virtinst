@@ -499,7 +499,7 @@ class CloneDesign(object):
             xmldisk.path = None
             xmldisk.type = clone_disk.type
             xmldisk.path = clone_disk.path
-            xmldisk.driver_type = clone_disk.driver_type
+            xmldisk.driver_type = orig_disk.driver_type
 
         # Save altered clone xml
         self._clone_xml = self._guest.get_xml_config()
@@ -553,7 +553,8 @@ class CloneDesign(object):
                     device = VirtualDisk.DEVICE_CDROM
 
                 d = VirtualDisk(disk.path, conn=self._hyper_conn,
-                                device=device, validate=validate)
+                                device=device, driverType=disk.driver_type,
+                                validate=validate)
                 d.target = disk.target
             except Exception, e:
                 logging.debug("", exc_info=True)
