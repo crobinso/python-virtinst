@@ -436,7 +436,9 @@ def fail(msg, do_exit=True):
     Convenience function when failing in cli app
     """
     logging.error(msg)
-    logging.debug("", exc_info=True)
+    import traceback
+    if traceback.format_exc().strip() != "None":
+        logging.debug("", exc_info=True)
     if do_exit:
         _fail_exit()
 
