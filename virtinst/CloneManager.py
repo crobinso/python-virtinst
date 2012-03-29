@@ -441,6 +441,11 @@ class CloneDesign(object):
         self._guest.name = self._clone_name
         self._guest.uuid = self._clone_uuid
         self._clone_mac.reverse()
+        for dev in self._guest.get_devices("graphics"):
+            if dev.port and dev.port != -1:
+                logging.warn(_("Setting the graphics device port to autoport, "
+                               "in order to avoid conflicting."))
+                dev.port = -1
         for iface in self._guest.get_devices("interface"):
             iface.target_dev = None
 
