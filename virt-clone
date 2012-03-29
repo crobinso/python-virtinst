@@ -236,7 +236,7 @@ def main(conn=None):
                        not options.preserve, options.auto_clone)
 
     # setup design object
-    design.setup()
+    design.setup_clone()
 
     if options.xmlonly:
         print_stdout(design.clone_xml, do_force=True)
