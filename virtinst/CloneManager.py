@@ -503,6 +503,7 @@ class CloneDesign(object):
 
         # Save altered clone xml
         self._clone_xml = self._guest.get_xml_config()
+        logging.debug("Clone guest xml is\n%s", self._clone_xml)
 
     def setup(self):
         """
@@ -510,10 +511,7 @@ class CloneDesign(object):
         additional debug logging.
         """
         self.setup_original()
-        logging.debug("Original guest xml is\n%s", self._original_xml)
-
         self.setup_clone()
-        logging.debug("Clone guest xml is\n%s", self._clone_xml)
 
     def remove_original_vm(self, force=None):
         return self._valid_guest.remove_original_vm(force=force)
