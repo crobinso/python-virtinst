@@ -93,6 +93,7 @@
       </source>
     </hostdev>
     <watchdog model='ib700' action='none'/>
+    <memballoon model='virtio'/>
   </devices>
   <seclabel type='static' model='selinux'>
     <label>foolabel</label>

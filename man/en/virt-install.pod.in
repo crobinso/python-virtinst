@@ -1142,6 +1142,23 @@ Add a USB device redirected via a dedicated Spice channel.
 
 =back
 
+=item --memballoon MODEL
+
+Attach a virtual memory balloon device to the guest. If the memballoon device
+needs to be explicitly disabled, MODEL='none' is used.
+
+MODEL is the type of memballoon device provided. The value can be 'virtio',
+'xen' or 'none'.
+Some examples:
+
+Use the recommended settings:
+
+--memballoon virtio
+
+Do not use memballoon device:
+
+--memballoon none
+
 =head2 Miscellaneous Options
 
 =over 2

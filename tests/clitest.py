@@ -567,6 +567,10 @@ args_dict = {
         "--hvm --pxe --filesystem template_name,/,type=template",
         # no networks
         "--hvm --nodisks --nonetworks --cdrom %(EXISTIMG1)s",
+        # --memballoon use virtio
+        "--hvm --nodisks --pxe --memballoon virtio",
+        # --memballoon disabled
+        "--hvm --nodisks --pxe --memballoon none",
       ],
 
       "invalid": [
@@ -586,6 +590,8 @@ args_dict = {
         "--paravirt --import --disk path=virt-install --print-step 2",
         # 2 stage install with --print-xml
         "--hvm --nodisks --pxe --print-xml",
+        # Busted --memballoon
+        "--hvm --nodisks --pxe --memballoon foobar",
       ],
 
       "compare": [

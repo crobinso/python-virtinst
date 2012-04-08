@@ -44,6 +44,7 @@ class VirtualDevice(XMLBuilderDomain):
     VIRTUAL_DEV_FILESYSTEM      = "filesystem"
     VIRTUAL_DEV_SMARTCARD       = "smartcard"
     VIRTUAL_DEV_REDIRDEV        = "redirdev"
+    VIRTUAL_DEV_MEMBALLOON      = "memballoon"
 
     # Ordering in this list is important: it will be the order the
     # Guest class outputs XML. So changing this may upset the test suite
@@ -62,7 +63,8 @@ class VirtualDevice(XMLBuilderDomain):
                             VIRTUAL_DEV_HOSTDEV,
                             VIRTUAL_DEV_WATCHDOG,
                             VIRTUAL_DEV_SMARTCARD,
-                            VIRTUAL_DEV_REDIRDEV]
+                            VIRTUAL_DEV_REDIRDEV,
+                            VIRTUAL_DEV_MEMBALLOON]
 
     # General device type (disk, interface, etc.)
     _virtual_device_type = None

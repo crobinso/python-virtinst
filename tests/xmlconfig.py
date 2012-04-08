@@ -31,6 +31,7 @@ from virtinst import VirtualVideoDevice
 from virtinst import VirtualController
 from virtinst import VirtualWatchdog
 from virtinst import VirtualInputDevice
+from virtinst import VirtualMemballoon
 import utils
 
 _testconn = utils.open_testdriver()
@@ -772,10 +773,16 @@ class TestXMLConfig(unittest.TestCase):
         g.add_device(vdev3)
         g.add_device(vdev4)
 
+        # Watchdog Devices
         wdev2 = VirtualWatchdog(g.conn)
         wdev2.model = "ib700"
         wdev2.action = "none"
         g.add_device(wdev2)
+
+        # Memballoon Devices
+        mdev1 = VirtualMemballoon(g.conn)
+        mdev1.model = "virtio"
+        g.add_device(mdev1)
 
         # Check keymap autoconfig
         gdev1 = virtinst.VirtualGraphics(conn=g.conn, type="vnc")

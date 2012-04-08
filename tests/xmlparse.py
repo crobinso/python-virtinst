@@ -160,6 +160,9 @@ class XMLParseTest(unittest.TestCase):
         check("memory_mode", "interleave", "strict", None)
         check("memory_nodeset", "1-5,^3,7", "2,4,6")
 
+        check = self._make_checker(guest.get_devices("memballoon")[0])
+        check("model", "virtio", "none")
+
         self._alter_compare(guest.get_config_xml(), outfile)
 
     def testAlterMinimalGuest(self):

@@ -53,6 +53,7 @@
     </interface>
     <graphics type="sdl" display=":3.4" xauth="/tmp/.Xauthority"/>
     <console type="pty"/>
+    <memballoon model='virtio'/>
   </devices>
   <seclabel type="static" model="selinux">
     <label>foolabel</label>

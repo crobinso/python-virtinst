@@ -1018,6 +1018,16 @@ def get_redirdev(guest, sc_opts):
         if dev:
             guest.add_device(dev)
 
+def get_memballoon(guest, sc_opts):
+    for sc in listify(sc_opts):
+        try:
+            dev = parse_memballoon(guest, sc)
+        except Exception, e:
+            fail(_("Error in memballoon device parameters: %s") % str(e))
+
+        if dev:
+            guest.add_device(dev)
+
 #############################
 # Common CLI option/group   #
 #############################
@@ -1113,6 +1123,9 @@ def add_device_options(devg):
     devg.add_option("", "--redirdev", dest="redirdev", action="append",
                     help=_("Configure a guest redirection device. Ex:\n"
                            "--redirdev usb,type=tcp,server=192.168.1.1:4000"))
+    devg.add_option("", "--memballoon", dest="memballoon", action="append",
+                    help=_("Configure a guest memballoon device. Ex:\n"
+                           "--memballoon medel=virtio"))
 
 def add_gfx_option(devg):
     devg.add_option("", "--graphics", dest="graphics", action="append",
@@ -1825,6 +1838,27 @@ def parse_watchdog(guest, optstring, dev=None):
 
     set_param("model", "model")
     set_param("action", "action")
+
+    if opts:
+        raise ValueError(_("Unknown options %s") % opts.keys())
+
+    return dev
+
+########################
+# --memballoon parsing #
+########################
+
+def parse_memballoon(guest, optstring, dev=None):
+    if optstring is None:
+        return None
+
+    # Peel the mode off the front
+    opts = parse_optstr(optstring, remove_first="model")
+    model = get_opt_param(opts, "model")
+
+    if not dev:
+        dev = virtinst.VirtualMemballoon(model=model,
+                                         conn=guest.conn)
 
     if opts:
         raise ValueError(_("Unknown options %s") % opts.keys())
