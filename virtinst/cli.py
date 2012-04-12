@@ -1369,7 +1369,10 @@ def parse_boot(guest, optstring):
         if val == None:
             return
 
-        setattr(guest.installer.bootconfig, paramname, val)
+        if paramname == "loader":
+            guest.installer.loader = val
+        else:
+            setattr(guest.installer.bootconfig, paramname, val)
 
     # Convert menu= value
     if "menu" in opts:
@@ -1389,6 +1392,7 @@ def parse_boot(guest, optstring):
     set_param("enable_bootmenu", "menu", menu)
     set_param("kernel", "kernel")
     set_param("initrd", "initrd")
+    set_param("loader", "loader")
     set_param("kernel_args", ["kernel_args", "extra_args"])
 
     # Build boot order

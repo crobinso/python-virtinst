@@ -617,7 +617,8 @@ args_dict = {
          "--channel spicevmc "
          "--smartcard passthrough,type=spicevmc "
          "--security type=static,label='system_u:object_r:svirt_image_t:s0:c100,c200',relabel=yes "
-         """ --numatune \\"1-3,5\\",mode=preferred """,
+         """ --numatune \\"1-3,5\\",mode=preferred """
+         "--boot loader=/foo/bar ",
          "many-devices"),
       ],
 

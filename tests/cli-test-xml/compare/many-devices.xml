@@ -9,6 +9,7 @@
   </numatune>
   <os>
     <type arch='i686'>hvm</type>
+    <loader>/foo/bar</loader>
     <boot dev='network'/>
     <boot dev='hd'/>
   </os>
@@ -91,6 +92,7 @@
   </numatune>
   <os>
     <type arch='i686'>hvm</type>
+    <loader>/foo/bar</loader>
     <boot dev='hd'/>
   </os>
   <features>
