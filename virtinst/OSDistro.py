@@ -899,16 +899,16 @@ class SuseDistro(Distro):
 
 class DebianDistro(Distro):
     # ex. http://ftp.egr.msu.edu/debian/dists/sarge/main/installer-i386/
-    # daily builds: http://people.debian.org/~joeyh/d-i/
+    # daily builds: http://d-i.debian.org/daily-images/amd64/
 
     name = "Debian"
     os_type = "linux"
 
     def __init__(self, uri, arch, vmtype=None, scratchdir=None):
         Distro.__init__(self, uri, arch, vmtype, scratchdir)
-        if uri.count("installer-i386"):
+        if uri.count("i386"):
             self._treeArch = "i386"
-        elif uri.count("installer-amd64"):
+        elif uri.count("amd64"):
             self._treeArch = "amd64"
         else:
             self._treeArch = "i386"
@@ -935,9 +935,9 @@ class DebianDistro(Distro):
         if fetcher.hasFile("%s/MANIFEST" % self._prefix):
             # For regular trees
             pass
-        elif fetcher.hasFile("images/daily/MANIFEST"):
+        elif fetcher.hasFile("daily/MANIFEST"):
             # For daily trees
-            self._prefix = "images/daily"
+            self._prefix = "daily"
             self._set_media_paths()
         else:
             return False

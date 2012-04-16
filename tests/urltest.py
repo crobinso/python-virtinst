@@ -136,7 +136,7 @@ urls = {
         'distro': ("linux", None)
     },
     "debian-daily" : {
-        'i386' : "http://people.debian.org/~joeyh/d-i/",
+        'i386' : "http://d-i.debian.org/daily-images/amd64/",
         'distro': ("linux", None)
     },
 
