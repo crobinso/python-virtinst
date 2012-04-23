@@ -516,7 +516,7 @@ OS_TYPES = {
         },
     },
     "ubuntulucid": {
-        "label": "Ubuntu 10.04 (Lucid Lynx)",
+        "label": "Ubuntu 10.04 LTS (Lucid Lynx)",
         "distro": "ubuntu",
         "supported": True,
         "devices" : {
@@ -527,7 +527,6 @@ OS_TYPES = {
     "ubuntumaverick": {
         "label": "Ubuntu 10.10 (Maverick Meerkat)",
         "distro": "ubuntu",
-        "supported": True,
         "devices" : {
             DISK : VIRTIO_DISK,
             NET  : VIRTIO_NET,
@@ -544,6 +543,24 @@ OS_TYPES = {
     },
     "ubuntuoneiric": {
         "label": "Ubuntu 11.10 (Oneiric Ocelot)",
+        "distro": "ubuntu",
+        "supported": True,
+        "devices" : {
+            DISK : VIRTIO_DISK,
+            NET  : VIRTIO_NET,
+        },
+    },
+    "ubuntuprecise": {
+        "label": "Ubuntu 12.04 LTS (Precise Pangolin)",
+        "distro": "ubuntu",
+        "supported": True,
+        "devices" : {
+            DISK : VIRTIO_DISK,
+            NET  : VIRTIO_NET,
+        },
+    },
+    "ubuntuquantal": {
+        "label": "Ubuntu 12.10 (Quantal Quetzal)",
         "distro": "ubuntu",
         "supported": True,
         "devices" : {
