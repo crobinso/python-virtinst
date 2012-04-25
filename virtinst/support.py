@@ -82,6 +82,7 @@ Possible keys:
                     force the check, but for things like XML options (AC97)
                     we want to be ABSOLUTELY SURE it is supported so we
                     don't enable it by default and break guest creation.
+                    This isn't required for versions after >= 0.7.3
 
   "function" : Function name to check exists. If object not specified,
                function is checked against libvirt module.
@@ -233,7 +234,6 @@ _support_dict = {
 
     SUPPORT_CONN_HV_SOUND_ICH6 : {
         "version" : 8008,
-        "force_version" : True,
         "drv_version" : [ ("qemu", 14000), ],
         "rhel6_drv_version" : [ ("qemu", 12001) ],
         "rhel6_version" : 8007,
@@ -241,18 +241,15 @@ _support_dict = {
 
     SUPPORT_CONN_HV_GRAPHICS_SPICE : {
         "version" : 8006,
-        "force_version" : True,
         "drv_version" : [ ("qemu", 14000), ],
     },
 
     SUPPORT_CONN_HV_CHAR_SPICEVMC : {
         "version" : 8008,
-        "force_version" : True,
         "drv_version" : [ ("qemu", 14000), ],
     },
     SUPPORT_CONN_HV_DIRECT_INTERFACE : {
         "version" : 8007,
-        "force_version" : True,
         "drv_version" : [ ("qemu", 0), ],
     },
     SUPPORT_CONN_HV_FILESYSTEM : {
