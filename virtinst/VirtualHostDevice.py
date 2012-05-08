@@ -222,7 +222,7 @@ class VirtualHostDeviceUSB(VirtualHostDevice):
         if self.vendor and self.product:
             xml += "        <vendor id='%s'/>\n" % self.vendor
             xml += "        <product id='%s'/>\n" % self.product
-        elif self.bus and self.device:
+        if self.bus and self.device:
             xml += "        <address bus='%s' device='%s'/>\n" % (self.bus,
                                                                   self.device)
         else:
