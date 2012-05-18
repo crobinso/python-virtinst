@@ -89,8 +89,8 @@ class TestClone(unittest.TestCase):
         cloneobj.clone_name = "clone-new"
         cloneobj.clone_uuid = "12345678-1234-1234-1234-123456789012"
 
-        cloneobj.clone_mac = "01:23:45:67:89:00"
-        cloneobj.clone_mac = "01:23:45:67:89:01"
+        cloneobj.clone_mac = "22:23:45:67:89:00"
+        cloneobj.clone_mac = "22:23:45:67:89:01"
 
         if disks != None:
             for disk in disks:

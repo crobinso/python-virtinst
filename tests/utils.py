@@ -218,7 +218,7 @@ def get_blkdisk(path="/dev/loop0"):
 
 def get_virtual_network():
     dev = virtinst.VirtualNetworkInterface(conn=_conn)
-    dev.macaddr = "11:22:33:44:55:66"
+    dev.macaddr = "22:22:33:44:55:66"
     dev.type = virtinst.VirtualNetworkInterface.TYPE_VIRTUAL
     dev.network = "default"
     return dev

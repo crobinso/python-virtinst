@@ -629,13 +629,13 @@ args_dict = {
 
       "valid": [
         # Just a macaddr
-        "--mac 11:22:33:44:55:AF",
+        "--mac 22:22:33:44:55:AF",
         # user networking
         "--network=user",
         # Old bridge option
         "--bridge mybr0",
         # Old bridge w/ mac
-        "--bridge mybr0 --mac 11:22:33:44:55:AF",
+        "--bridge mybr0 --mac 22:22:33:44:55:AF",
         # --network bridge:
         "--network bridge:mybr0,model=e1000",
         # VirtualNetwork with a random macaddr
@@ -643,11 +643,11 @@ args_dict = {
         # VirtualNetwork with a random macaddr
         "--network network:default --mac 00:11:22:33:44:55",
         # Using '=' as the net type delimiter
-        "--network network=default,mac=11:00:11:00:11:00",
+        "--network network=default,mac=22:00:11:00:11:00",
         # with NIC model
         "--network=user,model=e1000",
         # several networks
-        "--network=network:default,model=e1000 --network=user,model=virtio,mac=11:22:33:44:55:AF",
+        "--network=network:default,model=e1000 --network=user,model=virtio,mac=22:22:33:44:55:AF",
       ],
       "invalid": [
         # Nonexistent network
@@ -657,7 +657,7 @@ args_dict = {
         # Mixing bridge and network
         "--network user --bridge foo0",
         # Colliding macaddr
-        "--mac 11:22:33:12:34:AB",
+        "--mac 22:22:33:12:34:AB",
       ],
 
      }, # category "network"

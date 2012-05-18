@@ -278,8 +278,8 @@ args = {
         'invalid'   : ["foobar", None],
         'valid'     : [Interface.Interface.INTERFACE_START_MODE_ONBOOT], },
     'macaddr' : {
-        'invalid'   : [0, 100, "11:22:33", "foobar"],
-        'valid'     : [None, "11:22:33:44:55:66"], },
+        'invalid'   : [0, 100, "22:22:33", "foobar"],
+        'valid'     : [None, "22:22:33:44:55:66"], },
 
     'protocols' : {
         'invalid'   : [],

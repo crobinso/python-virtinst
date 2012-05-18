@@ -20,15 +20,15 @@
     <emulator>/usr/lib/xen/bin/qemu-dm</emulator>
     <interface type='bridge'>
       <source bridge='br0'/>
-      <mac address='11:22:33:44:55:66'/>
+      <mac address='22:22:33:44:55:66'/>
     </interface>
 <interface type="bridge">
-      <mac address="11:22:33:44:55:67"/>
+      <mac address="22:22:33:44:55:67"/>
       <source bridge="foobr0"/>
     </interface>
 
 <interface type="bridge">
-      <mac address="11:22:33:44:55:68"/>
+      <mac address="22:22:33:44:55:68"/>
     </interface>
 
     <input type='mouse' bus='ps2'/>

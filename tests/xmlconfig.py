@@ -587,7 +587,7 @@ class TestXMLConfig(unittest.TestCase):
         g = utils.get_basic_fullyvirt_guest(installer=i)
 
         net1 = VirtualNetworkInterface(type="user",
-                                       macaddr="11:11:11:11:11:11")
+                                       macaddr="22:11:11:11:11:11")
         net2 = utils.get_virtual_network()
         net3 = utils.get_virtual_network()
         net3.model = "e1000"
@@ -731,7 +731,7 @@ class TestXMLConfig(unittest.TestCase):
         net1 = utils.get_virtual_network()
         net1.model = "e1000"
         net2 = VirtualNetworkInterface(type="user",
-                                       macaddr="11:11:11:11:11:11")
+                                       macaddr="22:11:11:11:11:11")
         net3 = VirtualNetworkInterface(type=virtinst.VirtualNetworkInterface.TYPE_VIRTUAL,
                                        macaddr="22:22:22:22:22:22", network="default")
         net3.model = "spapr-vlan"
@@ -934,20 +934,20 @@ class TestXMLConfig(unittest.TestCase):
             util.default_bridge2 = newbridge
 
             dev1 = virtinst.VirtualNetworkInterface(conn=g.conn)
-            dev1.macaddr = "11:22:33:44:55:66"
+            dev1.macaddr = "22:22:33:44:55:66"
             g.add_device(dev1)
 
             dev2 = virtinst.VirtualNetworkInterface(conn=g.conn,
                                                 parsexml=dev1.get_xml_config())
             dev2.source = None
             dev2.source = "foobr0"
-            dev2.macaddr = "11:22:33:44:55:67"
+            dev2.macaddr = "22:22:33:44:55:67"
             g.add_device(dev2)
 
             dev3 = virtinst.VirtualNetworkInterface(conn=g.conn,
                                                 parsexml=dev1.get_xml_config())
             dev3.source = None
-            dev3.macaddr = "11:22:33:44:55:68"
+            dev3.macaddr = "22:22:33:44:55:68"
             g.add_device(dev3)
 
             self._compare(g, "boot-default-bridge", False, do_create=False)
