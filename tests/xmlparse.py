@@ -550,10 +550,10 @@ class XMLParseTest(unittest.TestCase):
         check("type", "pci")
         check("managed", True, True)
         check("mode", "subsystem", "capabilities")
-        check("domain", "0x0", "0x2")
-        check("bus", "0x11", "0x99")
-        check("slot", "0x22", "0x88")
-        check("function", "0x33", "0x77")
+        check("domain", "0x0", "0x4")
+        check("bus", "0x1", "0x5")
+        check("slot", "0x2", "0x6")
+        check("function", "0x3", "0x7")
 
         self._alter_compare(guest.get_config_xml(), outfile)
 

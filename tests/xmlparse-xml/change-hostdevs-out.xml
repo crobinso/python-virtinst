@@ -35,7 +35,7 @@
     </hostdev>
     <hostdev mode="capabilities" type="pci" managed="yes">
       <source>
-        <address domain="0x2" bus="0x99" slot="0x88" function="0x77"/>
+        <address domain="0x4" bus="0x5" slot="0x6" function="0x7"/>
       </source>
     </hostdev>
   </devices>
