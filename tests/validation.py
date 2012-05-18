@@ -463,11 +463,10 @@ class TestValidation(unittest.TestCase):
         hostmac = virtinst.util.get_host_network_devices()
         if len(hostmac) is not 0:
             hostmac = hostmac[0][4]
-
-        for params in ({'macaddr' : hostmac},):
-            network = virtinst.VirtualNetworkInterface(*(), **params)
-            self.assertRaises(RuntimeError, network.setup, \
-                              testconn)
+            for params in ({'macaddr' : hostmac},):
+                network = virtinst.VirtualNetworkInterface(*(), **params)
+                self.assertRaises(RuntimeError, network.setup, \
+                                      testconn)
 
         # Test dynamic MAC/Bridge success
         try:
