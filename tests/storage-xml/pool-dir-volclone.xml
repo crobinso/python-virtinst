@@ -4,8 +4,8 @@
   <key>/some/target/path/pool-dir-vol</key>
   <source>
   </source>
-  <capacity>10737418240</capacity>
-  <allocation>5368709120</allocation>
+  <capacity unit="bytes">10737418240</capacity>
+  <allocation unit="bytes">5368709120</allocation>
   <target>
     <path>/some/target/path/pool-dir-vol</path>
     <format type="raw"/>
