@@ -1503,7 +1503,11 @@ class Guest(XMLBuilderDomain.XMLBuilderDomain):
                     disk.bus = "fdc"
                 else:
                     if self.installer.is_hvm():
-                        disk.bus = "ide"
+                        if (self.installer.type == "kvm" and
+                            self.installer.machine == "pseries"):
+                            disk.bus = "scsi"
+                        else:
+                            disk.bus = "ide"
                     elif self.installer.is_xenpv():
                         disk.bus = "xen"
             used_targets.append(disk.generate_target(used_targets))
