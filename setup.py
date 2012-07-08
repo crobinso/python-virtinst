@@ -268,7 +268,6 @@ class mysdist(sdist):
         inp = infd.read()
         infd.close()
 
-
         outp = inp.replace("::VARIANT VALUES::", output)
         if outp != origout or not(os.path.exists(outfile)):
             outfd = open(outfile, "w")
@@ -278,6 +277,11 @@ class mysdist(sdist):
         # Generate new manpages
         if os.system("make -C man/en"):
             raise RuntimeError("Couldn't generate man pages.")
+
+        if os.system("grep -IRq 'Hey!' man/en") == 0:
+            raise RuntimeError("man pages have errors in them! "
+                               "(grep for 'Hey!')")
+
 
 class mybuild(build):
     """ custom build command to compile i18n files"""
