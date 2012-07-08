@@ -276,7 +276,7 @@ class VirtualGraphics(VirtualDevice.VirtualDevice):
         listenxml   = (listen and (" listen='%s'" % listen) or "")
         passwdxml   = (passwd and (" passwd='%s'" % passwd) or "")
         passwdValidToxml = (passwdValidTo and
-                            ( "passwdValidTo='%s'" % passwdValidTo) or "")
+                            (" passwdValidTo='%s'" % passwdValidTo) or "")
 
         xauthxml    = (xauth and  (" xauth='%s'" % xauth) or "")
         displayxml  = (display and (" display='%s'" % display) or "")
