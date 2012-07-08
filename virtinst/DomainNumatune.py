@@ -37,7 +37,7 @@ class DomainNumatune(XMLBuilderDomain.XMLBuilderDomain):
         if type(val) is not type("string") or len(val) == 0:
             raise ValueError(_("cpuset must be string"))
         if re.match("^[0-9,-^]*$", val) is None:
-            raise ValueError(_("cpuset can only contain numeric, ',', or "
+            raise ValueError(_("cpuset can only contain numeric, ',', '^', or "
                                "'-' characters"))
 
         pcpus = _util.get_phy_cpus(conn)
