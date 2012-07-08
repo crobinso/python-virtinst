@@ -144,9 +144,10 @@ Convert a 64-bit hvm guest:
 
 =head1 AUTHOR
 
-Written by Joey Boggs and John Levon
+Written by Joey Boggs, John Levon, and Cole Robinson
 
-See the AUTHORS file in the source distribution for the complete list of credits.
+See the AUTHORS file in the source distribution for the complete list
+of credits.
 
 =head1 BUGS
 
@@ -154,10 +155,10 @@ Please see http://virt-manager.org/page/BugReporting
 
 =head1 COPYRIGHT
 
-Copyright (C) 2006-2008 Red Hat, Inc, and various contributors. 
-This is free software. You may redistribute copies of it under the terms of the GNU General 
-Public License C<http://www.gnu.org/licenses/gpl.html>. There is NO WARRANTY, to the extent 
-permitted by law.
+Copyright (C) 2006-2012 Red Hat, Inc, and various contributors.
+This is free software. You may redistribute copies of it under the terms
+of the GNU General Public License C<http://www.gnu.org/licenses/gpl.html>.
+There is NO WARRANTY, to the extent permitted by law.
 
 =head1 SEE ALSO
 

@@ -124,7 +124,7 @@
 .\" ========================================================================
 .\"
 .IX Title "VIRT-IMAGE 1"
-.TH VIRT-IMAGE 1 "2012-01-24" "" "Virtual Machine Install Tools"
+.TH VIRT-IMAGE 1 "2012-07-08" "" "Virtual Machine Install Tools"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -155,8 +155,8 @@ line option.
 .IP "\-h, \-\-help" 4
 .IX Item "-h, --help"
 Show the help message and exit
-.IP "\-\-connect=CONNECT" 4
-.IX Item "--connect=CONNECT"
+.IP "\-\-connect=URI" 4
+.IX Item "--connect=URI"
 Connect to a non-default hypervisor. See \fIvirt\-install\fR\|(1) for details
 .SS "General Options"
 .IX Subsection "General Options"
@@ -279,25 +279,25 @@ Create and start a guest called \f(CW\*(C`example\*(C'\fR with a \s-1VNC\s0 cons
 \&\f(CW\*(C`image.xml\*(C'\fR:
 .PP
 .Vb 1
-\&  # virt\-image \-\-name example \-\-vnc \-i image.xml
+\&  # virt\-image \-\-name example \-\-vnc image.xml
 .Ve
 .PP
 Print the libvirt \s-1XML\s0 for a guest called \f(CW\*(C`example\*(C'\fR without graphics, but
 do not create or start a virtual machine:
 .PP
 .Vb 1
-\&  # virt\-image \-\-print \-\-name example \-\-nographics \-\-image image.xml
+\&  # virt\-image \-\-print \-\-name example \-\-nographics image.xml
 .Ve
 .SH "AUTHOR"
 .IX Header "AUTHOR"
-Written by David Lutterkort. See the \s-1AUTHORS\s0 file in the source
-distribution for the complete list of credits.
+Written by David Lutterkort and Cole Robinson. See the \s-1AUTHORS\s0 file in
+the source distribution for the complete list of credits.
 .SH "BUGS"
 .IX Header "BUGS"
 Please see http://virt\-manager.org/page/BugReporting
 .SH "COPYRIGHT"
 .IX Header "COPYRIGHT"
-Copyright (C) 2006\-2007 Red Hat, Inc, and various contributors.
+Copyright (C) 2006\-2012 Red Hat, Inc, and various contributors.
 This is free software. You may redistribute copies of it under the terms
 of the \s-1GNU\s0 General Public License \f(CW\*(C`http://www.gnu.org/licenses/gpl.html\*(C'\fR.
 There is \s-1NO\s0 \s-1WARRANTY\s0, to the extent permitted by law.

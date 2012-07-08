@@ -34,7 +34,7 @@ line option.
 
 Show the help message and exit
 
-=item --connect=CONNECT
+=item --connect=URI
 
 Connect to a non-default hypervisor. See L<virt-install(1)> for details
 
@@ -219,17 +219,17 @@ Print debugging information.
 Create and start a guest called C<example> with a VNC console from
 C<image.xml>:
 
-  # virt-image --name example --vnc -i image.xml
+  # virt-image --name example --vnc image.xml
 
 Print the libvirt XML for a guest called C<example> without graphics, but
 do not create or start a virtual machine:
 
-  # virt-image --print --name example --nographics --image image.xml
+  # virt-image --print --name example --nographics image.xml
 
 =head1 AUTHOR
 
-Written by David Lutterkort. See the AUTHORS file in the source
-distribution for the complete list of credits.
+Written by David Lutterkort and Cole Robinson. See the AUTHORS file in
+the source distribution for the complete list of credits.
 
 =head1 BUGS
 
@@ -237,7 +237,7 @@ Please see http://virt-manager.org/page/BugReporting
 
 =head1 COPYRIGHT
 
-Copyright (C) 2006-2007 Red Hat, Inc, and various contributors.
+Copyright (C) 2006-2012 Red Hat, Inc, and various contributors.
 This is free software. You may redistribute copies of it under the terms
 of the GNU General Public License C<http://www.gnu.org/licenses/gpl.html>.
 There is NO WARRANTY, to the extent permitted by law.

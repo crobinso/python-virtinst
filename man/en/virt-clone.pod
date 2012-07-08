@@ -34,7 +34,7 @@ storage options via -file.
 
 Show the help message and exit
 
-=item  --connect=CONNECT
+=item  --connect=URI
 
 Connect to a non-default hypervisor. See L<virt-install(1)> for details
 
@@ -192,14 +192,16 @@ new guest can do a filesystem resize when it boots.
 
   # virt-clone \
        --connect qemu:///system \
-       --name demo \
+       --original demo \
+       --name newdemo \
        --file /dev/HostVG/DemoVM \
        --mac 52:54:00:34:11:54
 
 =head1 AUTHOR
 
-Written by Kazuki Mizushima, and a team of many other contributors. See the AUTHORS 
-file in the source distribution for the complete list of credits.
+Written by Kazuki Mizushima, Cole Robinson, and a team of many other
+contributors. See the AUTHORS file in the source distribution for the
+complete list of credits.
 
 =head1 BUGS
 
@@ -207,10 +209,10 @@ Please see http://virt-manager.org/page/BugReporting
 
 =head1 COPYRIGHT
 
-Copyright (C) Fujitsu Limited 2007, and various contributors. 
-This is free software. You may redistribute copies of it under the terms of the GNU General 
-Public License C<http://www.gnu.org/licenses/gpl.html>. There is NO WARRANTY, to the extent 
-permitted by law.
+Copyright (C) Fujitsu Limited, and various contributors.
+This is free software. You may redistribute copies of it under the terms
+of the GNU General Public License C<http://www.gnu.org/licenses/gpl.html>.
+There is NO WARRANTY, to the extent permitted by law.
 
 =head1 SEE ALSO
 

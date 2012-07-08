@@ -124,7 +124,7 @@
 .\" ========================================================================
 .\"
 .IX Title "VIRT-CLONE 1"
-.TH VIRT-CLONE 1 "2011-07-13" "" "Virtual Machine Install Tools"
+.TH VIRT-CLONE 1 "2012-07-08" "" "Virtual Machine Install Tools"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -155,8 +155,8 @@ storage options via \-file.
 .IP "\-h, \-\-help" 4
 .IX Item "-h, --help"
 Show the help message and exit
-.IP "\-\-connect=CONNECT" 4
-.IX Item "--connect=CONNECT"
+.IP "\-\-connect=URI" 4
+.IX Item "--connect=URI"
 Connect to a non-default hypervisor. See \fIvirt\-install\fR\|(1) for details
 .SS "General Options"
 .IX Subsection "General Options"
@@ -284,26 +284,28 @@ Clone a guest to a physical device which is at least as big as the
 original guests disks. If the destination device is bigger, the
 new guest can do a filesystem resize when it boots.
 .PP
-.Vb 5
+.Vb 6
 \&  # virt\-clone \e
 \&       \-\-connect qemu:///system \e
-\&       \-\-name demo \e
+\&       \-\-original demo \e
+\&       \-\-name newdemo \e
 \&       \-\-file /dev/HostVG/DemoVM \e
 \&       \-\-mac 52:54:00:34:11:54
 .Ve
 .SH "AUTHOR"
 .IX Header "AUTHOR"
-Written by Kazuki Mizushima, and a team of many other contributors. See the \s-1AUTHORS\s0 
-file in the source distribution for the complete list of credits.
+Written by Kazuki Mizushima, Cole Robinson, and a team of many other
+contributors. See the \s-1AUTHORS\s0 file in the source distribution for the
+complete list of credits.
 .SH "BUGS"
 .IX Header "BUGS"
 Please see http://virt\-manager.org/page/BugReporting
 .SH "COPYRIGHT"
 .IX Header "COPYRIGHT"
-Copyright (C) Fujitsu Limited 2007, and various contributors. 
-This is free software. You may redistribute copies of it under the terms of the \s-1GNU\s0 General 
-Public License \f(CW\*(C`http://www.gnu.org/licenses/gpl.html\*(C'\fR. There is \s-1NO\s0 \s-1WARRANTY\s0, to the extent 
-permitted by law.
+Copyright (C) Fujitsu Limited, and various contributors.
+This is free software. You may redistribute copies of it under the terms
+of the \s-1GNU\s0 General Public License \f(CW\*(C`http://www.gnu.org/licenses/gpl.html\*(C'\fR.
+There is \s-1NO\s0 \s-1WARRANTY\s0, to the extent permitted by law.
 .SH "SEE ALSO"
 .IX Header "SEE ALSO"
 \&\f(CWvirsh(1)\fR, \f(CW\*(C`virt\-install(1)\*(C'\fR, \f(CW\*(C`virt\-manager(1)\*(C'\fR, the project website \f(CW\*(C`http://virt\-manager.org\*(C'\fR

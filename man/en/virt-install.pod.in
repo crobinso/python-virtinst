@@ -14,9 +14,9 @@ B<virt-install> is a command line tool for creating new KVM, Xen, or Linux
 container guests using the C<libvirt> hypervisor management library.
 See the EXAMPLES section at the end of this document to quickly get started.
 
-B<virt-install> tool supports both text based & graphical installations,
-using VNC or SDL graphics, or a text serial console. The guest can be
-configured to use one or more virtual disks, network interfaces,
+B<virt-install> tool supports graphical installations using (for example)
+VNC or SPICE, as well as text mode installs over serial console. The guest
+can be configured to use one or more virtual disks, network interfaces,
 audio devices, physical USB or PCI devices, among others.
 
 The installation media can be held locally or remotely on NFS, HTTP, FTP
@@ -42,27 +42,32 @@ guest storage (--disk, --filesystem or --nodisks), and an install option.
 
 Show the help message and exit
 
-=item  --connect=CONNECT
+=item  --connect=URI
 
-Connect to a non-default hypervisor. The default connection is chosen based
-on the following rules:
+Connect to a non-default hypervisor. If this isn't specified, libvirt
+will try and choose the most suitable default.
+
+Some valid options here are:
 
 =over 4
 
-=item xen
-
-If running on a host with the Xen kernel (checks against /proc/xen)
-
 =item qemu:///system
 
-If running on a bare metal kernel as root (needed for KVM installs)
+For creating KVM and QEMU guests to be run by the system libvirtd instance.
+This is the default mode that virt-manager uses, and what most KVM users
+want.
 
 =item qemu:///session
 
-If running on a bare metal kernel as non-root
+For creating KVM and QEMU guests for libvirtd running as the regular user.
 
-It is only necessary to provide the C<--connect> argument if this default
-prioritization is incorrect, eg if wanting to use QEMU while on a Xen kernel.
+=item xen:///
+
+For connecting to Xen.
+
+=item lxc:///
+
+For creating linux containers
 
 =back
 
@@ -901,10 +906,10 @@ PCI device (via lspci).
 
 Attach a virtual audio device to the guest. MODEL specifies the emulated
 sound card model. Possible values are ich6, ac97, es1370, sb16, pcspk,
-or default. 'default' will be AC97 if the hypervisor supports it,
-otherwise it will be ES1370.
+or default. 'default' will try to pick the best model that the specified
+OS supports.
 
-This deprecates the old boolean --sound model (which still works the same
+This deprecates the old boolean --sound option (which still works the same
 as a single '--soundhw default')
 
 =item --watchdog MODEL[,action=ACTION]
@@ -1148,8 +1153,6 @@ Add a USB device redirected via a dedicated Spice channel.
 
 =back
 
-=back
-
 =item --memballoon MODEL
 
 Attach a virtual memory balloon device to the guest. If the memballoon device
@@ -1166,6 +1169,8 @@ Use the recommended settings:
 Do not use memballoon device:
 
 --memballoon none
+
+=back
 
 =head2 Miscellaneous Options
 
@@ -1323,19 +1328,19 @@ Create a guest from an existing disk image 'mydisk.img' using defaults for
 the rest of the options.
 
   # virt-install \
-       --name demo
-       --ram 512
-       --disk /home/user/VMs/mydisk.img
+       --name demo \
+       --ram 512 \
+       --disk /home/user/VMs/mydisk.img \
        --import
 
 Test a custom kernel/initrd using an existing disk image, manually
 specifying a serial device hooked to a PTY on the host machine.
 
   # virt-install \
-       --name mykernel
-       --ram 512
-       --disk /home/user/VMs/mydisk.img
-       --boot kernel=/tmp/mykernel,initrd=/tmp/myinitrd,kernel_args="console=ttyS0"
+       --name mykernel \
+       --ram 512 \
+       --disk /home/user/VMs/mydisk.img \
+       --boot kernel=/tmp/mykernel,initrd=/tmp/myinitrd,kernel_args="console=ttyS0" \
        --serial pty
 
 =head1 AUTHORS
