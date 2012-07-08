@@ -94,11 +94,13 @@ class TestCommand(TestBaseCommand):
     description = "Runs a quick unit test suite"
     user_options = TestBaseCommand.user_options + \
                    [("testfile=", None, "Specific test file to run (e.g "
-                                        "validation, storage, ...)")]
+                                        "validation, storage, ...)"),
+                    ("skipcli", None, "Skip CLI tests")]
 
     def initialize_options(self):
         TestBaseCommand.initialize_options(self)
         self.testfile = None
+        self.skipcli = None
 
     def finalize_options(self):
         TestBaseCommand.finalize_options(self)
@@ -118,6 +120,8 @@ class TestCommand(TestBaseCommand):
                 check = os.path.basename(self.testfile)
                 if base != check and base != (check + ".py"):
                     continue
+            if self.skipcli and base.count("clitest"):
+                continue
 
             testfiles.append('.'.join(['tests', os.path.splitext(base)[0]]))
 
