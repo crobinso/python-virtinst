@@ -219,13 +219,19 @@ class VirtualHostDeviceUSB(VirtualHostDevice):
 
     def _get_source_xml(self):
         xml = ""
+        found = False
+
         if self.vendor and self.product:
             xml += "        <vendor id='%s'/>\n" % self.vendor
             xml += "        <product id='%s'/>\n" % self.product
+            found = True
+
         if self.bus and self.device:
             xml += "        <address bus='%s' device='%s'/>\n" % (self.bus,
                                                                   self.device)
-        else:
+            found = True
+
+        if not found:
             raise RuntimeError(_("'vendor' and 'product', or 'bus' and "
                                  " 'device' are required."))
         return xml
