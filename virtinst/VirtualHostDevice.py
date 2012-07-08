@@ -214,8 +214,10 @@ class VirtualHostDeviceUSB(VirtualHostDevice):
 
         self.vendor = nodedev.vendor_id
         self.product = nodedev.product_id
-        self.bus = nodedev.bus
-        self.device = nodedev.device
+
+        if not (self.vendor or self.product):
+            self.bus = nodedev.bus
+            self.device = nodedev.device
 
     def _get_source_xml(self):
         xml = ""
