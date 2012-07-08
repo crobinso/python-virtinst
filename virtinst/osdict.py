@@ -267,6 +267,16 @@ OS_TYPES = {
             INPUT: USB_TABLET,
         }
     },
+    "rhel7": {
+        "label": "Red Hat Enterprise Linux 7",
+        "distro": "rhel",
+        "supported": False,
+        "devices" : {
+            DISK : VIRTIO_DISK,
+            NET  : VIRTIO_NET,
+            INPUT: USB_TABLET,
+        }
+    },
 
     "fedora5": {
         "sortby": "fedora05",
