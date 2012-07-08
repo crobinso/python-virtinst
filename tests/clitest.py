@@ -1256,7 +1256,7 @@ class PromptTest(Command):
                 break
 
         exited = False
-        for i in range(30):
+        for ignore in range(30):
             if proc.poll() is not None:
                 exited = True
                 break
