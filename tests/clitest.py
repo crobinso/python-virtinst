@@ -19,6 +19,7 @@ import os
 import shlex
 import subprocess
 import sys
+import time
 import traceback
 import unittest
 import StringIO
@@ -1254,6 +1255,17 @@ class PromptTest(Command):
                 proc.kill()
                 break
 
+        exited = False
+        for i in range(30):
+            if proc.poll() is not None:
+                exited = True
+                break
+            time.sleep(.1)
+
+        if not exited:
+            proc.kill()
+            out += "\nProcess was killed by test harness"
+
         return proc.wait(), out
 
 
@@ -1309,6 +1321,14 @@ p6.add("cloned virtual machine", "test-clone-new")
 p6.add("use as the cloned disk", "%(NEWIMG1)s")
 p6.add("use as the cloned disk", "%(NEWIMG2)s")
 promptlist.append(p6)
+
+# Basic virt-clone prompting with disk failure handling
+p7 = PromptTest("virt-clone --connect %(TESTURI)s --prompt --quiet "
+               "--clone-running -o test-clone-simple -n test-clone-new")
+p7.add("use as the cloned disk", "/root")
+p7.add("'/root' must be a file or a device")
+p7.add("use as the cloned disk", "%(MANAGEDNEW1)s")
+promptlist.append(p7)
 
 
 #########################

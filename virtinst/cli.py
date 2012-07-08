@@ -708,7 +708,8 @@ def disk_prompt(conn, origpath, origsize, origsparse,
         # If we fail within the loop, reprompt for size and path
         if not retry_path:
             origpath = None
-            origsize = None
+            if not path_to_clone:
+                origsize = None
         retry_path = False
 
         # Get disk path
