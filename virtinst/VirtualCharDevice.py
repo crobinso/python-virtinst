@@ -210,7 +210,7 @@ class VirtualCharDevice(VirtualDevice.VirtualDevice):
 
         self.char_type = self._char_type
 
-    def supports_property(self, propname):
+    def supports_property(self, propname, ro=False):
         """
         Whether the character dev type supports the passed property name
         """
@@ -224,6 +224,9 @@ class VirtualCharDevice(VirtualDevice.VirtualDevice):
             "bind_host"     : [self.CHAR_UDP],
             "bind_port"     : [self.CHAR_UDP],
         }
+
+        if ro:
+            users["source_path"] += [self.CHAR_PTY]
 
         channel_users = {
             "target_name"   : [self.CHAR_CHANNEL_TARGET_VIRTIO],
@@ -485,6 +488,9 @@ class VirtualConsoleDevice(VirtualCharDevice):
 class VirtualCharPtyDevice(VirtualCharDevice):
     _char_type = VirtualCharDevice.CHAR_PTY
     _char_xml = VirtualCharDevice._char_empty_xml
+    source_path = property(VirtualCharDevice.get_source_path,
+                           VirtualCharDevice.set_source_path,
+                           doc=_("PTY allocated to the guest."))
 class VirtualCharStdioDevice(VirtualCharDevice):
     _char_type = VirtualCharDevice.CHAR_STDIO
     _char_xml = VirtualCharDevice._char_empty_xml
