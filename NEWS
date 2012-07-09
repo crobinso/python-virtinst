@@ -1,6 +1,13 @@
    Virtinst News
    =================
 
+Release 0.600.2 (July 08, 2012)
+-------------------------------
+- virt-install: New --memballoon option (Eiichi Tsukata)
+- virt-install: Improved qemu/kvm pseries support (Li Zhang, Qing Lin)
+- virt-install: Support setting BIOS path using -boot loader=PATH
+- Various bug fixes and improvements
+
 Release 0.600.1 (January 31, 2012)
 ----------------------------------
 - virt-install: --redir option for usb redirection (Marc-André Lureau)

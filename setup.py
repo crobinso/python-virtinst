@@ -23,7 +23,7 @@ from distutils.command.sdist import sdist
 from distutils.command.build import build
 from unittest import TextTestRunner, TestLoader
 
-VERSION = "0.600.1"
+VERSION = "0.600.2"
 
 # translation installing
 def _build_po_list():

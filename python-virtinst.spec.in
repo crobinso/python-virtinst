@@ -104,6 +104,13 @@ rm -rf $RPM_BUILD_ROOT
 %{_bindir}/virt-convert
 
 %changelog
+* Sun Jul 08 2012 Cole Robinson <crobinso@redhat.com> - 0.600.2-1
+- virtinst release 0.600.2
+- virt-install: New --memballoon option (Eiichi Tsukata)
+- virt-install: Improved qemu/kvm pseries support (Li Zhang, Qing Lin)
+- virt-install: Support setting BIOS path using -boot loader=PATH
+- Various bug fixes and improvements
+
 * Tue Jan 31 2012 Cole Robinson <crobinso@redhat.com> - 0.600.1-1
 - virt-install: --redir option for usb redirection (Marc-André Lureau)
 - virt-install: Advanced --controller support for usb2 (Marc-André
