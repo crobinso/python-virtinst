@@ -146,9 +146,9 @@ urls = {
         'x86_64' : CURCENTOS_BASEURL % ("5", "x86_64"),  # No .treeinfo
         'distro': ("linux", "rhel5.4")
     },
-    "centos-4-latest" : {
-        'i386' : CURCENTOS_BASEURL % ("4", "i386"),
-        'x86_64' : CURCENTOS_BASEURL % ("4", "x86_64"),
+    "centos-4.9" : {
+        'i386' : CURCENTOS_BASEURL % ("4.9", "i386"),
+        'x86_64' : CURCENTOS_BASEURL % ("4.9", "x86_64"),
         'distro': ("linux", None)
     },
     "centos-5.0" : {
@@ -172,15 +172,6 @@ urls = {
     },
     "scientific-5.0" : {
         'x86_64': SCIENTIFIC_BASEURL % ("50", "x86_64"),
-        'distro': ("linux", None)
-    },
-    "scientific-4.7" : {
-        'x86_64': SCIENTIFIC_BASEURL % ("47", "x86_64"),
-        'distro': ("linux", None)
-    },
-    "scientific-4.0" : {
-        "noxen": True,
-        'x86_64': SCIENTIFIC_BASEURL % ("40", "x86_64"),
         'distro': ("linux", None)
     },
 
