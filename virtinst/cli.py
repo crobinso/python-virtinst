@@ -1126,7 +1126,7 @@ def add_device_options(devg):
                            "--redirdev usb,type=tcp,server=192.168.1.1:4000"))
     devg.add_option("", "--memballoon", dest="memballoon", action="append",
                     help=_("Configure a guest memballoon device. Ex:\n"
-                           "--memballoon medel=virtio"))
+                           "--memballoon model=virtio"))
 
 def add_gfx_option(devg):
     devg.add_option("", "--graphics", dest="graphics", action="append",

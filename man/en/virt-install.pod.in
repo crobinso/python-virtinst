@@ -118,7 +118,7 @@ the guest will be able to hotplug up to MAX vcpus while the guest is running,
 but will startup with VCPUS.
 
 CPU topology can additionally be specified with sockets, cores, and threads.
-If values are omitted, the rest will be autofilled prefering sockets over
+If values are omitted, the rest will be autofilled preferring sockets over
 cores over threads.
 
 =item --cpuset=CPUSET
@@ -208,7 +208,7 @@ install option is specified, the C<--disk> cdrom is used as the install media.
 
 =item  -l LOCATION, --location=LOCATION
 
-Distribution tree installtion source. virt-install can recognize
+Distribution tree installation source. virt-install can recognize
 certain distribution trees and fetches a bootable kernel/initrd pair to
 launch the install.
 
@@ -404,7 +404,7 @@ a file or block device. If installing on a remote host, the existing media
 must be shared as a libvirt storage volume.
 
 Specifying a non-existent path implies attempting to create the new storage,
-and will require specifyng a 'size' value. If the base directory of the path
+and will require specifying a 'size' value. If the base directory of the path
 is a libvirt storage pool on the host, the new storage will be created as a
 libvirt storage volume. For remote hosts, the base directory is required to be
 a storage pool if using this method.
@@ -742,7 +742,7 @@ is used by 'vnc' and 'spice'
 =item B<passwordvalidto>
 
 Set an expiration date for password. After the date/time has passed,
-all new graphical connections are denyed until a new password is set.
+all new graphical connections are denied until a new password is set.
 This is used by 'vnc' and 'spice'
 
 The format for this value is YYYY-MM-DDTHH:MM:SS, for example
@@ -1207,7 +1207,7 @@ completed.
 
 Amount of time to wait (in minutes) for a VM to complete its install.
 Without this option, virt-install will wait for the console to close (not
-neccessarily indicating the guest has shutdown), or in the case of
+necessarily indicating the guest has shutdown), or in the case of
 --noautoconsole, simply kick off the install and exit. Any negative
 value will make virt-install wait indefinitely, a value of 0 triggers the
 same results as noautoconsole. If the time limit is exceeded, virt-install

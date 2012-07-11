@@ -224,7 +224,7 @@ the guest will be able to hotplug up to \s-1MAX\s0 vcpus while the guest is runn
 but will startup with \s-1VCPUS\s0.
 .Sp
 \&\s-1CPU\s0 topology can additionally be specified with sockets, cores, and threads.
-If values are omitted, the rest will be autofilled prefering sockets over
+If values are omitted, the rest will be autofilled preferring sockets over
 cores over threads.
 .IP "\-\-cpuset=CPUSET" 2
 .IX Item "--cpuset=CPUSET"
@@ -301,7 +301,7 @@ specified via the \f(CW\*(C`\-\-disk\*(C'\fR option, and neither \f(CW\*(C`\-\-c
 install option is specified, the \f(CW\*(C`\-\-disk\*(C'\fR cdrom is used as the install media.
 .IP "\-l \s-1LOCATION\s0, \-\-location=LOCATION" 2
 .IX Item "-l LOCATION, --location=LOCATION"
-Distribution tree installtion source. virt-install can recognize
+Distribution tree installation source. virt-install can recognize
 certain distribution trees and fetches a bootable kernel/initrd pair to
 launch the install.
 .Sp
@@ -530,7 +530,7 @@ a file or block device. If installing on a remote host, the existing media
 must be shared as a libvirt storage volume.
 .Sp
 Specifying a non-existent path implies attempting to create the new storage,
-and will require specifyng a 'size' value. If the base directory of the path
+and will require specifying a 'size' value. If the base directory of the path
 is a libvirt storage pool on the host, the new storage will be created as a
 libvirt storage volume. For remote hosts, the base directory is required to be
 a storage pool if using this method.
@@ -815,7 +815,7 @@ is used by 'vnc' and 'spice'
 .IP "\fBpasswordvalidto\fR" 4
 .IX Item "passwordvalidto"
 Set an expiration date for password. After the date/time has passed,
-all new graphical connections are denyed until a new password is set.
+all new graphical connections are denied until a new password is set.
 This is used by 'vnc' and 'spice'
 .Sp
 The format for this value is \s-1YYYY\-MM\-DDTHH:MM:SS\s0, for example
@@ -1198,7 +1198,7 @@ completed.
 .IX Item "--wait=WAIT"
 Amount of time to wait (in minutes) for a \s-1VM\s0 to complete its install.
 Without this option, virt-install will wait for the console to close (not
-neccessarily indicating the guest has shutdown), or in the case of
+necessarily indicating the guest has shutdown), or in the case of
 \&\-\-noautoconsole, simply kick off the install and exit. Any negative
 value will make virt-install wait indefinitely, a value of 0 triggers the
 same results as noautoconsole. If the time limit is exceeded, virt-install
