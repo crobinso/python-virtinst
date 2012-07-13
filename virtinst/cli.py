@@ -822,7 +822,7 @@ def get_vcpus(guest, vcpus, check_cpu, image_vcpus=None):
             if not prompt_for_yes_or_no(msg, askmsg):
                 nice_exit()
 
-def get_cpuset(guest, cpuset):
+def get_cpuset(guest, cpuset, memory):
     conn = guest.conn
     if cpuset and cpuset != "auto":
         guest.cpuset = cpuset
@@ -830,7 +830,7 @@ def get_cpuset(guest, cpuset):
     elif cpuset == "auto":
         tmpset = None
         try:
-            tmpset = Guest.generate_cpuset(conn, guest.memory)
+            tmpset = Guest.generate_cpuset(conn, memory)
         except Exception, e:
             logging.debug("Not setting cpuset: %s", str(e))
 

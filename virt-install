@@ -478,7 +478,6 @@ def build_guest_instance(conn, options):
     # Guest configuration
     cli.get_uuid(options.uuid, guest)
     cli.get_vcpus(guest, options.vcpus, options.check_cpu)
-    cli.get_cpuset(guest, options.cpuset)
     cli.parse_numatune(guest, options.numatune)
     cli.parse_cpu(guest, options.cpu)
     cli.parse_security(guest, options.security)
@@ -533,6 +532,9 @@ def build_guest_instance(conn, options):
     # Various little validations about option collisions. Need to do
     # this after setting guest.installer at least
     check_option_collisions(options, guest)
+
+    # Needs to come after setting memory
+    cli.get_cpuset(guest, options.cpuset, guest.memory)
 
     # Warnings
     if options.pxe and not supports_pxe(guest):

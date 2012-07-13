@@ -164,7 +164,7 @@ def main(conn=None):
     cli.get_memory(options.memory, guest, image.domain.memory)
     cli.get_uuid(options.uuid, guest)
     cli.get_vcpus(guest, options.vcpus, options.check_cpu, image.domain.vcpu)
-    cli.get_cpuset(guest, options.cpuset)
+    cli.get_cpuset(guest, options.cpuset, guest.memory)
     cli.parse_cpu(guest, options.cpu)
     get_networks(image.domain, guest, options)
 
