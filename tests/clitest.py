@@ -90,6 +90,7 @@ promptlist = []
 
 test_files = {
     'TESTURI'           : testuri,
+    'DEFAULTURI'        : "__virtinst_test__test:///default,predictable",
     'REMOTEURI'         : remoteuri,
     'KVMURI'            : kvmuri,
     'XENURI'            : xenuri,
@@ -621,6 +622,10 @@ args_dict = {
          """ --numatune \\"1-3,5\\",mode=preferred """
          "--boot loader=/foo/bar ",
          "many-devices"),
+        # --cpuset=auto actually works
+        ("--connect %(DEFAULTURI)s --hvm --nodisks --pxe --cpuset auto "
+         "--vcpus 2",
+         "cpuset-auto"),
       ],
 
      }, # category "misc"
