@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: virtinst\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-09 07:22-0400\n"
-"PO-Revision-Date: 2012-02-14 08:45+0000\n"
+"POT-Creation-Date: 2012-07-29 16:11-0400\n"
+"PO-Revision-Date: 2012-07-11 05:36+0000\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -231,9 +231,9 @@ msgid "Error in redirdev device parameters: %s"
 msgstr "Помилка у параметрах пристрою переспрямування: %s"
 
 #: virtinst/cli.py:1027
-#, fuzzy, python-format
+#, python-format
 msgid "Error in memballoon device parameters: %s"
-msgstr "Помилка у параметрах мережевого пристрою: %s"
+msgstr "Помилка у параметрах пристрою резервної пам’яті: %s"
 
 #: virtinst/cli.py:1038
 msgid "Connect to hypervisor with libvirt URI"
@@ -342,10 +342,10 @@ msgstr ""
 #, fuzzy
 msgid ""
 "Configure a guest memballoon device. Ex:\n"
-"--memballoon medel=virtio"
+"--memballoon model=virtio"
 msgstr ""
-"Налаштувати пристрій читання карток гостьової системи. Приклад:\n"
-"--smartcard mode=passthrough"
+"Налаштувати пристрій резервної пам’яті. Приклад:\n"
+"--memballoon model=virtio"
 
 #: virtinst/cli.py:1133
 msgid ""
@@ -485,24 +485,26 @@ msgstr ""
 msgid ""
 "Setting the graphics device port to autoport, in order to avoid conflicting."
 msgstr ""
+"Встановлюємо для порту графічного пристрою значення autoport з метою "
+"уникнення конфліктів."
 
-#: virtinst/CloneManager.py:478
-#, python-format
-msgid "Clone onto existing storage volume is not supported: '%s'"
+#: virtinst/CloneManager.py:490
+#, fuzzy, python-format
+msgid "Clone onto existing storage volume is not currently supported: '%s'"
 msgstr ""
 "Підтримки клонування на вже створений том сховища даних не передбачено: «%s»"
 
-#: virtinst/CloneManager.py:550
+#: virtinst/CloneManager.py:562
 #, python-format
 msgid "Disk '%s' does not exist."
 msgstr "Диска «%s» не існує."
 
-#: virtinst/CloneManager.py:564
+#: virtinst/CloneManager.py:576
 #, python-format
 msgid "Could not determine original disk information: %s"
 msgstr "Не вдалося визначити дані початкового диска: %s"
 
-#: virtinst/CloneManager.py:605
+#: virtinst/CloneManager.py:617
 #, python-format
 msgid "Domain '%s' was not found."
 msgstr "Домену «%s» не знайдено."
@@ -559,9 +561,8 @@ msgid "cpuset must be string"
 msgstr "cpuset має бути рядком"
 
 #: virtinst/DomainNumatune.py:40
-#, fuzzy
 msgid "cpuset can only contain numeric, ',', '^', or '-' characters"
-msgstr "cpuset може містити лише цифри і символи «,» та «-»"
+msgstr "cpuset може містити лише цифри і символи «,», «^» та «-»"
 
 #: virtinst/DomainNumatune.py:54
 msgid "cpuset contains invalid format."
@@ -1537,9 +1538,8 @@ msgid "A source path is required for character device type '%s'"
 msgstr "Для символьного пристрою типу «%s» слід вказати шлях до джерела даних"
 
 #: virtinst/VirtualCharDevice.py:493
-#, fuzzy
 msgid "PTY allocated to the guest."
-msgstr "Призупинити гостьову систему"
+msgstr "PTY надано гостьовій системі."
 
 #: virtinst/VirtualCharDevice.py:509
 msgid "Host character device to attach to guest."
@@ -1917,9 +1917,9 @@ msgid "Unknown input bus '%s'."
 msgstr "Невідомий канал вхідних даних «%s»."
 
 #: virtinst/VirtualMemballoon.py:50
-#, fuzzy, python-format
+#, python-format
 msgid "Unsupported memballoon model '%s'"
-msgstr "Непідтримувана модель звукової системи «%s»"
+msgstr "Непідтримувана модель резервної пам’яті, «%s»"
 
 #: virtinst/VirtualNetworkInterface.py:117
 msgid "Shared physical device"
@@ -1953,10 +1953,9 @@ msgid "Virtual network '%s' has not been started."
 msgstr "Роботу віртуальної мережі «%s» не було розпочато."
 
 #: virtinst/VirtualNetworkInterface.py:327
-#, fuzzy
 msgid ""
 "The MAC address you entered is already in use by another virtual machine."
-msgstr "Вказаною вами MAC вже користується інша активна віртуальна машина."
+msgstr "Вказаною вами MAC вже користується інша віртуальна машина."
 
 #: virtinst/VirtualNetworkInterface.py:333
 msgid ""
@@ -2145,7 +2144,7 @@ msgstr "Слід вказати назву початкової віртуаль
 msgid "What would you like to use as the cloned disk (file path) for '%s'?"
 msgstr "Що хочете використати як клонований диск (шлях до файла) для «%s»?"
 
-#: virt-clone:132 virt-image:59 virt-install:812
+#: virt-clone:132 virt-image:59 virt-install:814
 msgid "General Options"
 msgstr "Загальні параметри"
 
@@ -2176,7 +2175,7 @@ msgstr ""
 "Нове значення UUID для клонованої гостьової системи. Типовим є випадково "
 "створене значення UUID."
 
-#: virt-clone:148 virt-install:862
+#: virt-clone:148 virt-install:864
 msgid "Storage Configuration"
 msgstr "Налаштування сховища даних"
 
@@ -2213,7 +2212,7 @@ msgstr ""
 "Нова фіксована MAC-адреса для клонованої гостьової системи. Типовою є "
 "випадково створена MAC-адреса."
 
-#: virt-clone:171 virt-image:91 virt-install:934
+#: virt-clone:171 virt-image:91 virt-install:936
 msgid "Miscellaneous Options"
 msgstr "Інші параметри"
 
@@ -2231,11 +2230,11 @@ msgstr ""
 "Не виявляти конфлікти назв. Надає змогу замінювати вже створену гостьову "
 "систему новим клоном."
 
-#: virt-clone:179 virt-convert:85 virt-image:107 virt-install:961
+#: virt-clone:179 virt-convert:85 virt-image:107 virt-install:963
 msgid "Print debugging information"
 msgstr "Вивести діагностичні дані"
 
-#: virt-clone:182 virt-install:958
+#: virt-clone:182 virt-install:960
 msgid "Request user input for ambiguous situations or required options."
 msgstr ""
 "Запитувати користувача щодо неоднозначних ситуацій або потрібних параметрів."
@@ -2248,11 +2247,11 @@ msgstr ""
 "Не запитувати користувача. У разі можливості відповідати «так», всі інші "
 "запити переривати."
 
-#: virt-clone:189 virt-convert:83 virt-image:117 virt-install:955
+#: virt-clone:189 virt-convert:83 virt-image:117 virt-install:957
 msgid "Suppress non-error output"
 msgstr "Придушити повідомлення не про помилки"
 
-#: virt-clone:206 virt-install:982
+#: virt-clone:206 virt-install:984
 #, python-format
 msgid "Unknown argument '%s'"
 msgstr "Невідомий аргумент «%s»"
@@ -2268,7 +2267,7 @@ msgstr ""
 msgid "Clone '%s' created successfully."
 msgstr "Клон «%s» успішно створено."
 
-#: virt-clone:259 virt-image:214 virt-install:1018
+#: virt-clone:259 virt-image:214 virt-install:1020
 msgid "Installation aborted at user request"
 msgstr "Встановлення перервано на вимогу користувача"
 
@@ -2284,12 +2283,12 @@ msgstr "Формат виведення даних, наприклад, «virt-i
 msgid "Output disk format"
 msgstr "Форма виведеного диска"
 
-#: virt-convert:56 virt-install:907
+#: virt-convert:56 virt-install:909
 msgid "This guest should be a fully virtualized guest"
 msgstr ""
 "Ця гостьова система має бути повністю віртуалізованою гостьовою системою"
 
-#: virt-convert:58 virt-install:909
+#: virt-convert:58 virt-install:911
 msgid "This guest should be a paravirtualized guest"
 msgstr "Ця гостьова система має бути паравіртуалізованою гостьовою системою"
 
@@ -2312,7 +2311,7 @@ msgstr ""
 "Варіант операційної системи повністю віртуалізованих гостьових систем, "
 "наприклад, «fedora6», «rhel5», «solaris10», «win2k», «vista»"
 
-#: virt-convert:73 virt-install:924
+#: virt-convert:73 virt-install:926
 msgid ""
 "Disables APIC for fully virtualized guest (overrides value in os-type/os-"
 "variant db)"
@@ -2320,7 +2319,7 @@ msgstr ""
 "Вимкнути APIC для повністю віртуалізованої гостьової системи (перевизначає "
 "значення у базі даних тип-ОС/варіант-ОС)"
 
-#: virt-convert:77 virt-install:928
+#: virt-convert:77 virt-install:930
 msgid ""
 "Disables ACPI for fully virtualized guest (overrides value in os-type/os-"
 "variant db)"
@@ -2414,19 +2413,19 @@ msgstr "Перервано на вимогу користувача"
 msgid "The image requires %i network interface."
 msgstr "Образу потрібен інтерфейс мережі %i."
 
-#: virt-image:61 virt-install:814
+#: virt-image:61 virt-install:816
 msgid "Name of the guest instance"
 msgstr "Назва екземпляра гостьової системи"
 
-#: virt-image:63 virt-install:816
+#: virt-image:63 virt-install:818
 msgid "Memory to allocate for guest instance in megabytes"
 msgstr "Об’єм пам’яті для розміщення екземпляра гостьової системи у мегабайтах"
 
-#: virt-image:66 virt-install:931
+#: virt-image:66 virt-install:933
 msgid "UUID for the guest."
 msgstr "UUID гостьової системи."
 
-#: virt-image:69 virt-install:852
+#: virt-image:69 virt-install:854
 msgid "The OS type being installed, e.g. 'linux', 'unix', 'windows'"
 msgstr "Тип ОС, яка встановлюється, наприклад, «linux», «unix», «windows»"
 
@@ -2461,7 +2460,7 @@ msgstr "Номер запису завантаження (починаючи з 
 msgid "Overwrite, or destroy, an existing image with the same name"
 msgstr "Перезаписати або вилучити вже створений образ з такою самою назвою"
 
-#: virt-image:102 virt-install:945
+#: virt-image:102 virt-install:947
 msgid "Don't boot guest after completing install."
 msgstr "Не завантажувати гостьову систему після завершення встановлення."
 
@@ -2623,11 +2622,11 @@ msgstr "Не можна одночасно використовувати --pxe 
 msgid "A disk device must be specified with --import."
 msgstr "Дисковий пристрій слід вказувати за допомогою --import."
 
-#: virt-install:539
+#: virt-install:541
 msgid "The guest's network configuration does not support PXE"
 msgstr "Налаштуваннями мережі гостьової системи не підтримується PXE"
 
-#: virt-install:564
+#: virt-install:566
 msgid ""
 "Unable to connect to graphical console: virt-viewer not installed. Please "
 "install the 'virt-viewer' package."
@@ -2635,7 +2634,7 @@ msgstr ""
 "Не вдалося встановити з’єднання з графічною консоллю: virt-viewer не "
 "встановлено. Будь ласка, встановіть пакунок «virt-viewer»."
 
-#: virt-install:627
+#: virt-install:629
 msgid ""
 "\n"
 "Starting install..."
@@ -2643,7 +2642,7 @@ msgstr ""
 "\n"
 "Починаємо встановлення…"
 
-#: virt-install:649
+#: virt-install:651
 #, python-format
 msgid ""
 "Domain creation completed. You can restart your domain by running:\n"
@@ -2653,20 +2652,20 @@ msgstr ""
 "командою:\n"
 "  %s"
 
-#: virt-install:653
+#: virt-install:655
 msgid "Guest installation complete... restarting guest."
 msgstr ""
 "Встановлення гостьової системи завершено… Перезапускаємо гостьову систему."
 
-#: virt-install:660
+#: virt-install:662
 msgid "Domain install interrupted."
 msgstr "Встановлення домену перервано."
 
-#: virt-install:682
+#: virt-install:684
 msgid "Domain has crashed."
 msgstr "Домен завершив роботу у аварійному режимі."
 
-#: virt-install:719
+#: virt-install:721
 msgid ""
 "Domain installation still in progress. You can reconnect to \n"
 "the console to complete the installation process."
@@ -2674,12 +2673,12 @@ msgstr ""
 "Встановлення домену ще не завершено. Ви можете повторно з’єднатися з \n"
 "консоллю, щоб завершити процедуру встановлення."
 
-#: virt-install:724
+#: virt-install:726
 #, python-format
 msgid "%d minutes "
 msgstr "%d хвилин "
 
-#: virt-install:726
+#: virt-install:728
 #, python-format
 msgid ""
 "Domain installation still in progress. Waiting %sfor installation to "
@@ -2688,26 +2687,26 @@ msgstr ""
 "Встановлення домену не завершено. Слід почекати %s для завершення "
 "встановлення."
 
-#: virt-install:732
+#: virt-install:734
 msgid "Domain has shutdown. Continuing."
 msgstr "Роботу домену завершено. Продовжуємо."
 
-#: virt-install:739
+#: virt-install:741
 #, python-format
 msgid "Could not lookup domain after install: %s"
 msgstr "Не вдалося знайти домен після встановлення: %s"
 
-#: virt-install:746
+#: virt-install:748
 msgid "Installation has exceeded specified time limit. Exiting application."
 msgstr ""
 "Час встановлення перевищив вказане обмеження за часом. Завершуємо роботу "
 "програми."
 
-#: virt-install:771
+#: virt-install:773
 msgid "Dry run completed successfully"
 msgstr "Під час тестового запуску помилок не виявлено"
 
-#: virt-install:777
+#: virt-install:779
 msgid ""
 "--print-xml can only be used with guests that do not have an installation "
 "phase (--import, --boot, etc.). To see all generated XML, please use --print-"
@@ -2717,52 +2716,52 @@ msgstr ""
 "фази встановлення (--import, --boot, тощо). Для перегляду всіх створених "
 "XML, скористайтеся параметром --print-step all."
 
-#: virt-install:787
+#: virt-install:789
 msgid "Requested installation does not have XML step 2"
 msgstr "У вказаному встановленні немає кроку 2 XML"
 
-#: virt-install:791
+#: virt-install:793
 msgid "Requested installation does not have XML step 3"
 msgstr "У вказаному встановленні немає кроку 3 XML"
 
-#: virt-install:820
+#: virt-install:822
 msgid "Human readable description of the VM to store in the generated XML."
 msgstr ""
 "Зручний для читання опис віртуальної машини, який зберігатиметься у "
 "створеному XML."
 
-#: virt-install:823
+#: virt-install:825
 msgid "Set domain security driver configuration."
 msgstr "Встановити налаштування драйверів безпеки домену."
 
-#: virt-install:825
+#: virt-install:827
 msgid "Tune NUMA policy for the domain process."
 msgstr "Змінити правила NUMA для процесу домену."
 
-#: virt-install:828
+#: virt-install:830
 msgid "Installation Method Options"
 msgstr "Параметри способу встановлення"
 
-#: virt-install:830
+#: virt-install:832
 msgid "CD-ROM installation media"
 msgstr "Носій CD-ROM для встановлення"
 
-#: virt-install:832
+#: virt-install:834
 msgid ""
 "Installation source (eg, nfs:host:/path, http://host/path, ftp://host/path)"
 msgstr ""
 "Джерело даних встановлення (наприклад, nfs:вузол:/шлях, http://вузол:/шлях, "
 "ftp://вузол:/шлях)"
 
-#: virt-install:835
+#: virt-install:837
 msgid "Boot from the network using the PXE protocol"
 msgstr "Завантажити з мережі за допомогою протоколу PXE"
 
-#: virt-install:837
+#: virt-install:839
 msgid "Build guest around an existing disk image"
 msgstr "Побудувати гостьову систему на основі вже створеного образу диска"
 
-#: virt-install:839
+#: virt-install:841
 msgid ""
 "Path to init binary for container guest. Ex:\n"
 "--init /path/to/app (to contain an application)\n"
@@ -2772,22 +2771,22 @@ msgstr ""
 "--init /шлях/до/програми (для програми у контейнері)\n"
 "--init /sbin/init (для повноцінного контейнера ОС)"
 
-#: virt-install:843
+#: virt-install:845
 msgid "Treat the CD-ROM media as a Live CD"
 msgstr "Вважати носій CD-ROM носієм компакт-диска портативної системи"
 
-#: virt-install:846
+#: virt-install:848
 msgid ""
 "Additional arguments to pass to the install kernel booted from --location"
 msgstr ""
 "Додаткові параметри, які слід передати ядру встановлення, що "
 "завантажуватиметься з --location"
 
-#: virt-install:850
+#: virt-install:852
 msgid "Add given file to root of initrd from --location"
 msgstr "Додати вказаний файл до кореневого каталогу initrd з --location"
 
-#: virt-install:855
+#: virt-install:857
 msgid ""
 "The OS variant being installed guests, e.g. 'fedora6', 'rhel5', 'solaris10', "
 "'win2k'"
@@ -2795,7 +2794,7 @@ msgstr ""
 "Варіант гостьових операційних систем, яка встановлюється, наприклад, "
 "«fedora6», «rhel5», «solaris10», «win2k»"
 
-#: virt-install:858
+#: virt-install:860
 msgid ""
 "Optionally configure post-install boot order, menu, permanent kernel boot, "
 "etc."
@@ -2803,7 +2802,7 @@ msgstr ""
 "Додаткове налаштування порядку завантаження після встановлення, меню, "
 "постійного каталогу завантаження ядра тощо."
 
-#: virt-install:864
+#: virt-install:866
 msgid ""
 "Specify storage with various options. Ex.\n"
 "--disk path=/my/existing/disk\n"
@@ -2815,53 +2814,53 @@ msgstr ""
 "--disk path=/мій/новий/диск,size=5 (у гігабайтах)\n"
 "--disk vol=назва_резервного_сховища:назва_тому,device=cdrom,bus=scsi,..."
 
-#: virt-install:869
+#: virt-install:871
 msgid "Don't set up any disks for the guest."
 msgstr "Не налаштовувати жодних дисків для гостьової системи."
 
-#: virt-install:886
+#: virt-install:888
 msgid "Don't create network interfaces for the guest."
 msgstr "Не створювати інтерфейсів мережі для гостьової системи."
 
-#: virt-install:892
+#: virt-install:894
 msgid "Don't automatically try to connect to the guest console"
 msgstr ""
 "Не виконувати автоматичних спроб встановлення з’єднання з консоллю гостьової "
 "системи"
 
-#: virt-install:896
+#: virt-install:898
 msgid "Device Options"
 msgstr "Параметри пристрою"
 
-#: virt-install:905
+#: virt-install:907
 msgid "Virtualization Platform Options"
 msgstr "Параметри платформи віртуалізації"
 
-#: virt-install:912
+#: virt-install:914
 msgid "This guest should be a container guest"
 msgstr "Ця гостьова система має бути гостьовою системою у контейнері"
 
-#: virt-install:915
+#: virt-install:917
 msgid "Hypervisor name to use (kvm, qemu, xen, ...)"
 msgstr "Назва гіпервізора, яку слід використовувати (kvm, qemu, xen…)"
 
-#: virt-install:919
+#: virt-install:921
 msgid "The CPU architecture to simulate"
 msgstr "Архітектура процесора, яку слід імітувати"
 
-#: virt-install:921
+#: virt-install:923
 msgid "The machine type to emulate"
 msgstr "Тип архітектури, який слід імітувати"
 
-#: virt-install:937
+#: virt-install:939
 msgid "Have domain autostart on host boot up."
 msgstr "Автоматично запускати домен після запуску основної системи."
 
-#: virt-install:939
+#: virt-install:941
 msgid "Print the generated domain XML rather than define the guest."
 msgstr "Вивести створений XML-домену замість визначення гостьової системи."
 
-#: virt-install:942
+#: virt-install:944
 msgid ""
 "Print XML of a specific install step (1, 2, 3, all) rather than define the "
 "guest."
@@ -2869,29 +2868,23 @@ msgstr ""
 "Показати XML певного кроку встановлення (1, 2, 3, all) замість визначення "
 "гостьової системи."
 
-#: virt-install:947
+#: virt-install:949
 msgid "Time to wait (in minutes)"
 msgstr "Час очікування (у хвилинах)"
 
-#: virt-install:949
+#: virt-install:951
 msgid ""
 "Run through install process, but do not create devices or define the guest."
 msgstr ""
 "Виконати процедуру встановлення, але не створювати пристроїв і не визначати "
 "гостьову систему."
 
-#: virt-install:952
+#: virt-install:954
 msgid "Forces 'yes' for any applicable prompts, terminates for all others"
 msgstr ""
 "Відповідати «так» ('yes') на всі запити, переривати роботу у відповідь на "
 "всі інші запити"
 
-#: virt-install:996
+#: virt-install:998
 msgid "--print-step must be 1, 2, 3, or all"
 msgstr "Значенням --print-step має бути 1, 2, 3 або all"
-
-#~ msgid ""
-#~ "The MAC address you entered is already in use by another inactive virtual "
-#~ "machine."
-#~ msgstr ""
-#~ "Вказаною вами MAC вже користується інша неактивна віртуальна машина."

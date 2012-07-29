@@ -1,6 +1,11 @@
    Virtinst News
    =================
 
+Release 0.600.3 (July 29, 2012)
+-------------------------------
+- virt-install: Fix --cpuset=auto
+- virt-clone: Fix cloning to existing local managed block device
+
 Release 0.600.2 (July 08, 2012)
 -------------------------------
 - virt-install: New --memballoon option (Eiichi Tsukata)

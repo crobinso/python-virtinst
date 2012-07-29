@@ -104,6 +104,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_bindir}/virt-convert
 
 %changelog
+* Sun Jul 29 2012 Cole Robinson <crobinso@redhat.com> - 0.600.3-1
+- virtinst release 0.600.3
+- virt-install: Fix --cpuset=auto
+- virt-clone: Fix cloning to existing local managed block device
+
 * Sun Jul 08 2012 Cole Robinson <crobinso@redhat.com> - 0.600.2-1
 - virtinst release 0.600.2
 - virt-install: New --memballoon option (Eiichi Tsukata)
