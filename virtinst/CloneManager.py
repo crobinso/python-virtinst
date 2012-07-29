@@ -473,10 +473,22 @@ class CloneDesign(object):
                     xmldisk = disk
 
             if clone_disk.vol_object:
-                # XXX We could do this with vol upload I think
-                raise RuntimeError(
-                    _("Clone onto existing storage volume is not "
-                      "supported: '%s'") % clone_disk.path)
+                # XXX We could always do this with vol upload?
+
+                # Special case: non remote cloning of a guest using
+                # managed block devices: fall back to local cloning if
+                # we have permissions to do so. This validation check
+                # caused a few bug reports in a short period of time,
+                # so must be a common case.
+                if (clone_disk.is_remote() or
+                    clone_disk.type != clone_disk.TYPE_BLOCK or
+                    not orig_disk.path or
+                    not os.access(orig_disk.path, os.R_OK) or
+                    not clone_disk.path or
+                    not os.access(clone_disk.path, os.W_OK)):
+                    raise RuntimeError(
+                        _("Clone onto existing storage volume is not "
+                          "currently supported: '%s'") % clone_disk.path)
 
             # Sync 'size' between the two
             if orig_disk.size:
