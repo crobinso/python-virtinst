@@ -48,8 +48,9 @@ class VirtualFilesystem(VirtualDevice.VirtualDevice):
 
     DRIVER_PATH = "path"
     DRIVER_HANDLE = "handle"
+    DRIVER_PROXY = "proxy"
     DRIVER_DEFAULT = "default"
-    DRIVER_TYPES = [DRIVER_PATH, DRIVER_HANDLE, DRIVER_DEFAULT]
+    DRIVER_TYPES = [DRIVER_PATH, DRIVER_HANDLE, DRIVER_PROXY, DRIVER_DEFAULT]
 
     @staticmethod
     def type_to_source_prop(fs_type):
