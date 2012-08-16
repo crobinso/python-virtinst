@@ -235,6 +235,7 @@ class StoragePool(StorageObject):
     Base class for building and installing libvirt storage pool xml
     """
 
+    """@group Types: TYPE_*"""
     TYPE_DIR     = "dir"
     TYPE_FS      = "fs"
     TYPE_NETFS   = "netfs"
@@ -243,7 +244,6 @@ class StoragePool(StorageObject):
     TYPE_ISCSI   = "iscsi"
     TYPE_SCSI    = "scsi"
     TYPE_MPATH   = "mpath"
-    """@group Types: TYPE_*"""
 
     # Pool type descriptions for use in higher level programs
     _types = {}
@@ -261,7 +261,7 @@ class StoragePool(StorageObject):
         Return class associated with passed pool type.
 
         @param ptype: Pool type
-        @type ptype: C{str} member of L{Types}
+        @type ptype: member of I{Types}
         """
         if ptype not in StoragePool._types:
             raise ValueError(_("Unknown storage pool type: %s" % ptype))
@@ -309,7 +309,7 @@ class StoragePool(StorageObject):
 
         @param conn: Libvirt connection
         @param name: Name for the new pool
-        @param pool_type: Pool type string from L{Types}
+        @param pool_type: Pool type string from I{Types}
         @param host: Option host string to poll for sources
         """
         if not support.check_conn_support(conn,
@@ -1022,7 +1022,8 @@ class StorageVolume(StorageObject):
 
         Ex name="test", suffix=".img" -> name-3.img
 
-        @collidelist: An extra list of names to check for collision
+        @param collidelist: An extra list of names to check for collision
+        @type collidelist: C{list}
         @returns: A free name
         @rtype: C{str}
         """

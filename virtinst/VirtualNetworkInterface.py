@@ -302,14 +302,12 @@ class VirtualNetworkInterface(VirtualDevice.VirtualDevice):
 
     def is_conflict_net(self, conn, mac=None):
         """
-        is_conflict_net: determines if mac conflicts with others in system
-
-        returns a two element tuple:
+        @returns: a two element tuple:
             first element is True if fatal collision occured
             second element is a string description of the collision.
 
-        Non fatal collisions (mac addr collides with inactive guest) will
-        return (False, "description of collision")
+            Non fatal collisions (mac addr collides with inactive guest) will
+            return (False, "description of collision")
         """
         mac = mac or self.macaddr
         if mac is None:

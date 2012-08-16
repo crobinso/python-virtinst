@@ -585,9 +585,9 @@ class Capabilities(object):
         Try to determine if fullvirt may be disabled in the bios.
 
         Check is basically:
-        - We support HW virt
-        - We appear to be xen
-        - There are no HVM install options
+            - We support HW virt
+            - We appear to be xen
+            - There are no HVM install options
 
         We don't do this check for KVM, since no KVM options may mean
         KVM isn't installed or the module isn't loaded (and loading the
@@ -688,9 +688,9 @@ def guest_lookup(conn, caps=None, os_type=None, arch=None, type=None,
     we return the default virt type associated with those values. These are
     typically:
 
-    - os_type    : hvm, then xen
-    - type : kvm over plain qemu
-    - arch    : host arch over all others
+        - os_type    : hvm, then xen
+        - type : kvm over plain qemu
+        - arch    : host arch over all others
 
     Otherwise the default will be the first listed in the capabilities xml.
     This function throws C{ValueError}s if any of the requested values are
@@ -699,7 +699,7 @@ def guest_lookup(conn, caps=None, os_type=None, arch=None, type=None,
     @param conn: virConnect instance
     @type conn: libvirt.virConnect
     @param caps: Optional L{Capabilities} instance (saves a lookup)
-    @type conn: L{Capabilities}
+    @type caps: L{Capabilities}
     @param type: Virtualization type ('hvm', 'xen', ...)
     @type type: C{str}
     @param arch: Guest architecture ('x86_64', 'i686' ...)

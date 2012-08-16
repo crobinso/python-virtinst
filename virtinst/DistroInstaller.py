@@ -175,10 +175,13 @@ class DistroInstaller(Installer.Installer):
     def set_location(self, val):
         """
         Valid values for location:
-        1) it can be a local file (ex. boot.iso), directory (ex. distro tree)
-           or physical device (ex. cdrom media)
-        2) tuple of the form (poolname, volname) pointing to a file or device
-           which will set location as that path
+
+        1) it can be a local file (ex. boot.iso), directory (ex. distro
+        tree) or physical device (ex. cdrom media)
+
+        2) tuple of the form (poolname, volname) pointing to a file or
+        device which will set location as that path
+
         3) http, ftp, or nfs path for an install tree
         """
         is_tuple = False

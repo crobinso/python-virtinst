@@ -515,7 +515,7 @@ class VirtualDisk(VirtualDevice):
 
         @return: tuple of
                  (True if regular file, False otherwise, default is True,
-                  max size of storage, default is 0)
+                 max size of storage, default is 0)
         """
         try:
             return _util.stat_disk(path)
@@ -1710,10 +1710,11 @@ class VirtualDisk(VirtualDevice):
     def generate_target(self, skip_targets):
         """
         Generate target device ('hda', 'sdb', etc..) for disk, excluding
-        any targets in list 'skip_targets'. Sets self.target, and returns the
+        any targets in 'skip_targets'. Sets self.target, and returns the
         generated value
-        @param used_targets: list of targets to exclude
-        @type used_targets: C{list}
+
+        @param skip_targets: list of targets to exclude
+        @type skip_targets: C{list}
         @raise ValueError: can't determine target type, no targets available
         @returns generated target
         @rtype C{str}

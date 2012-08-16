@@ -1210,8 +1210,7 @@ def parse_optstr(optstr, basedict=None, remove_first=None,
                          returns {"char_type", "pty", "foo" : "bar"}
     @param compress_first: If there are no options of the form opt1=opt2,
                            compress the string to a single option
-
-    Returns a dictionary of {'opt1': 'val1', 'opt2': 'val2'}
+    @returns: a dictionary of {'opt1': 'val1', 'opt2': 'val2'}
     """
     optlist = parse_optstr_tuples(optstr, compress_first=compress_first)
     optdict = basedict or {}

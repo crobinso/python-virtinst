@@ -72,36 +72,39 @@ SUPPORT_STREAM_UPLOAD = 6000
 """
 Possible keys:
 
-  "version" : Minimum libvirt version required for this feature. Not used
-              if 'args' provided
-  "force_version" : Demand that version check is met for the checked
-                    libvirt version. Normally we will make a best effort
-                    attempt, because determining the daemon version depends
-                    on a fairly new API call getLibVersion. So for things like
-                    testing API availability (e.g. createXMLFrom) we won't
-                    force the check, but for things like XML options (AC97)
-                    we want to be ABSOLUTELY SURE it is supported so we
-                    don't enable it by default and break guest creation.
-                    This isn't required for versions after >= 0.7.3
+  - "version" : Minimum libvirt version required for this feature. Not used
+                if 'args' provided
 
-  "function" : Function name to check exists. If object not specified,
-               function is checked against libvirt module.
-  "args": Argument tuple to actually test object.function with.
-  "flag": A flag to check exists. This will be appended to the argument
-          list if args are provided, otherwise we will only check against
-          the local libvirt version.
+  - "force_version" : Demand that version check is met for the checked
+                      libvirt version. Normally we will make a best effort
+                      attempt, because determining the daemon version depends
+                      on a fairly new API call getLibVersion. So for things like
+                      testing API availability (e.g. createXMLFrom) we won't
+                      force the check, but for things like XML options (AC97)
+                      we want to be ABSOLUTELY SURE it is supported so we
+                      don't enable it by default and break guest creation.
+                      This isn't required for versions after >= 0.7.3
 
-  "drv_version" : A list of tuples of the form
-                  (driver name (e.g qemu, xen, lxc), minimum supported version)
-                 If a hypervisor is not listed, it is assumed to be NOT
-                 SUPPORTED.
-  "drv_libvirt_version" : List of tuples, similar to drv_version, but
-                          the version number is minimum supported _libvirt_
-                          version
-  "hv_version" : A list of tuples of the same form as drv_version, however
-                 listing the actual <domain type='%s'/> from the XML.
-                 example: 'kvm'
+  - "function" : Function name to check exists. If object not specified,
+                 function is checked against libvirt module.
 
+  - "args": Argument tuple to actually test object.function with.
+
+  - "flag": A flag to check exists. This will be appended to the argument
+            list if args are provided, otherwise we will only check against
+            the local libvirt version.
+
+  - "drv_version" : A list of tuples of the form
+                   (driver name (e.g qemu, xen, lxc), minimum supported version)
+                   If a hypervisor is not listed, it is assumed to be NOT
+                   SUPPORTED.
+
+  - "drv_libvirt_version" : List of tuples, similar to drv_version, but
+                            the version number is minimum supported _libvirt_
+                            version
+  - "hv_version" : A list of tuples of the same form as drv_version, however
+                   listing the actual <domain type='%s'/> from the XML.
+                   example: 'kvm'
 """
 
 _support_dict = {

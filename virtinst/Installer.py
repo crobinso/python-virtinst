@@ -419,9 +419,9 @@ class Installer(XMLBuilderDomain.XMLBuilderDomain):
         """
         Fetch any files needed for installation.
         @param guest: guest instance being installed
-        @type L{Guest}
+        @type guest: L{Guest}
         @param meter: progress meter
-        @type Urlgrabber ProgressMeter
+        @type meter: Urlgrabber ProgressMeter
         """
         raise NotImplementedError("Must be implemented in subclass")
 

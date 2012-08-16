@@ -259,8 +259,8 @@ def get_host_network_devices():
     return device
 
 def get_max_vcpus(conn, type=None):
-    """@conn libvirt connection to poll for max possible vcpus
-       @type optional guest type (kvm, etc.)"""
+    """@param conn: libvirt connection to poll for max possible vcpus
+       @type type: optional guest type (kvm, etc.)"""
     if type is None:
         type = conn.getType()
     try:
@@ -537,7 +537,7 @@ def lookup_pool_by_path(conn, path):
     return the first we find, active or inactive. This iterates over
     all pools and dumps their xml, so it is NOT quick.
     Favor running pools over inactive pools.
-    @return virStoragePool object if found, None otherwise
+    @returns: virStoragePool object if found, None otherwise
     """
     if not is_storage_capable(conn):
         return None

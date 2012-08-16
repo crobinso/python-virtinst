@@ -50,7 +50,7 @@ class NodeDevice(object):
         @param child_dev: Child node device to display in description
         @type child_dev: L{NodeDevice}
 
-        @returns Device description string
+        @returns: Device description string
         @rtype C{str}
         """
         ignore = child_dev
@@ -497,13 +497,12 @@ def devAddressToNodedev(conn, addrstr):
     Look up the passed host device address string as a libvirt node device,
     parse its xml, and return a NodeDevice instance.
 
-    addrstr can be the following formats:
-        bus.addr (ex. 001.003 for a usb device)
-        vendor:product (ex. 0x1234:0x5678 for a usb device
-        (domain:)bus:slot.func (ex. 00:10.0 for a pci device)
-
     @param conn: libvirt.virConnect instance to perform the lookup on
-    @param name: host device string to parse and lookup
+    @param addrstr: host device string to parse and lookup
+        - bus.addr (ex. 001.003 for a usb device)
+        - vendor:product (ex. 0x1234:0x5678 for a usb device
+        - (domain:)bus:slot.func (ex. 00:10.0 for a pci device)
+    @param addrstr: C{str}
     """
     if not is_nodedev_capable(conn):
         raise ValueError(_("Connection does not support host device "

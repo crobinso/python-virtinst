@@ -39,9 +39,6 @@ class VirtualRedirDevice(VirtualDevice.VirtualDevice):
         """
         @param conn: Connection the device/guest will be installed on
         @type conn: libvirt.virConnect
-        @param nodedev: Optional NodeDevice instance for device being
-                         attached to the guest
-        @type nodedev: L{virtinst.NodeDeviceParser.NodeDevice}
         """
         VirtualDevice.VirtualDevice.__init__(self, conn, parsexml,
                                              parsexmlnode, caps)
