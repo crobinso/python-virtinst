@@ -393,7 +393,7 @@ def check_option_collisions(options, guest):
         if options.mac:
             fail(_("Cannot use --mac with --nonetworks"))
         if options.bridge:
-            fail(_("Cannot use --bridges with --nonetworks"))
+            fail(_("Cannot use --bridge with --nonetworks"))
         if options.network:
             fail(_("Cannot use --network with --nonetworks"))
         return
