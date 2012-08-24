@@ -1435,6 +1435,9 @@ class Guest(XMLBuilderDomain.XMLBuilderDomain):
         if features["pae"] is None and self._get_caps():
             features["pae"] = self._get_caps().support_pae()
 
+        if (self.installer.machine == None and
+            self._get_caps().host.arch == "ppc64"):
+            self.installer.machine = "pseries"
 
     def _set_pv_defaults(self, devlist_func, remove_func):
         # Default file backed PV guests to tap driver
