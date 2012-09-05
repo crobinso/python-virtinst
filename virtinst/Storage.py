@@ -741,7 +741,7 @@ class LogicalPool(StoragePool):
             raise ValueError(_("Must explicitly specify source path if "
                                "building pool"))
         return StoragePool.install(self, meter=meter, create=create,
-                                   build=build, autostart=False)
+                                   build=build, autostart=autostart)
 
 class DiskPool(StoragePool):
     """
