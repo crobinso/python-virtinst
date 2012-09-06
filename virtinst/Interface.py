@@ -230,7 +230,7 @@ class Interface(object):
 
     def install(self, meter=None, create=True):
         """
-        Install storage pool xml.
+        Install network interface xml.
         """
         xml = self.get_xml_config()
         logging.debug("Creating interface '%s' with xml:\n%s",
