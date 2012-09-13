@@ -219,8 +219,8 @@ args_dict = {
         "--disk path=%(EXISTIMG1)s,device=floppy",
         # Existing disk, no extra options
         "--disk path=%(EXISTIMG1)s",
-        # Create volume in a pool
-        "--disk pool=%(POOL)s,size=.0001",
+        # Create 2 volumes in a pool
+        "--disk pool=%(POOL)s,size=.0001 --disk pool=%(POOL)s,size=.0001",
         # Existing volume
         "--disk vol=%(POOL)s/%(VOL)s",
         # 3 IDE and CD

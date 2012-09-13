@@ -30,6 +30,7 @@ import difflib
 import tempfile
 import optparse
 import shlex
+import itertools
 
 import libvirt
 
@@ -1476,6 +1477,8 @@ def parse_security(guest, security):
 # --disk parsing #
 ##################
 
+_disk_counter = itertools.count()
+
 def _parse_disk_source(guest, path, pool, vol, size, fmt, sparse):
     abspath = None
     volinst = None
@@ -1498,9 +1501,10 @@ def _parse_disk_source(guest, path, pool, vol, size, fmt, sparse):
         vc = virtinst.Storage.StorageVolume.get_volume_for_pool(pool_name=pool,
                                                                 conn=guest.conn)
         vname = virtinst.Storage.StorageVolume.find_free_name(conn=guest.conn,
-                                                              pool_name=pool,
-                                                              name=guest.name,
-                                                              suffix=".img")
+                                            pool_name=pool,
+                                            name=guest.name,
+                                            suffix=".img",
+                                            start_num=_disk_counter.next())
         volinst = vc(pool_name=pool, name=vname, conn=guest.conn,
                      allocation=0, capacity=(size and
                                              size * 1024 * 1024 * 1024))
