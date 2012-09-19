@@ -1513,7 +1513,10 @@ class Guest(XMLBuilderDomain.XMLBuilderDomain):
                             disk.bus = "ide"
                     elif self.installer.is_xenpv():
                         disk.bus = "xen"
-            used_targets.append(disk.generate_target(used_targets))
+            if disk.target:
+                used_targets.append(disk.target)
+            else:
+                used_targets.append(disk.generate_target(used_targets))
 
         # Set sound device model
         sound_model  = self._lookup_device_param(soundtype, "model")

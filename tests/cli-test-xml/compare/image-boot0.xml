@@ -18,7 +18,7 @@
     </disk>
     <disk type='file' device='disk'>
       <source file='/tmp/__virtinst__cli_scratch.raw'/>
-      <target dev='xvdb' bus='xen'/>
+      <target dev='xvdc' bus='xen'/>
     </disk>
     <interface type='user'>
       <mac address='00:11:22:33:44:55'/>

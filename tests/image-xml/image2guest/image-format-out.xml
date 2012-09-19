@@ -30,7 +30,7 @@
     <disk type='file' device='disk'>
       <driver name='qemu' type='vmdk'/>
       <source file='REPLACEME/tests/image-xml/image-format.xml'/>
-      <target dev='hdd' bus='ide'/>
+      <target dev='hdc' bus='ide'/>
     </disk>
     <input type='mouse' bus='ps2'/>
     <graphics type='sdl' display=':3.4' xauth='/tmp/.Xauthority'/>
