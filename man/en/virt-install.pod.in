@@ -249,7 +249,7 @@ http://download.fedoraproject.org/pub/fedora/linux/releases/10/Fedora/i386/os/
 
 =item Debian/Ubuntu
 
-http://ftp.us.debian.org/debian/dists/etch/main/installer-amd64/
+http://ftp.us.debian.org/debian/dists/stable/main/installer-amd64/
 
 =item Suse
 
