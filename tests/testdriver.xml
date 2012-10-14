@@ -1534,7 +1534,14 @@
   <start mode="onboot"/>
   <mtu size="1500"/>
   <bridge stp="off">
-    <interface type="bond" name="bond-brbond"/>
+    <interface type="bond" name="bond-brbond">
+      <start mode="none"/>
+      <bond mode="active-backup">
+        <miimon freq="100" updelay="10" carrier="ioctl"/>
+        <interface type="ethernet" name="brbond-eth0"/>
+        <interface type="ethernet" name="brbond-eth1"/>
+      </bond>
+    </interface>
   </bridge>
 </interface>
 
