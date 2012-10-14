@@ -3,7 +3,7 @@
   <uuid>00000000-1111-2222-3333-444444444444</uuid>
   <memory unit="KiB">409600</memory>
   <currentMemory unit="KiB">204800</currentMemory>
-  <vcpu>5</vcpu>
+  <vcpu placement="static">5</vcpu>
   <os>
     <type arch="i686">hvm</type>
     <loader>/usr/lib/xen/boot/hvmloader</loader>
