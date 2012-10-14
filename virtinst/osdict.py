@@ -382,6 +382,16 @@ OS_TYPES = {
             INPUT: USB_TABLET,
         }
     },
+    "fedora18": {
+        "label": "Fedora 18",
+        "distro": "fedora",
+        "supported": True,
+        "devices" : {
+            DISK : VIRTIO_DISK,
+            NET  : VIRTIO_NET,
+            INPUT: USB_TABLET,
+        }
+    },
 
     "opensuse11": {
         "label": "openSuse 11",
