@@ -383,6 +383,8 @@ class VirtualDisk(VirtualDevice):
         @return: List of the directories the user cannot search, or empty list
         @rtype : C{list}
         """
+        if path is None:
+            return []
         if _util.is_uri_remote(conn.getURI(), conn=conn):
             return []
 
