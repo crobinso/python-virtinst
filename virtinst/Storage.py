@@ -45,17 +45,19 @@ General workflow for the different storage objects:
 @see: U{http://libvirt.org/storage.html}
 """
 
-import libvirt
+import os
 import threading
 import time
-import os
-
 import logging
-from _util import xml_escape as escape
 
+import libvirt
+import urlgrabber
+
+from _util import xml_escape as escape
 import _util
 import support
 from virtinst import _gettext as _
+
 
 DEFAULT_DEV_TARGET = "/dev"
 DEFAULT_LVM_TARGET_BASE = "/dev/"
@@ -449,6 +451,9 @@ class StoragePool(StorageObject):
         logging.debug("Creating storage pool '%s' with xml:\n%s",
                       self.name, xml)
 
+        if not meter:
+            meter = urlgrabber.progress.BaseMeter()
+
         try:
             pool = self.conn.storagePoolDefineXML(xml, 0)
         except Exception, e:
@@ -456,16 +461,10 @@ class StoragePool(StorageObject):
 
         errmsg = None
         if build:
-            if meter:
-                #meter.start(size=None, text=_("Creating storage pool..."))
-                pass
             try:
                 pool.build(libvirt.VIR_STORAGE_POOL_BUILD_NEW)
             except Exception, e:
                 errmsg = _("Could not build storage pool: %s" % str(e))
-            if meter:
-                #meter.end(0)
-                pass
 
         if create and not errmsg:
             try:
@@ -1201,21 +1200,22 @@ class StorageVolume(StorageObject):
                              args=(meter,))
         t.setDaemon(True)
 
+        if not meter:
+            meter = urlgrabber.progress.BaseMeter()
+
         try:
             try:
                 self._install_finished = False
                 t.start()
-                if meter:
-                    meter.start(size=self.capacity,
-                                text=_("Allocating '%s'") % self.name)
+                meter.start(size=self.capacity,
+                            text=_("Allocating '%s'") % self.name)
 
                 if self.input_vol:
                     vol = self.pool.createXMLFrom(xml, self.input_vol, 0)
                 else:
                     vol = self.pool.createXML(xml, 0)
 
-                if meter:
-                    meter.end(self.capacity)
+                meter.end(self.capacity)
                 logging.debug("Storage volume '%s' install complete.",
                               self.name)
                 return vol

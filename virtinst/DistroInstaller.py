@@ -23,6 +23,8 @@ import shutil
 import subprocess
 import tempfile
 
+import urlgrabber
+
 import Storage
 import support
 import _util
@@ -93,6 +95,9 @@ def _upload_file(conn, meter, destpool, src):
             if ret == 0 or ret == len(data):
                 break
             data = data[ret:]
+
+    if meter is None:
+        meter = urlgrabber.progress.BaseMeter()
 
     # Build placeholder volume
     size = os.path.getsize(src)

@@ -19,12 +19,16 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301 USA.
 
-import os.path
+import logging
+import os
+
 import libxml2
+import urlgrabber
+
 import CapabilitiesParser
 from virtinst import _gettext as _
 import _util
-import logging
+
 
 class ParserException(Exception):
     def __init__(self, msg):
@@ -240,6 +244,9 @@ class Disk:
             import sha
             hashlib = None
 
+        if meter is None:
+            meter = urlgrabber.progress.BaseMeter()
+
         m = None
         if hashlib:
             if "sha256" in self.csum:
@@ -259,18 +266,16 @@ class Disk:
 
         meter_ct = 0
         disk_size = os.path.getsize(self.file)
-        if meter:
-            meter.start(size=disk_size,
-                        text=_("Checking disk signature for %s" % self.file))
+        meter.start(size=disk_size,
+                    text=_("Checking disk signature for %s" % self.file))
 
         f = file(self.file)
         while 1:
             chunk = f.read(65536)
             if not chunk:
                 break
-            if meter:
-                meter.update(meter_ct)
-                meter_ct = meter_ct + 65536
+            meter.update(meter_ct)
+            meter_ct = meter_ct + 65536
             m.update(chunk)
         checksum = m.hexdigest()
         if checksum != csumvalue:
