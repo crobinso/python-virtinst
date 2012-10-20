@@ -1608,6 +1608,7 @@ def parse_disk(guest, optstr, dev=None):
                                    volInstall=volinst,
                                    size=size,
                                    readOnly=ro,
+                                   sparse=sparse,
                                    shareable=shared,
                                    device=device,
                                    format=fmt)
