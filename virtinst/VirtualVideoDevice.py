@@ -28,6 +28,12 @@ class VirtualVideoDevice(VirtualDevice.VirtualDevice):
     MODEL_DEFAULT = "default"
     _model_types = [ "cirrus", "vga", "vmvga", "xen", "qxl", MODEL_DEFAULT]
 
+    @staticmethod
+    def pretty_model(model):
+        if model in ["qxl", "vmvga"]:
+            return model.upper()
+        return model.capitalize()
+
     def __init__(self, conn, parsexml=None, parsexmlnode=None, caps=None):
         VirtualDevice.VirtualDevice.__init__(self, conn,
                                              parsexml, parsexmlnode, caps)
