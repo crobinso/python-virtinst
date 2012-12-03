@@ -866,7 +866,7 @@ def parse_args():
         help=_("Specify storage with various options. Ex.\n"
                "--disk path=/my/existing/disk\n"
                "--disk path=/my/new/disk,size=5 (in gigabytes)\n"
-               "--disk vol=poolname:volname,device=cdrom,bus=scsi,..."))
+               "--disk vol=poolname/volname,device=cdrom,bus=scsi,..."))
     stog.add_option("", "--nodisks", action="store_true",
                     help=_("Don't set up any disks for the guest."))
     cli.add_fs_option(stog)
