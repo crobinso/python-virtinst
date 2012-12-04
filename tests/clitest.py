@@ -251,8 +251,6 @@ args_dict = {
         "--disk %(DIR)s,device=floppy",
         # Driver name and type options
         "--disk %(EXISTIMG1)s,driver_name=qemu,driver_type=qcow2",
-        # Unknown driver name and type options
-        "--disk %(EXISTIMG1)s,driver_name=foobar,driver_type=foobaz",
         # Using a storage pool source as a disk
         "--disk /dev/hda",
         # Building 'default' pool
@@ -290,6 +288,8 @@ args_dict = {
         "--disk %(COLLIDE)s",
         # Dir without floppy
         "--disk %(DIR)s,device=cdrom",
+        # Unknown driver name and type options (as of 1.0.0)
+        "--disk %(EXISTIMG1)s,driver_name=foobar,driver_type=foobaz",
       ]
      }, # category "storage"
 
