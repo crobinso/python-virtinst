@@ -656,14 +656,13 @@ def start_install(guest, continue_inst, options):
             dom.create()
             guest.connect_console(conscb)
 
-    except KeyboardInterrupt, e:
+    except KeyboardInterrupt:
         logging.debug("", exc_info=True)
         guest.terminate_console()
         print_stderr(_("Domain install interrupted."))
+        raise
     except RuntimeError, e:
         fail(e)
-    except SystemExit, e:
-        sys.exit(e.code)
     except Exception, e:
         fail(e, do_exit=False)
         cli.install_fail(guest)

@@ -21,6 +21,7 @@ import glob
 from distutils.core import setup, Command
 from distutils.command.sdist import sdist
 from distutils.command.build import build
+import unittest
 from unittest import TextTestRunner, TestLoader
 
 VERSION = "0.600.3"
@@ -81,7 +82,16 @@ class TestBaseCommand(Command):
             coverage.erase()
             coverage.start()
 
-        result = t.run(tests)
+        if hasattr(unittest, "installHandler"):
+            try:
+                unittest.installHandler()
+            except:
+                print "installHandler hack failed"
+
+        try:
+            result = t.run(tests)
+        except KeyboardInterrupt:
+            sys.exit(1)
 
         if use_coverage:
             coverage.stop()
