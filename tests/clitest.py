@@ -14,6 +14,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301 USA.
 
+import atexit
 import logging
 import os
 import shlex
@@ -1434,3 +1435,5 @@ _cmdlist = build_cmd_list()
 for _cmd in _cmdlist:
     newidx += 1
     setattr(CLITests, "testCLI%d" % newidx, maketest(_cmd))
+
+atexit.register(cleanup)
