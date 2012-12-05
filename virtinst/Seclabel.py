@@ -1,5 +1,5 @@
 #
-# Copyright 2010  Red Hat, Inc.
+# Copyright 2010, 2012  Red Hat, Inc.
 # Cole Robinson <crobinso@redhat.com>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -32,6 +32,14 @@ class Seclabel(XMLBuilderDomain.XMLBuilderDomain):
 
     MODEL_DEFAULT = "default"
 
+    SECLABEL_MODEL_TEST = "testSecurity"
+    SECLABEL_MODEL_SELINUX = "selinux"
+    SECLABEL_MODEL_DAC = "dac"
+    SECLABEL_MODEL_NONE = "none"
+    SECLABEL_MODELS = [ SECLABEL_MODEL_SELINUX,
+                        SECLABEL_MODEL_DAC,
+                        SECLABEL_MODEL_NONE ]
+
     _dumpxml_xpath = "/domain/seclabel"
     def __init__(self, conn, parsexml=None, parsexmlnode=None, caps=None):
         XMLBuilderDomain.XMLBuilderDomain.__init__(self, conn, parsexml,
@@ -50,7 +58,43 @@ class Seclabel(XMLBuilderDomain.XMLBuilderDomain):
         self.type = self.SECLABEL_TYPE_DEFAULT
 
     def _get_default_model(self):
-        return self._get_caps().host.secmodel.model
+        caps = self._get_caps()
+        if caps:
+            if (self.SECLABEL_MODEL_TEST in
+                [x.model for x in caps.host.secmodels]):
+                return self.SECLABEL_MODEL_TEST
+
+            for model in self.SECLABEL_MODELS:
+                if model in [x.model for x in caps.host.secmodels]:
+                    return model
+        raise RuntimeError("No supported model found in capabilities")
+
+    def _guess_secmodel(self, label, imagelabel):
+        # We always want the testSecurity model when running tests
+        caps = self._get_caps()
+        if (caps and
+            self.SECLABEL_MODEL_TEST in
+            [x.model for x in caps.host.secmodels]):
+            return self.SECLABEL_MODEL_TEST
+
+        if not label and not imagelabel:
+            return self._get_default_model()
+
+        lab_len = imglab_len = None
+        if label:
+            lab_len = min(3, len(label.split(':')))
+        if imagelabel:
+            imglab_len = min(3, len(imagelabel.split(':')))
+        if lab_len and imglab_len and lab_len != imglab_len:
+            raise ValueError("Label and Imagelabel are incompatible")
+
+        lab_len = lab_len or imglab_len
+        if lab_len == 3:
+            return self.SECLABEL_MODEL_SELINUX
+        elif lab_len == 2:
+            return self.SECLABEL_MODEL_DAC
+        else:
+            raise ValueError("Unknown model type for label '%s'" % self.label)
 
     def get_type(self):
         return self._type
@@ -100,8 +144,6 @@ class Seclabel(XMLBuilderDomain.XMLBuilderDomain):
         typ = self.type
         relabel = self.relabel
 
-        if model == self.MODEL_DEFAULT:
-            model = self._get_default_model()
         if typ == self.SECLABEL_TYPE_DEFAULT:
             typ = self.SECLABEL_TYPE_DYNAMIC
 
@@ -113,6 +155,8 @@ class Seclabel(XMLBuilderDomain.XMLBuilderDomain):
                 raise RuntimeError("A label must be specified for static "
                                    "security type.")
 
+        if model == self.MODEL_DEFAULT:
+            model = self._guess_secmodel(self.label, self.imagelabel)
 
         label_xml = ""
         xml = "  <seclabel type='%s' model='%s'" % (typ, model)

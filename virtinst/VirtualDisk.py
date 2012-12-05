@@ -1,7 +1,7 @@
 #
 # Classes for building disk device xml
 #
-# Copyright 2006-2008  Red Hat, Inc.
+# Copyright 2006-2008, 2012  Red Hat, Inc.
 # Jeremy Katz <katzj@redhat.com>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -1620,11 +1620,10 @@ class VirtualDisk(VirtualDevice):
         for selinux commands
         """
         caps = self._get_caps()
-        if (not caps and False):
-            #caps.host.secmodel is None or
-            #caps.host.secmodel.model != "selinux"):
-            # XXX: Libvirt support isn't strictly required, but all the
-            #      our label guesses are built with svirt in mind
+        if not caps:
+            return False
+
+        elif "selinux" not in [x.model for x in caps.host.secmodels]:
             return False
 
         elif self.is_remote():

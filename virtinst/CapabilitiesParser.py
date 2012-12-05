@@ -1,7 +1,7 @@
 #
 # Some code for parsing libvirt's capabilities XML
 #
-# Copyright 2007  Red Hat, Inc.
+# Copyright 2007, 2012  Red Hat, Inc.
 # Mark McLoughlin <markmc@redhat.com>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -260,10 +260,14 @@ class Host(object):
     def __init__(self, node=None):
         self.cpu = CPU()
         self.topology = None
-        self.secmodel = None
+        self.secmodels = []
 
         if not node is None:
             self.parseXML(node)
+
+    def get_secmodel(self):
+        return self.secmodels and self.secmodels[0] or None
+    secmodel = property(get_secmodel)
 
     # Back compat for CPU class
     def get_arch(self):
@@ -285,7 +289,7 @@ class Host(object):
                 self.topology = Topology(child)
 
             if child.name == "secmodel":
-                self.secmodel = SecurityModel(child)
+                self.secmodels.append(SecurityModel(child))
 
             if child.name == "cpu":
                 self.cpu = CPU(child)
