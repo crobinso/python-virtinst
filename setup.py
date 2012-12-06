@@ -45,6 +45,52 @@ def _build_lang_data():
         ret.append((targetpath, [newname]))
     return ret
 
+def _update_manpages():
+    # Update virt-install.1 with latest os type/variant values
+    import virtinst.osdict as osdict
+
+    # Build list first
+    ret = []
+    for t in osdict.sort_helper(osdict.OS_TYPES):
+        for v in osdict.sort_helper(osdict.OS_TYPES[t]["variants"]):
+            label = osdict.OS_TYPES[t]["variants"][v]["label"]
+            if osdict.lookup_osdict_key(None, None, t, v, "supported"):
+                ret.append((v, label))
+
+    output = ""
+    output += "=over 2\n\n"
+
+    for v, label in ret:
+        output += "=item %-20s : %s\n\n" % (v, label)
+
+    output += "=back\n\n"
+
+    infile = "man/en/virt-install.pod.in"
+    outfile = "man/en/virt-install.pod"
+
+    outfd = open(outfile, "w+")
+    origout = outfd.read()
+    outfd.close()
+
+    infd  = open(infile, "r")
+    inp = infd.read()
+    infd.close()
+
+    outp = inp.replace("::VARIANT VALUES::", output)
+    if outp != origout or not(os.path.exists(outfile)):
+        outfd = open(outfile, "w")
+        outfd.write(outp)
+        outfd.close()
+
+    # Generate new manpages
+    if os.system("make -C man/en"):
+        raise RuntimeError("Couldn't generate man pages.")
+
+    if os.system("grep -IRq 'Hey!' man/en") == 0:
+        raise RuntimeError("man pages have errors in them! "
+                           "(grep for 'Hey!')")
+
+
 # Config file building
 config_files = ["virtinst/_config.py", "virtconv/_config.py"]
 config_template = """
@@ -243,54 +289,9 @@ class mysdist(sdist):
         os.system(cmd)
 
         # Update and generate man pages
-        self._update_manpages()
+        _update_manpages()
 
         sdist.run(self)
-
-    def _update_manpages(self):
-        # Update virt-install.1 with latest os type/variant values
-        import virtinst.osdict as osdict
-
-        # Build list first
-        ret = []
-        for t in osdict.sort_helper(osdict.OS_TYPES):
-            for v in osdict.sort_helper(osdict.OS_TYPES[t]["variants"]):
-                label = osdict.OS_TYPES[t]["variants"][v]["label"]
-                if osdict.lookup_osdict_key(None, None, t, v, "supported"):
-                    ret.append((v, label))
-
-        output = ""
-        output += "=over 2\n\n"
-
-        for v, label in ret:
-            output += "=item %-20s : %s\n\n" % (v, label)
-
-        output += "=back\n\n"
-
-        infile = "man/en/virt-install.pod.in"
-        outfile = "man/en/virt-install.pod"
-
-        outfd = open(outfile, "w+")
-        origout = outfd.read()
-        outfd.close()
-
-        infd  = open(infile, "r")
-        inp = infd.read()
-        infd.close()
-
-        outp = inp.replace("::VARIANT VALUES::", output)
-        if outp != origout or not(os.path.exists(outfile)):
-            outfd = open(outfile, "w")
-            outfd.write(outp)
-            outfd.close()
-
-        # Generate new manpages
-        if os.system("make -C man/en"):
-            raise RuntimeError("Couldn't generate man pages.")
-
-        if os.system("grep -IRq 'Hey!' man/en") == 0:
-            raise RuntimeError("man pages have errors in them! "
-                               "(grep for 'Hey!')")
 
 
 class mybuild(build):
@@ -336,6 +337,9 @@ class mybuild(build):
             os.system("msgfmt po/%s -o %s" % (filename, newname))
 
         build.run(self)
+
+        # Update and generate man pages, but not before the build is done!
+        _update_manpages()
 
 setup(
     name='virtinst',
