@@ -307,9 +307,10 @@ class VirtualDisk(VirtualDevice):
         CACHE_MODE_WRITEBACK]
 
     DEVICE_DISK = "disk"
+    DEVICE_LUN = "lun"
     DEVICE_CDROM = "cdrom"
     DEVICE_FLOPPY = "floppy"
-    devices = [DEVICE_DISK, DEVICE_CDROM, DEVICE_FLOPPY]
+    devices = [DEVICE_DISK, DEVICE_LUN, DEVICE_CDROM, DEVICE_FLOPPY]
 
     TYPE_FILE = "file"
     TYPE_BLOCK = "block"
