@@ -50,6 +50,7 @@ Requires: libselinux-python
 %endif
 BuildRequires: gettext
 BuildRequires: python
+BuildRequires: /usr/bin/pod2man
 
 %description
 virtinst is a module that helps build and install libvirt based virtual
