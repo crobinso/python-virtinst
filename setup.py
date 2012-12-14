@@ -82,7 +82,9 @@ def _update_manpages():
         outfd.write(outp)
         outfd.close()
 
-    # Generate new manpages
+    _regenerate_manpages()
+
+def _regenerate_manpages():
     if os.system("make -C man/en"):
         raise RuntimeError("Couldn't generate man pages.")
 
@@ -338,8 +340,7 @@ class mybuild(build):
 
         build.run(self)
 
-        # Update and generate man pages, but not before the build is done!
-        _update_manpages()
+        _regenerate_manpages()
 
 setup(
     name='virtinst',
