@@ -145,7 +145,13 @@ def setupParser(usage=None):
     return parser
 
 def setupGettext():
-    locale.setlocale(locale.LC_ALL, '')
+    try:
+        locale.setlocale(locale.LC_ALL, '')
+    except locale.Error, e:
+        print >> sys.stderr, "warning: failed to set locale, defaulting to C"
+        os.environ['LC_ALL'] = 'C'
+        locale.setlocale(locale.LC_ALL, 'C')
+
     gettext.bindtextdomain("virtinst")
     gettext.install("virtinst")
 
