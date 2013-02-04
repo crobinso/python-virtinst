@@ -1,4 +1,5 @@
 #
+# Copyright 2013 Red Hat, Inc.
 # Copyright 2008 Sun Microsystems, Inc.  All rights reserved.
 # Use is subject to license terms.
 #
@@ -246,6 +247,7 @@ class virtimage_parser(formats.parser):
                 ImageParser.Disk.FORMAT_VMDK: diskcfg.DISK_FORMAT_VMDK,
                 ImageParser.Disk.FORMAT_QCOW: diskcfg.DISK_FORMAT_QCOW,
                 ImageParser.Disk.FORMAT_QCOW2: diskcfg.DISK_FORMAT_QCOW2,
+                ImageParser.Disk.FORMAT_VDI: diskcfg.DISK_FORMAT_VDI,
             }
 
             fmt = None

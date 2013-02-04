@@ -1,7 +1,7 @@
 # Sample code to parse an image XML description and
 # spit out libvirt XML; will be hooked into virt-install
 #
-# Copyright 2007  Red Hat, Inc.
+# Copyright 2007, 2013  Red Hat, Inc.
 # David Lutterkort <dlutter@redhat.com>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -205,6 +205,7 @@ class Disk:
     FORMAT_QCOW = "qcow"
     FORMAT_QCOW2 = "qcow2"
     FORMAT_VMDK = "vmdk"
+    FORMAT_VDI = "vdi"
 
     USE_SYSTEM = "system"
     USE_USER = "user"
@@ -231,7 +232,12 @@ class Disk:
             csumtype = xpathString(d, "@type")
             csumvalue = xpathString(d, "")
             self.csum[csumtype] = csumvalue
-        formats = [Disk.FORMAT_RAW, Disk.FORMAT_QCOW, Disk.FORMAT_QCOW2, Disk.FORMAT_VMDK, Disk.FORMAT_ISO]
+        formats = [Disk.FORMAT_RAW,
+                   Disk.FORMAT_QCOW,
+                   Disk.FORMAT_QCOW2,
+                   Disk.FORMAT_VMDK,
+                   Disk.FORMAT_ISO,
+                   Disk.FORMAT_VDI]
         validate(formats.count(self.format) > 0,
                  _("The format for disk %s must be one of %s") %
                  (self.file, ",".join(formats)))

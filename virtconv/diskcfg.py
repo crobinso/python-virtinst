@@ -1,4 +1,5 @@
 #
+# Copyright 2013 Red Hat, Inc.
 # Copyright 2008 Sun Microsystems, Inc.  All rights reserved.
 # Use is subject to license terms.
 #
@@ -35,6 +36,7 @@ DISK_FORMAT_VDISK = 3
 DISK_FORMAT_QCOW = 4
 DISK_FORMAT_QCOW2 = 5
 DISK_FORMAT_COW = 6
+DISK_FORMAT_VDI = 7
 
 DISK_TYPE_DISK = 0
 DISK_TYPE_CDROM = 1
@@ -50,6 +52,7 @@ disk_suffixes = {
     DISK_FORMAT_QCOW: ".qcow",
     DISK_FORMAT_QCOW2: ".qcow2",
     DISK_FORMAT_COW: ".cow",
+    DISK_FORMAT_VDI: ".vdi",
 }
 
 qemu_formats = {
@@ -59,6 +62,7 @@ qemu_formats = {
     DISK_FORMAT_QCOW: "qcow",
     DISK_FORMAT_QCOW2: "qcow2",
     DISK_FORMAT_COW: "cow",
+    DISK_FORMAT_VDI: "vdi",
 }
 
 disk_format_names = {
@@ -69,6 +73,7 @@ disk_format_names = {
     "qcow": DISK_FORMAT_QCOW,
     "qcow2": DISK_FORMAT_QCOW2,
     "cow": DISK_FORMAT_COW,
+    "vdi": DISK_FORMAT_VDI,
 }
 
 checksum_types = {
