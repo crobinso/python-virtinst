@@ -627,6 +627,12 @@ class VirtualDisk(VirtualDevice):
         self._error_policy = None
         self._serial = None
         self._target = None
+        self._iotune_read_bytes_sec = None
+        self._iotune_read_iops_sec = None
+        self._iotune_total_bytes_sec = None
+        self._iotune_total_iops_sec = None
+        self._iotune_write_bytes_sec = None
+        self._iotune_write_iops_sec = None
         self._validate = validate
 
         # XXX: No property methods for these
@@ -901,6 +907,84 @@ class VirtualDisk(VirtualDevice):
                                 self.serial)
     serial = _xml_property(_get_serial, _set_serial,
                            xpath="./serial")
+    
+    def _get_iotune_read_bytes_sec(self):
+        return self._iotune_read_bytes_sec
+    def _set_iotune_read_bytes_sec(self, val):
+        if (type(val) is not type(1) or val < 0):
+            raise ValueError(_("IOTune read bytes per second value must be an "
+                               "integer"))
+        self._iotune_read_bytes_sec = val
+    iotune_read_bytes_sec = _xml_property(_get_iotune_read_bytes_sec,
+                                          _set_iotune_read_bytes_sec,
+                                          xpath="./iotune/read_bytes_sec",
+                                          get_converter=lambda s, x: int(x or 0),
+                                          set_converter=lambda s, x: int(x))
+    
+    def _get_iotune_read_iops_sec(self):
+        return self._iotune_read_iops_sec
+    def _set_iotune_read_iops_sec(self, val):
+        if (type(val) is not type(1) or val < 0):
+            raise ValueError(_("IOTune read iops per second value must be an "
+                               "integer"))
+        self._iotune_read_iops_sec = val
+    iotune_read_iops_sec = _xml_property(_get_iotune_read_iops_sec,
+                                         _set_iotune_read_iops_sec,
+                                         xpath="./iotune/read_iops_sec",
+                                         get_converter=lambda s, x: int(x or 0),
+                                         set_converter=lambda s, x: int(x))
+    
+    def _get_iotune_total_bytes_sec(self):
+        return self._iotune_total_bytes_sec
+    def _set_iotune_total_bytes_sec(self, val):
+        if (type(val) is not type(1) or val < 0):
+            raise ValueError(_("IOTune total bytes per second value must be an "
+                               "integer"))
+        self._iotune_total_bytes_sec = val
+    iotune_total_bytes_sec = _xml_property(_get_iotune_total_bytes_sec,
+                                           _set_iotune_total_bytes_sec,
+                                           xpath="./iotune/total_bytes_sec",
+                                           get_converter=lambda s, x: int(x or 0),
+                                           set_converter=lambda s, x: int(x))
+    
+    def _get_iotune_total_iops_sec(self):
+        return self._iotune_total_iops_sec
+    def _set_iotune_total_iops_sec(self, val):
+        if (type(val) is not type(1) or val < 0):
+            raise ValueError(_("IOTune total iops per second value must be an "
+                               "integer"))
+        self._iotune_total_iops_sec = val
+    iotune_total_iops_sec = _xml_property(_get_iotune_total_iops_sec,
+                                          _set_iotune_total_iops_sec,
+                                          xpath="./iotune/total_iops_sec",
+                                          get_converter=lambda s, x: int(x or 0),
+                                          set_converter=lambda s, x: int(x))
+    
+    def _get_iotune_write_bytes_sec(self):
+        return self._iotune_write_bytes_sec
+    def _set_iotune_write_bytes_sec(self, val):
+        if (type(val) is not type(1) or val < 0):
+            raise ValueError(_("IOTune write bytes per second value must be an "
+                               "integer"))
+        self._iotune_write_bytes_sec = val
+    iotune_write_bytes_sec = _xml_property(_get_iotune_write_bytes_sec,
+                                           _set_iotune_write_bytes_sec,
+                                           xpath="./iotune/write_bytes_sec",
+                                           get_converter=lambda s, x: int(x or 0),
+                                           set_converter=lambda s, x: int(x))
+    
+    def _get_iotune_write_iops_sec(self):
+        return self._iotune_write_iops_sec
+    def _set_iotune_write_iops_sec(self, val):
+        if (type(val) is not type(1) or val < 0):
+            raise ValueError(_("IOTune write iops per second value must be an "
+                               "integer"))
+        self._iotune_write_iops_sec = val
+    iotune_write_iops_sec = _xml_property(_get_iotune_write_iops_sec,
+                                          _set_iotune_write_iops_sec,
+                                          xpath="./iotune/write_iops_sec",
+                                          get_converter=lambda s, x: int(x or 0),
+                                          set_converter=lambda s, x: int(x))
 
     # If there is no selinux support on the libvirt connection or the
     # system, we won't throw errors if this is set, just silently ignore.
@@ -1536,6 +1620,24 @@ class VirtualDisk(VirtualDevice):
         if self.serial:
             ret += ("      <serial>%s</serial>\n" %
                     _util.xml_escape(self.serial))
+        
+        if (self.iotune_read_bytes_sec or self.iotune_read_iops_sec or
+            self.iotune_total_bytes_sec or self.iotune_total_iops_sec or
+            self.iotune_write_bytes_sec or self.iotune_write_iops_sec):
+            ret += "      <iotune>"
+            if self.iotune_read_bytes_sec:
+                ret += "        <read_bytes_sec>%s</read_bytes_sec>" % (self.iotune_read_bytes_sec)
+            if self.iotune_read_iops_sec:
+                ret += "        <read_iops_sec>%s</read_iops_sec>" % (self.iotune_read_iops_sec)
+            if self.iotune_total_bytes_sec:
+                ret += "        <total_bytes_sec>%s</total_bytes_sec>" % (self.iotune_total_bytes_sec)
+            if self.iotune_total_iops_sec:
+                ret += "        <total_iops_sec>%s</total_iops_sec>" % (self.iotune_total_iops_sec)
+            if self.iotune_write_bytes_sec:
+                ret += "        <write_bytes_sec>%s</write_bytes_sec>" % (self.iotune_write_bytes_sec)
+            if self.iotune_write_iops_sec:
+                ret += "        <write_iops_sec>%s</write_iops_sec>" % (self.iotune_write_iops_sec)
+            ret += "      </iotune>"
 
         ret += "    </disk>"
         return ret
