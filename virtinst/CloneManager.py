@@ -1,4 +1,5 @@
 #
+# Copyright 2013  Red Hat, Inc.
 # Copyright(c) FUJITSU Limited 2007.
 #
 # Cloning a virtual machine module.
@@ -404,6 +405,7 @@ class CloneDesign(object):
 
         self._guest = Guest.Guest(conn=self._hyper_conn,
                                   parsexml=self.original_xml)
+        self._guest.replace = self.replace
 
         # Pull clonable storage info from the original xml
         self._original_virtual_disks = self._get_original_devices_info()
