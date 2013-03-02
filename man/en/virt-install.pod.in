@@ -846,6 +846,9 @@ Force disable ACPI for the guest.
 Attach a controller device to the guest. TYPE is one of:
 B<ide>, B<fdc>, B<scsi>, B<sata>, B<virtio-serial>, or B<usb>.
 
+Controller also supports the special value B<usb2>, which will set up
+a USB2 controller with fallback USB1 support.
+
 =over 4
 
 =item B<model>

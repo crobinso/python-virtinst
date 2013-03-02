@@ -676,6 +676,7 @@ args_dict = {
         "--controller usb,model=ich9-ehci1,address=0:0:4.7",
         "--controller usb,model=ich9-ehci1,address=0:0:4.7,index=0",
         "--controller usb,model=ich9-ehci1,address=0:0:4.7,index=1,master=0",
+        "--controller usb2",
       ],
 
       "invalid": [

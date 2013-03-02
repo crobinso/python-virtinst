@@ -1749,6 +1749,10 @@ def parse_controller(guest, optstring, dev=None):
     if optstring is None:
         return None
 
+    if optstring == "usb2":
+        guest.add_usb_ich9_controllers()
+        return None
+
     # Peel the mode off the front
     opts = parse_optstr(optstring, remove_first="type")
     ctrltype = get_opt_param(opts, "type")
