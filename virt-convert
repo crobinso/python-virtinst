@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright 2008  Red Hat, Inc.
+# Copyright 2008, 2013  Red Hat, Inc.
 # Joey Boggs <jboggs@redhat.com>
 #
 # Copyright 2008 Sun Microsystems, Inc.  All rights reserved.
@@ -213,8 +213,8 @@ def main():
         clean += [ options.output_dir ]
     except OSError, e:
         if (e.errno != errno.EEXIST):
-            fail("Could not create directory %s: %s",
-                (options.output_dir, e.strerror))
+            fail("Could not create directory %s: %s" %
+                 (options.output_dir, e.strerror))
 
     if not options.output_file:
         options.output_file = os.path.join(options.output_dir,
