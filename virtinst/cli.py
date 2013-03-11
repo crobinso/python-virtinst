@@ -1,7 +1,7 @@
 #
 # Utility functions for the command line drivers
 #
-# Copyright 2006-2007  Red Hat, Inc.
+# Copyright 2006-2007, 2013  Red Hat, Inc.
 # Jeremy Katz <katzj@redhat.com>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -1186,6 +1186,7 @@ def parse_optstr_tuples(optstr, compress_first=False):
         return [(optstr, None)]
 
     argsplitter = shlex.shlex(optstr, posix=True)
+    argsplitter.commenters = ""
     argsplitter.whitespace = ","
     argsplitter.whitespace_split = True
 
