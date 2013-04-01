@@ -105,6 +105,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_bindir}/virt-convert
 
 %changelog
+* Mon Apr 01 2013 Cole Robinson <crobinso@redhat.com> - 0.600.4-1
+- virtinst release 0.600.4
+- virt-install: New convenience option --controller usb2
+- API support for disk iotune properties (David Shane Holden)
+- Bug fixes and minor improvements
+
 * Sun Jul 29 2012 Cole Robinson <crobinso@redhat.com> - 0.600.3-1
 - virtinst release 0.600.3
 - virt-install: Fix --cpuset=auto

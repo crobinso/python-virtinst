@@ -24,7 +24,7 @@ from distutils.command.build import build
 import unittest
 from unittest import TextTestRunner, TestLoader
 
-VERSION = "0.600.3"
+VERSION = "0.600.4"
 
 # translation installing
 def _build_po_list():

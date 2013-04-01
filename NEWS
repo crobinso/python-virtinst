@@ -1,6 +1,12 @@
    Virtinst News
    =================
 
+Release 0.600.4 (April 01, 2013)
+--------------------------------
+- virt-install: New convenience option --controller usb2
+- API support for disk iotune properties (David Shane Holden)
+- Bug fixes and minor improvements
+
 Release 0.600.3 (July 29, 2012)
 -------------------------------
 - virt-install: Fix --cpuset=auto
