@@ -1,0 +1,4 @@
+virtinst has merged with virt-manager. Please do any new development
+against the master branch of virt-manager.git:
+
+http://git.fedorahosted.org/cgit/virt-manager.git/

@@ -1,7 +1,0 @@
-Please see http://git.fedorahosted.org/git/?p=python-virtinst.git;a=shortlog
-
-Or directly from a git checkout:
-
-  git clone git://git.fedorahosted.org/python-virtinst.git
-  cd python-virtinst
-  git log

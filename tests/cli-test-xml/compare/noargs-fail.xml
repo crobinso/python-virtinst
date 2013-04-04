@@ -1,4 +1,0 @@
-ERROR    
---disk storage must be specified (override with --nodisks)
-An install method must be specified
-(--location URL, --cdrom CD/ISO, --pxe, --import, --boot hd|cdrom|...)

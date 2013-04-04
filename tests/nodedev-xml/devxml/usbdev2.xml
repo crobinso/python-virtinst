@@ -1,5 +1,0 @@
-    <hostdev mode='subsystem' type='usb' managed='yes'>
-      <source>
-        <address bus='1' device='4'/>
-      </source>
-    </hostdev>
